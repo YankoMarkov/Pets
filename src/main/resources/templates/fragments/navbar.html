@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-pets rounded"
+     xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+	<a class="navbar-brand nav-link-white" th:href="@{/}">PETS</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+	        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+		<th:block th:unless="${#authentication.getName() == 'anonymousUser'}">
+			<div class="btn-group">
+				<form th:action="@{/home}" th:method="get">
+					<select type="button" class="btn btn-info dropdown-toggle" onchange="submit();"
+					        th:name="animalId">
+						<option value="">Select Animal...</option>
+						<option th:each="animal : ${animals}"
+						        th:value="${animal.id}"
+						        th:text="${animal.name}"
+						        th:selected="${animal.id == animalId}"></option>
+					</select>
+				</form>
+			</div>
+		</th:block>
+		<ul class="navbar-nav ml-auto" sec:authorize="isAnonymous()">
+			<li class="nav-item active">
+				<a class="nav-link nav-link-white" th:href="@{/users/login}">Login</a>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link nav-link-white" th:href="@{/users/register}">Register</a>
+			</li>
+		</ul>
+		<th:block sec:authorize="isAuthenticated()">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active" sec:authorize="hasAnyAuthority('ADMIN','MODERATOR')">
+					<div class="dropdown show">
+						<a class="nav-link active dropdown-toggle" th:href="@{#}" role="button"
+						   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						   id="categoryProductDropdown">
+							Animals
+						</a>
+						<div class="dropdown-menu" aria-labelledby="categoryProductDropdown">
+							<a class="dropdown-item" th:href="@{/animals/add}">Add Animal</a>
+							<a class="dropdown-item" th:href="@{/animals/all}">All Animals</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active" sec:authorize="hasAuthority('ROOT')">
+					<a class="nav-link nav-link-white" th:href="@{/users/all}">All Users</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link nav-link-white" th:href="@{/home}">Home</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link nav-link-white" th:href="@{/users/profile}">Profile</a>
+				</li>
+				<li class="nav-item active">
+					<form th:action="@{/logout?login}" th:method="post">
+						<button class="logout-button nav-link">Logout</button>
+					</form>
+				</li>
+			</ul>
+		</th:block>
+	</div>
+</nav>

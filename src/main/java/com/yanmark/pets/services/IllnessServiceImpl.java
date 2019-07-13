@@ -3,5 +3,5 @@ package com.yanmark.pets.services;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IllnessServiceImpl {
+public class IllnessServiceImpl implements IllnessService {
 }

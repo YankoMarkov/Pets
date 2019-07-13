@@ -12,69 +12,45 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().disable()
-                .csrf()
-                .csrfTokenRepository(csrfTokenRepository())
-                .and()
-                .authorizeRequests()
-                .antMatchers("/css/**",
-                        "/js/**",
-                        "/images/**").permitAll()
-                .antMatchers("/",
-                        "/users/login",
-                        "/users/register").anonymous()
-                .antMatchers("/packages/create",
-                        "/packages/shipped",
-                        "/packages/pending",
-                        "/packages/delivered",
-                        "/orders/all").hasAuthority("ADMIN")
-                .antMatchers("/categories/**",
-                        "/products/add",
-                        "/products/all",
-                        "/products/edit/**",
-                        "/products/delete/**",
-                        "/comments/all",
-                        "/comments/edit/**",
-                        "/comments/delete/**").hasAnyAuthority("ADMIN", "MODERATOR")
-                .antMatchers("/home",
-                        "/products/details/**",
-                        "/comments/add",
-                        "/comments/fetch/**",
-                        "/users/profile",
-                        "/users/edit/**",
-                        "/users/storage",
-                        "/orders/order/**",
-                        "/orders/buy/**",
-                        "/orders/delete/**",
-                        "/orders/my",
-                        "/packages/details/**",
-                        "/packages/acquire/**",
-                        "/receipts/**").authenticated()
-                .antMatchers("/users/all",
-                        "/users/changeRole").hasAuthority("ROOT")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/users/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/home")
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/unauthorized")
-                .and()
-                .logout()
-                .logoutSuccessUrl("/");
-
-    }
-
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setSessionAttributeName("_csrf");
-        return repository;
-    }
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+				.cors().disable()
+				.csrf()
+				.csrfTokenRepository(csrfTokenRepository())
+				.and()
+				.authorizeRequests()
+				.antMatchers("/css/**",
+						"/js/**",
+						"/images/**","/").permitAll()
+				.antMatchers("/users/login",
+						"/users/register").anonymous()
+				.antMatchers("/animals/**").hasAnyAuthority("ADMIN", "MODERATOR")
+				.antMatchers("/home",
+						"/users/profile",
+						"/users/edit/**").authenticated()
+				.antMatchers("/users/all",
+						"/users/changeRole").hasAuthority("ROOT")
+				.anyRequest().authenticated()
+				.and()
+				.formLogin()
+				.loginPage("/users/login")
+				.usernameParameter("username")
+				.passwordParameter("password")
+				.defaultSuccessUrl("/home")
+				.and()
+				.exceptionHandling()
+				.accessDeniedPage("/unauthorized")
+				.and()
+				.logout()
+				.logoutSuccessUrl("/");
+		
+	}
+	
+	private CsrfTokenRepository csrfTokenRepository() {
+		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+		repository.setSessionAttributeName("_csrf");
+		return repository;
+	}
 }

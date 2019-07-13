@@ -1,17 +1,14 @@
 package com.yanmark.pets.domain.models.services;
 
-import com.yanmark.pets.domain.enums.Animal;
 import com.yanmark.pets.domain.enums.Gender;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PetServiceModel extends BaseServiceModel {
 	
-	private Animal animal;
+	private String image;
+	private AnimalServiceModel animal;
 	private String name;
-	private List<ImageServiceModel> images;
 	private LocalDate birthDate;
 	private String breed;
 	private String furColor;
@@ -19,15 +16,19 @@ public class PetServiceModel extends BaseServiceModel {
 	private HealthyServiceModel healthy;
 	private UserServiceModel owner;
 	
-	public PetServiceModel() {
-		this.images = new ArrayList<>();
+	public String getImage() {
+		return image;
 	}
 	
-	public Animal getAnimal() {
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	public AnimalServiceModel getAnimal() {
 		return animal;
 	}
 	
-	public void setAnimal(Animal animal) {
+	public void setAnimal(AnimalServiceModel animal) {
 		this.animal = animal;
 	}
 	
@@ -37,14 +38,6 @@ public class PetServiceModel extends BaseServiceModel {
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public List<ImageServiceModel> getImages() {
-		return images;
-	}
-	
-	public void setImages(List<ImageServiceModel> images) {
-		this.images = images;
 	}
 	
 	public LocalDate getBirthDate() {

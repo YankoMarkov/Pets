@@ -6,14 +6,22 @@ import java.util.List;
 
 public class IllnessServiceModel extends BaseServiceModel {
 	
+	private LocalDate date;
 	private String name;
-	private List<ImageServiceModel> images;
-	private LocalDate startIllness;
 	private String description;
+	private List<ImageServiceModel> images;
 	private HealthyServiceModel healthy;
 	
 	public IllnessServiceModel() {
 		this.images = new ArrayList<>();
+	}
+	
+	public LocalDate getDate() {
+		return date;
+	}
+	
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 	
 	public String getName() {
@@ -24,28 +32,20 @@ public class IllnessServiceModel extends BaseServiceModel {
 		this.name = name;
 	}
 	
-	public List<ImageServiceModel> getImages() {
-		return images;
-	}
-	
-	public void setImages(List<ImageServiceModel> images) {
-		this.images = images;
-	}
-	
-	public LocalDate getStartIllness() {
-		return startIllness;
-	}
-	
-	public void setStartIllness(LocalDate startIllness) {
-		this.startIllness = startIllness;
-	}
-	
 	public String getDescription() {
 		return description;
 	}
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public List<ImageServiceModel> getImages() {
+		return images;
+	}
+	
+	public void setImages(List<ImageServiceModel> images) {
+		this.images = images;
 	}
 	
 	public HealthyServiceModel getHealthy() {

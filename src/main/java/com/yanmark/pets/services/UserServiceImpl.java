@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         User user = this.modelMapper.map(giveRolesToUser(userService), User.class);
         user.setPassword(this.passwordEncoder.encode(userService.getPassword()));
         try {
-            user = this.userRepository.saveAndFlush(user);
+            user = this.userRepository.save(user);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
                         .findFirst().orElse(null);
                 user.getAuthorities().remove(role);
             }
-            user = this.userRepository.saveAndFlush(user);
+            user = this.userRepository.save(user);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -80,11 +80,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserServiceModel updateUser(UserServiceModel userService, UserEditBindingModel userEdit) {
+        User user = this.userRepository.findByUsername(userService.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User was not found!"));
         if (!userEdit.getNewPassword().equals("") && userEdit.getNewPassword() != null) {
             userService.setPassword(userEdit.getNewPassword());
         }
-        User user = this.userRepository.findByUsername(userService.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User was not found!"));
         if (!this.passwordEncoder.matches(userEdit.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Incorrect password!");
         }
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setEmail(userService.getEmail());
         try {
-            user = this.userRepository.saveAndFlush(user);
+            user = this.userRepository.save(user);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }

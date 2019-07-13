@@ -1,7 +1,5 @@
 package com.yanmark.pets.domain.models.services;
 
-import com.yanmark.pets.domain.entities.Pet;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +9,7 @@ public class HealthyServiceModel extends BaseServiceModel {
 	private boolean isCastrated;
 	private LocalDate vaccineDate;
 	private List<IllnessServiceModel> illnesses;
-	private Pet pet;
+	private PetServiceModel pet;
 	
 	public HealthyServiceModel() {
 		this.illnesses = new ArrayList<>();
@@ -41,11 +39,11 @@ public class HealthyServiceModel extends BaseServiceModel {
 		this.illnesses = illnesses;
 	}
 	
-	public Pet getPet() {
+	public PetServiceModel getPet() {
 		return pet;
 	}
 	
-	public void setPet(Pet pet) {
+	public void setPet(PetServiceModel pet) {
 		this.pet = pet;
 	}
 }

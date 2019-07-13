@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 public class Image extends BaseEntity {
 
     private String image;
-    private Pet pet;
     private Illness illness;
 
     @Column(name = "image")
@@ -19,16 +18,6 @@ public class Image extends BaseEntity {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    @ManyToOne(targetEntity = Pet.class)
-    @JoinColumn(name = "pet_id", referencedColumnName = "id")
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
     }
 
     @ManyToOne(targetEntity = Illness.class)

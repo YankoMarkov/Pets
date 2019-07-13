@@ -3,5 +3,5 @@ package com.yanmark.pets.services;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ImageServiceImpl {
+public class ImageServiceImpl implements ImageService {
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="fragments/head"/>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:replace="fragments/navbar"/>
+    </header>
+    <main class="mt-3">
+        <hr class="bg-pets hr-2"/>
+        <h1 class="text-center text-pets">All Pets</h1>
+        <hr class="bg-pets w-25 hr-2"/>
+        <table class="table table-hover w-75 mx-auto">
+            <thead>
+            <tr class="row mx-auto">
+                <th class="col-md-1 text-center">#</th>
+                <th class="col-md-1 text-center">Animal</th>
+                <th class="col-md-3 text-center">Image</th>
+                <th class="col-md-2 text-center">Name</th>
+                <th class="col-md-1 text-center">Age</th>
+                <th class="col-md-1 text-center">Gender</th>
+                <th class="col-md-3 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="pet,iter : ${pets}">
+                <tr class="row mx-auto">
+                    <th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
+                    <td class="col-md-1 text-center" th:text="${pet.animal}"></td>
+                    <td class="col-md-3 text-center">
+                        <div class="text-center">
+                            <a th:href="@{/pets/details/{id}(id=${pet.id})}">
+                                <img th:src="${pet.image}" width="auto" height="40" alt="Image">
+                            </a>
+                        </div>
+                    </td>
+                    <td class="col-md-2 text-center" th:text="${pet.name}"></td>
+                    <td class="col-md-1 text-center" th:text="|${pet.ageInYears},${pet.ageInMonths}|"></td>
+                    <td class="col-md-1 text-center" th:text="${pet.gender}"></td>
+                    <td class="col-md-3 text-center">
+                        <a th:href="@{/pets/edit/{id}(id=${pet.id})}"
+                           class="btn btn-success font-weight-bold text-white">Change</a>
+                        <a th:href="@{/pets/delete/{id}(id=${pet.id})}"
+                           class="btn btn-danger font-weight-bold text-white">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <hr class="bg-pets hr-2 mt-5"/>
+    </main>
+    <footer>
+        <th:block th:replace="fragments/footer"/>
+    </footer>
+</div>
+</body>
+</html>
