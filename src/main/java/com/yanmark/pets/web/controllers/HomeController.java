@@ -62,6 +62,8 @@ public class HomeController extends BaseController {
 									LocalDate.now().withDayOfMonth(1));
 							petHomeViewModel.setAgeInYears((int) age / 12);
 							petHomeViewModel.setAgeInMonths((int) age % 12);
+							petHomeViewModel.setAnimal(pet.getAnimal().getName());
+							petHomeViewModel.setGender(pet.getGender().getGender());
 							return petHomeViewModel;
 						})
 						.collect(Collectors.toList());

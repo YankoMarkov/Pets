@@ -1,5 +1,6 @@
 package com.yanmark.pets.services;
 
+import com.yanmark.pets.domain.models.bindings.animals.AnimalCreateBindingModel;
 import com.yanmark.pets.domain.models.services.AnimalServiceModel;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 public interface AnimalService {
 	
 	AnimalServiceModel saveAnimal(AnimalServiceModel animalService);
+	
+	AnimalServiceModel editAnimal(AnimalCreateBindingModel animalCreate, String id);
 	
 	void deleteAnimal(String id);
 	

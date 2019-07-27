@@ -12,7 +12,7 @@ public class Illness extends BaseEntity {
 	private String name;
 	private String description;
 	private List<Image> images;
-	private Healthy healthy;
+	private Health health;
 	
 	public Illness() {
 		this.images = new ArrayList<>();
@@ -54,13 +54,13 @@ public class Illness extends BaseEntity {
 		this.images = images;
 	}
 	
-	@ManyToOne(targetEntity = Healthy.class)
-	@JoinColumn(name = "healthy_id", referencedColumnName = "id")
-	public Healthy getHealthy() {
-		return healthy;
+	@ManyToOne(targetEntity = Health.class)
+	@JoinColumn(name = "health_id", referencedColumnName = "id")
+	public Health getHealth() {
+		return health;
 	}
 	
-	public void setHealthy(Healthy healthy) {
-		this.healthy = healthy;
+	public void setHealth(Health health) {
+		this.health = health;
 	}
 }

@@ -8,15 +8,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "healthiest")
-public class Healthy extends BaseEntity {
+@Entity(name = "health")
+public class Health extends BaseEntity {
 
     private boolean isCastrated;
     private LocalDate vaccineDate;
     private List<Illness> illnesses;
     private Pet pet;
 
-    public Healthy() {
+    public Health() {
         this.illnesses = new ArrayList<>();
     }
 
@@ -38,7 +38,7 @@ public class Healthy extends BaseEntity {
         this.vaccineDate = vaccineDate;
     }
 
-    @OneToMany(targetEntity = Illness.class, mappedBy = "healthy")
+    @OneToMany(targetEntity = Illness.class, mappedBy = "health")
     public List<Illness> getIllnesses() {
         return illnesses;
     }

@@ -1,17 +1,14 @@
 package com.yanmark.pets.domain.models.views.pets;
 
-import com.yanmark.pets.domain.entities.Animal;
-import com.yanmark.pets.domain.enums.Gender;
-
 public class PetHomeViewModel {
 	
 	private String id;
 	private String image;
-	private Animal animal;
+	private String animal;
 	private String name;
 	private int ageInYears;
 	private int ageInMonths;
-	private Gender gender;
+	private String gender;
 	
 	public String getId() {
 		return id;
@@ -29,11 +26,11 @@ public class PetHomeViewModel {
 		this.image = image;
 	}
 	
-	public Animal getAnimal() {
+	public String getAnimal() {
 		return animal;
 	}
 	
-	public void setAnimal(Animal animal) {
+	public void setAnimal(String animal) {
 		this.animal = animal;
 	}
 	
@@ -61,11 +58,11 @@ public class PetHomeViewModel {
 		this.ageInMonths = ageInMonths;
 	}
 	
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 	
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 }

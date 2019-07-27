@@ -1,6 +1,7 @@
 package com.yanmark.pets.services;
 
 import com.yanmark.pets.domain.entities.Animal;
+import com.yanmark.pets.domain.models.bindings.animals.AnimalCreateBindingModel;
 import com.yanmark.pets.domain.models.services.AnimalServiceModel;
 import com.yanmark.pets.repositories.AnimalRepository;
 import org.modelmapper.ModelMapper;
@@ -25,6 +26,11 @@ public class AnimalServiceImpl implements AnimalService {
 	
 	@Override
 	public AnimalServiceModel saveAnimal(AnimalServiceModel animalService) {
+		Animal checkAnimal = this.animalRepository.findByName(animalService.getName())
+				.orElse(null);
+		if (checkAnimal != null) {
+			throw new IllegalArgumentException("Animal with this name already exist!");
+		}
 		Animal animal = this.modelMapper.map(animalService, Animal.class);
 		try {
 			animal = this.animalRepository.save(animal);
@@ -32,6 +38,15 @@ public class AnimalServiceImpl implements AnimalService {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 		return this.modelMapper.map(animal, AnimalServiceModel.class);
+	}
+	
+	@Override
+	public AnimalServiceModel editAnimal(AnimalCreateBindingModel animalCreate, String id) {
+		Animal animal = this.animalRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Animal with this id was not found!"));
+		AnimalServiceModel animalServiceModel = this.modelMapper.map(animal, AnimalServiceModel.class);
+		animalServiceModel.setName(animalCreate.getName());
+		return saveAnimal(animalServiceModel);
 	}
 	
 	@Override

@@ -17,19 +17,21 @@
 		<table class="table table-hover w-50 mx-auto">
 			<thead>
 			<tr class="row mx-auto">
-				<th class="col text-center">#</th>
-				<th class="col text-center">Name</th>
-				<th class="col text-center">Actions</th>
+				<th class="col-md-2 text-center">#</th>
+				<th class="col-md-4 text-center">Name</th>
+				<th class="col-md-6 text-center">Actions</th>
 			</tr>
 			</thead>
 			<tbody>
 			<th:block th:each="animal,iter : ${animals}">
 				<tr class="row mx-auto">
-					<th class="col text-center" th:text="${iter.index + 1}"></th>
-					<td class="col text-center" th:text="${animal.name}"></td>
-					<td class="col text-center">
+					<th class="col-md-2 text-center" th:text="${iter.index + 1}"></th>
+					<td class="col-md-4 text-center" th:text="${animal.name}"></td>
+					<td class="col-md-6 text-center">
 						<a th:href="@{/animals/edit/{id}(id=${animal.id})}" class="btn btn-primary">Edit</a>
-						<a th:href="@{/animals/delete/{id}(id=${animal.id})}" class="btn btn-danger">Delete</a>
+						<form th:action="@{/animals/delete/{id}(id=${animal.id})}" method="post">
+							<button class="btn btn-danger">Delete</button>
+						</form>
 					</td>
 				</tr>
 			</th:block>

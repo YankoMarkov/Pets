@@ -15,7 +15,7 @@ public class Pet extends BaseEntity {
 	private String breed;
 	private String furColor;
 	private Gender gender;
-	private Healthy healthy;
+	private Health health;
 	private User owner;
 	
 	@Column(name = "image")
@@ -83,14 +83,14 @@ public class Pet extends BaseEntity {
 		this.gender = gender;
 	}
 	
-	@OneToOne(targetEntity = Healthy.class)
+	@OneToOne(targetEntity = Health.class)
 	@JoinColumn(name = "healthy_id", referencedColumnName = "id")
-	public Healthy getHealthy() {
-		return healthy;
+	public Health getHealth() {
+		return health;
 	}
 	
-	public void setHealthy(Healthy healthy) {
-		this.healthy = healthy;
+	public void setHealth(Health health) {
+		this.health = health;
 	}
 	
 	@ManyToOne(targetEntity = User.class)

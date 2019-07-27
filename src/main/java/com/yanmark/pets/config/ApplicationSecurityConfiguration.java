@@ -23,7 +23,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 				.authorizeRequests()
 				.antMatchers("/css/**",
 						"/js/**",
-						"/images/**","/").permitAll()
+						"/images/**",
+						"/").permitAll()
 				.antMatchers("/users/login",
 						"/users/register").anonymous()
 				.antMatchers("/animals/**").hasAnyAuthority("ADMIN", "MODERATOR")
