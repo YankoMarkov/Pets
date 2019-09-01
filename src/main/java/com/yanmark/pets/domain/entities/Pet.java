@@ -4,6 +4,8 @@ import com.yanmark.pets.domain.enums.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "pets")
 public class Pet extends BaseEntity {
@@ -15,10 +17,16 @@ public class Pet extends BaseEntity {
 	private String breed;
 	private String furColor;
 	private Gender gender;
-	private Health health;
+	private boolean isCastrated;
+	private LocalDate vaccineDate;
+	private List<Illness> illnesses;
 	private User owner;
 	
-	@Column(name = "image")
+	public Pet() {
+		this.illnesses = new ArrayList<>();
+	}
+	
+	@Column(name = "image", nullable = false)
 	public String getImage() {
 		return image;
 	}
@@ -27,7 +35,7 @@ public class Pet extends BaseEntity {
 		this.image = image;
 	}
 	
-	@OneToOne(targetEntity = Animal.class)
+	@ManyToOne(targetEntity = Animal.class)
 	@JoinColumn(name = "animal_id", referencedColumnName = "id")
 	public Animal getAnimal() {
 		return animal;
@@ -83,14 +91,31 @@ public class Pet extends BaseEntity {
 		this.gender = gender;
 	}
 	
-	@OneToOne(targetEntity = Health.class)
-	@JoinColumn(name = "healthy_id", referencedColumnName = "id")
-	public Health getHealth() {
-		return health;
+	@Column(name = "is_castrated", nullable = false)
+	public boolean isCastrated() {
+		return isCastrated;
 	}
 	
-	public void setHealth(Health health) {
-		this.health = health;
+	public void setCastrated(boolean castrated) {
+		isCastrated = castrated;
+	}
+	
+	@Column(name = "vaccine_date")
+	public LocalDate getVaccineDate() {
+		return vaccineDate;
+	}
+	
+	public void setVaccineDate(LocalDate vaccineDate) {
+		this.vaccineDate = vaccineDate;
+	}
+	
+	@OneToMany(targetEntity = Illness.class, mappedBy = "pet", cascade = CascadeType.ALL)
+	public List<Illness> getIllnesses() {
+		return illnesses;
+	}
+	
+	public void setIllnesses(List<Illness> illnesses) {
+		this.illnesses = illnesses;
 	}
 	
 	@ManyToOne(targetEntity = User.class)

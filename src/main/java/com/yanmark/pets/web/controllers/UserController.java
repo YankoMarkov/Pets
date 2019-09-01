@@ -81,7 +81,8 @@ public class UserController extends BaseController {
 	@GetMapping("/profile")
 	@PreAuthorize("isAuthenticated()")
 	@PageTitle("\uD835\uDCB0\uD835\uDCC8\uD835\uDC52\uD835\uDCC7 \uD835\uDCAB\uD835\uDCC7\uD835\uDC5C\uD835\uDCBB\uD835\uDCBE\uD835\uDCC1\uD835\uDC52")
-	public ModelAndView profile(Principal principal, ModelAndView modelAndView) {
+	public ModelAndView profile(Principal principal,
+	                            ModelAndView modelAndView) {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
 		UserProfileViewModel userProfileViewModel = this.modelMapper.map(userServiceModel, UserProfileViewModel.class);
 		modelAndView.addObject("userProfile", userProfileViewModel);

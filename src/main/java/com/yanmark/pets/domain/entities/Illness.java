@@ -12,7 +12,7 @@ public class Illness extends BaseEntity {
 	private String name;
 	private String description;
 	private List<Image> images;
-	private Health health;
+	private Pet pet;
 	
 	public Illness() {
 		this.images = new ArrayList<>();
@@ -45,7 +45,7 @@ public class Illness extends BaseEntity {
 		this.description = description;
 	}
 	
-	@OneToMany(targetEntity = Image.class, mappedBy = "illness")
+	@OneToMany(targetEntity = Image.class, mappedBy = "illness", cascade = CascadeType.ALL)
 	public List<Image> getImages() {
 		return images;
 	}
@@ -54,13 +54,13 @@ public class Illness extends BaseEntity {
 		this.images = images;
 	}
 	
-	@ManyToOne(targetEntity = Health.class)
-	@JoinColumn(name = "health_id", referencedColumnName = "id")
-	public Health getHealth() {
-		return health;
+	@ManyToOne(targetEntity = Pet.class)
+	@JoinColumn(name = "pet_id", referencedColumnName = "id")
+	public Pet getPet() {
+		return pet;
 	}
 	
-	public void setHealth(Health health) {
-		this.health = health;
+	public void setPet(Pet pet) {
+		this.pet = pet;
 	}
 }

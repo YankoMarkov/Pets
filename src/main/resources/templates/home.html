@@ -19,22 +19,21 @@
 			<tr class="row mx-auto">
 				<th class="col-md-1 text-center">#</th>
 				<th class="col-md-1 text-center">Animal</th>
-				<th class="col-md-2 text-center">Image</th>
+				<th class="col-md-3 text-center">Image</th>
 				<th class="col-md-2 text-center">Name</th>
 				<th class="col-md-1 text-center">Age</th>
 				<th class="col-md-1 text-center">Gender</th>
-				<th class="col-md-1 text-center">Health</th>
 				<th class="col-md-3 text-center">Actions</th>
 			</tr>
 			</thead>
 			<tbody>
 			<th:block th:each="pet,iter : ${pets}">
-				<tr class="row mx-auto" th:href="@{/pets/details/{id}(id=${pet.id})}">
+				<tr class="row mx-auto">
 					<th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
 					<td class="col-md-1 text-center" th:text="${pet.animal}"></td>
-					<td class="col-md-2 text-center">
+					<td class="col-md-3 text-center">
 						<div class="text-center">
-							<a th:href="@{/pets/details/{id}(id=${pet.id})}">
+							<a th:href="${pet.image}">
 								<img th:src="${pet.image}" width="auto" height="60" alt="Image">
 							</a>
 						</div>
@@ -42,13 +41,9 @@
 					<td class="col-md-2 text-center" th:text="${pet.name}"></td>
 					<td class="col-md-1 text-center" th:text="|${pet.ageInYears}y ${pet.ageInMonths}m|"></td>
 					<td class="col-md-1 text-center" th:text="${pet.gender}"></td>
-					<td class="col-md-1 text-center">
-						<a th:href="@{/pets/edit/{id}(id=${pet.id})}"
-						   class="btn btn-info font-weight-bold text-white">Health</a>
-					</td>
 					<td class="col-md-3 text-center">
-						<a th:href="@{/pets/edit/{id}(id=${pet.id})}"
-						   class="btn btn-success font-weight-bold text-white">Change</a>
+						<a th:href="@{/pets/details/{id}(id=${pet.id})}"
+						   class="btn btn-success font-weight-bold text-white">Edit</a>
 						<a th:href="@{/pets/delete/{id}(id=${pet.id})}"
 						   class="btn btn-danger font-weight-bold text-white">Delete</a>
 					</td>

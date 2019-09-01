@@ -11,7 +11,7 @@ public class Image extends BaseEntity {
     private String image;
     private Illness illness;
 
-    @Column(name = "image")
+    @Column(name = "image", nullable = false, unique = true)
     public String getImage() {
         return image;
     }

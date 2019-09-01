@@ -10,7 +10,7 @@ public class IllnessServiceModel extends BaseServiceModel {
 	private String name;
 	private String description;
 	private List<ImageServiceModel> images;
-	private HealthyServiceModel healthy;
+	private PetServiceModel pet;
 	
 	public IllnessServiceModel() {
 		this.images = new ArrayList<>();
@@ -48,11 +48,11 @@ public class IllnessServiceModel extends BaseServiceModel {
 		this.images = images;
 	}
 	
-	public HealthyServiceModel getHealthy() {
-		return healthy;
+	public PetServiceModel getPet() {
+		return pet;
 	}
 	
-	public void setHealthy(HealthyServiceModel healthy) {
-		this.healthy = healthy;
+	public void setPet(PetServiceModel pet) {
+		this.pet = pet;
 	}
 }

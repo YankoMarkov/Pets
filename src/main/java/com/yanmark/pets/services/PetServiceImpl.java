@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,21 +22,23 @@ import java.util.stream.Collectors;
 @Service
 public class PetServiceImpl implements PetService {
 	
-	private static String UPLOADED_FOLDER = "src/main/resources/static/images/";
 	private final ModelMapper modelMapper;
 	private final PetRepository petRepository;
 	private final AnimalService animalService;
 	private final UserService userService;
+	private final CloudinaryService cloudinaryService;
 	
 	@Autowired
 	public PetServiceImpl(ModelMapper modelMapper,
 	                      PetRepository petRepository,
 	                      AnimalService animalService,
-	                      UserService userService) {
+	                      UserService userService,
+	                      CloudinaryService cloudinaryService) {
 		this.modelMapper = modelMapper;
 		this.petRepository = petRepository;
 		this.animalService = animalService;
 		this.userService = userService;
+		this.cloudinaryService = cloudinaryService;
 	}
 	
 	@Override
@@ -47,20 +47,76 @@ public class PetServiceImpl implements PetService {
 	                               Principal principal) throws IOException {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
 		petService.setOwner(userServiceModel);
+		
 		AnimalServiceModel animalServiceModel = this.animalService.getAnimalById(petCreate.getAnimal());
 		petService.setAnimal(animalServiceModel);
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate date = LocalDate.parse(petCreate.getBirthDate(), formatter);
-		petService.setBirthDate(date);
-		Path path = Paths.get(UPLOADED_FOLDER, petCreate.getImage().getOriginalFilename());
-		petCreate.getImage().transferTo(path);
-		petService.setImage("/images/" + petCreate.getImage().getOriginalFilename());
+		LocalDate birthDate = LocalDate.parse(petCreate.getBirthDate(), formatter);
+		petService.setBirthDate(birthDate);
+		
+		if (!petCreate.getVaccineDate().equals("")) {
+			LocalDate vaccineDate = LocalDate.parse(petCreate.getVaccineDate(), formatter);
+			petService.setVaccineDate(vaccineDate);
+		}
+		
+		petService.setImage(this.cloudinaryService.uploadImage(petCreate.getImage()));
 		
 		if (petCreate.getGender().equals("male")) {
 			petService.setGender(Gender.MALE);
 		} else {
 			petService.setGender(Gender.FEMALE);
 		}
+		if (petCreate.getIsCastrated().equals("true")) {
+			petService.setCastrated(true);
+		}
+		Pet pet = this.modelMapper.map(petService, Pet.class);
+		try {
+			pet = this.petRepository.save(pet);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		return this.modelMapper.map(pet, PetServiceModel.class);
+	}
+	
+	@Override
+	public PetServiceModel updatePet(PetServiceModel petService, PetCreateBindingModel petCreate) {
+		PetServiceModel petServiceModel = this.modelMapper.map(petCreate, PetServiceModel.class);
+		if (petServiceModel.getAnimal() != null) {
+			petService.setAnimal(petServiceModel.getAnimal());
+		}
+		if (!petServiceModel.getName().equals(petService.getName())) {
+			petService.setName(petServiceModel.getName());
+		}
+		if (petServiceModel.getBirthDate() != null) {
+			petService.setBirthDate(petServiceModel.getBirthDate());
+		}
+		if (petServiceModel.getVaccineDate() != null) {
+			petService.setVaccineDate(petServiceModel.getVaccineDate());
+		}
+		if (!petServiceModel.getFurColor().equals(petService.getFurColor())) {
+			petService.setFurColor(petServiceModel.getFurColor());
+		}
+		if (!petServiceModel.getBreed().equals(petService.getBreed())) {
+			petService.setBreed(petServiceModel.getBreed());
+		}
+		if (petServiceModel.getGender() != null) {
+			petService.setGender(petServiceModel.getGender());
+		}
+		if (petServiceModel.isCastrated()) {
+			petService.setCastrated(true);
+		}
+		Pet pet = this.modelMapper.map(petService, Pet.class);
+		try {
+			pet = this.petRepository.save(pet);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		return this.modelMapper.map(pet, PetServiceModel.class);
+	}
+	
+	@Override
+	public PetServiceModel addIllnesses(PetServiceModel petService) {
 		Pet pet = this.modelMapper.map(petService, Pet.class);
 		try {
 			pet = this.petRepository.save(pet);
@@ -83,5 +139,21 @@ public class PetServiceImpl implements PetService {
 		Pet pet = this.petRepository.getByName(name)
 				.orElseThrow(() -> new IllegalArgumentException("Pet was not found!"));
 		return this.modelMapper.map(pet, PetServiceModel.class);
+	}
+	
+	@Override
+	public PetServiceModel getPetById(String id) {
+		Pet pet = this.petRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Pet was not found!"));
+		return this.modelMapper.map(pet, PetServiceModel.class);
+	}
+	
+	@Override
+	public void deletePet(String id) {
+		try {
+			this.petRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 	}
 }

@@ -1,5 +1,8 @@
 package com.yanmark.pets.services;
 
-public interface ImageService {
+import com.yanmark.pets.domain.models.services.ImageServiceModel;
 
+public interface ImageService {
+	
+	ImageServiceModel saveImage(ImageServiceModel imageService);
 }

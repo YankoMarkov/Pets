@@ -14,7 +14,16 @@ public interface PetService {
 	                        PetCreateBindingModel petCreate,
 	                        Principal principal) throws IOException;
 	
+	PetServiceModel updatePet(PetServiceModel petService,
+	                          PetCreateBindingModel petCreate);
+	
+	PetServiceModel addIllnesses(PetServiceModel petService);
+	
 	List<PetServiceModel> getAllPetsByOwner(UserServiceModel userService);
 	
 	PetServiceModel getPetByName(String name);
+	
+	PetServiceModel getPetById(String id);
+	
+	void deletePet(String id);
 }
