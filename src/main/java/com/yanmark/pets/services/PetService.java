@@ -1,6 +1,7 @@
 package com.yanmark.pets.services;
 
 import com.yanmark.pets.domain.models.bindings.pets.PetCreateBindingModel;
+import com.yanmark.pets.domain.models.bindings.pets.PetEditBindingModel;
 import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.services.UserServiceModel;
 
@@ -15,15 +16,17 @@ public interface PetService {
 	                        Principal principal) throws IOException;
 	
 	PetServiceModel updatePet(PetServiceModel petService,
-	                          PetCreateBindingModel petCreate);
+	                          PetEditBindingModel petEdit);
 	
-	PetServiceModel addIllnesses(PetServiceModel petService);
+	PetServiceModel addIllness(PetServiceModel petService);
 	
 	List<PetServiceModel> getAllPetsByOwner(UserServiceModel userService);
 	
 	PetServiceModel getPetByName(String name);
 	
 	PetServiceModel getPetById(String id);
+	
+	Boolean vaccineDateExpired(String id);
 	
 	void deletePet(String id);
 }

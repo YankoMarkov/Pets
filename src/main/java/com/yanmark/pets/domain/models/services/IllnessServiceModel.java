@@ -1,19 +1,19 @@
 package com.yanmark.pets.domain.models.services;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class IllnessServiceModel extends BaseServiceModel {
 	
 	private LocalDate date;
 	private String name;
 	private String description;
-	private List<ImageServiceModel> images;
+	private Set<ImageServiceModel> images;
 	private PetServiceModel pet;
 	
 	public IllnessServiceModel() {
-		this.images = new ArrayList<>();
+		this.images = new HashSet<>();
 	}
 	
 	public LocalDate getDate() {
@@ -40,11 +40,11 @@ public class IllnessServiceModel extends BaseServiceModel {
 		this.description = description;
 	}
 	
-	public List<ImageServiceModel> getImages() {
+	public Set<ImageServiceModel> getImages() {
 		return images;
 	}
 	
-	public void setImages(List<ImageServiceModel> images) {
+	public void setImages(Set<ImageServiceModel> images) {
 		this.images = images;
 	}
 	

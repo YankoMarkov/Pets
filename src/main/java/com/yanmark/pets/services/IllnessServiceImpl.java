@@ -45,6 +45,7 @@ public class IllnessServiceImpl implements IllnessService {
 		IllnessServiceModel illnessServiceModel = this.modelMapper.map(illnessCreate, IllnessServiceModel.class);
 		
 		illnessServiceModel.setPet(petServiceModel);
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate date = LocalDate.parse(illnessCreate.getDate(), formatter);
 		illnessServiceModel.setDate(date);
@@ -56,32 +57,35 @@ public class IllnessServiceImpl implements IllnessService {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 		if (!illnessCreate.getImage().isEmpty()) {
-			illnessServiceModel = this.modelMapper.map(illness, IllnessServiceModel.class);
+			IllnessServiceModel illnessService = this.modelMapper.map(illness, IllnessServiceModel.class);
 			ImageServiceModel imageServiceModel = new ImageServiceModel();
 			imageServiceModel.setImage(this.cloudinaryService.uploadImage(illnessCreate.getImage()));
-			imageServiceModel.setIllness(illnessServiceModel);
+			imageServiceModel.setIllness(illnessService);
 			imageServiceModel = this.imageService.saveImage(imageServiceModel);
 			illnessServiceModel.getImages().add(imageServiceModel);
-			illness = this.modelMapper.map(illnessServiceModel, Illness.class);
-			try {
-				illness = this.illnessRepository.save(illness);
-			} catch (Exception e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
 		}
 		illnessServiceModel = this.modelMapper.map(illness, IllnessServiceModel.class);
 		petServiceModel.getIllnesses().add(illnessServiceModel);
-		this.petService.addIllnesses(petServiceModel);
+		this.petService.addIllness(petServiceModel);
 		return this.modelMapper.map(illness, IllnessServiceModel.class);
 	}
 	
 	@Override
 	public IllnessServiceModel updateIllness(IllnessServiceModel illnessService, IllnessEditBindingModel illnessEdit) throws IOException {
+		DateTimeFormatter stringFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		String illnessDate = illnessService.getDate().format(stringFormatter);
+		
 		if (!illnessService.getName().equals(illnessEdit.getName())) {
 			illnessService.setName(illnessEdit.getName());
 		}
 		if (!illnessService.getDescription().equals(illnessEdit.getDescription())) {
 			illnessService.setDescription(illnessEdit.getDescription());
+		}
+		if (!illnessEdit.getDate().equals("") && !illnessDate.equals(illnessEdit.getDate())) {
+			LocalDate date = LocalDate.parse(illnessEdit.getDate(), dateFormatter);
+			illnessService.setDate(date);
 		}
 		if (!illnessEdit.getImage().isEmpty()) {
 			ImageServiceModel imageServiceModel = new ImageServiceModel();

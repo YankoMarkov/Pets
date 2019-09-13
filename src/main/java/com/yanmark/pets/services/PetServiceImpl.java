@@ -4,12 +4,14 @@ import com.yanmark.pets.domain.entities.Pet;
 import com.yanmark.pets.domain.entities.User;
 import com.yanmark.pets.domain.enums.Gender;
 import com.yanmark.pets.domain.models.bindings.pets.PetCreateBindingModel;
+import com.yanmark.pets.domain.models.bindings.pets.PetEditBindingModel;
 import com.yanmark.pets.domain.models.services.AnimalServiceModel;
 import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.services.UserServiceModel;
 import com.yanmark.pets.repositories.PetRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -80,31 +82,55 @@ public class PetServiceImpl implements PetService {
 	}
 	
 	@Override
-	public PetServiceModel updatePet(PetServiceModel petService, PetCreateBindingModel petCreate) {
-		PetServiceModel petServiceModel = this.modelMapper.map(petCreate, PetServiceModel.class);
-		if (petServiceModel.getAnimal() != null) {
-			petService.setAnimal(petServiceModel.getAnimal());
+	public PetServiceModel updatePet(PetServiceModel petService, PetEditBindingModel petEdit) {
+		DateTimeFormatter stringFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		String castrated = "false";
+		if (petService.isCastrated()) {
+			castrated = "true";
 		}
-		if (!petServiceModel.getName().equals(petService.getName())) {
-			petService.setName(petServiceModel.getName());
+		
+		String birthDate = petService.getBirthDate().format(stringFormatter);
+		String vaccineDate = "";
+		
+		if (petService.getVaccineDate() != null) {
+			vaccineDate = petService.getVaccineDate().format(stringFormatter);
 		}
-		if (petServiceModel.getBirthDate() != null) {
-			petService.setBirthDate(petServiceModel.getBirthDate());
+		if (petEdit.getAnimal() != null && !petService.getAnimal().getId().equals(petEdit.getAnimal())) {
+			AnimalServiceModel animalServiceModel = this.animalService.getAnimalById(petEdit.getAnimal());
+			petService.setAnimal(animalServiceModel);
 		}
-		if (petServiceModel.getVaccineDate() != null) {
-			petService.setVaccineDate(petServiceModel.getVaccineDate());
+		if (!petEdit.getName().equals(petService.getName())) {
+			petService.setName(petEdit.getName());
 		}
-		if (!petServiceModel.getFurColor().equals(petService.getFurColor())) {
-			petService.setFurColor(petServiceModel.getFurColor());
+		if (!petEdit.getBirthDate().equals("") && !birthDate.equals(petEdit.getBirthDate())) {
+			LocalDate date = LocalDate.parse(petEdit.getBirthDate(), dateFormatter);
+			petService.setBirthDate(date);
 		}
-		if (!petServiceModel.getBreed().equals(petService.getBreed())) {
-			petService.setBreed(petServiceModel.getBreed());
+		if (!petEdit.getVaccineDate().equals("") && !vaccineDate.equals(petEdit.getVaccineDate())) {
+			LocalDate date = LocalDate.parse(petEdit.getVaccineDate(), dateFormatter);
+			petService.setVaccineDate(date);
 		}
-		if (petServiceModel.getGender() != null) {
-			petService.setGender(petServiceModel.getGender());
+		if (!petEdit.getFurColor().equals(petService.getFurColor())) {
+			petService.setFurColor(petEdit.getFurColor());
 		}
-		if (petServiceModel.isCastrated()) {
-			petService.setCastrated(true);
+		if (!petEdit.getBreed().equals(petService.getBreed())) {
+			petService.setBreed(petEdit.getBreed());
+		}
+		if (petEdit.getGender() != null && !petEdit.getGender().equalsIgnoreCase(petService.getGender().toString())) {
+			if (petEdit.getGender().equals("male")) {
+				petService.setGender(Gender.MALE);
+			} else {
+				petService.setGender(Gender.FEMALE);
+			}
+		}
+		if (petEdit.getIsCastrated() != null && !castrated.equals(petEdit.getIsCastrated())) {
+			if (petEdit.getIsCastrated().equals("true")) {
+				petService.setCastrated(true);
+			} else {
+				petService.setCastrated(false);
+			}
 		}
 		Pet pet = this.modelMapper.map(petService, Pet.class);
 		try {
@@ -116,7 +142,7 @@ public class PetServiceImpl implements PetService {
 	}
 	
 	@Override
-	public PetServiceModel addIllnesses(PetServiceModel petService) {
+	public PetServiceModel addIllness(PetServiceModel petService) {
 		Pet pet = this.modelMapper.map(petService, Pet.class);
 		try {
 			pet = this.petRepository.save(pet);
@@ -146,6 +172,18 @@ public class PetServiceImpl implements PetService {
 		Pet pet = this.petRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Pet was not found!"));
 		return this.modelMapper.map(pet, PetServiceModel.class);
+	}
+	
+	@Override
+	public Boolean vaccineDateExpired(String id) {
+		boolean result = false;
+		LocalDate date = LocalDate.now().plusDays(5);
+		Pet pet = this.petRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Pet was not found!"));
+		if (pet.getVaccineDate() != null && date.isAfter(pet.getVaccineDate().plusYears(1))) {
+			result = true;
+		}
+		return result;
 	}
 	
 	@Override

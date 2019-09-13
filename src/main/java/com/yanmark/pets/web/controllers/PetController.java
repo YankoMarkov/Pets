@@ -1,6 +1,7 @@
 package com.yanmark.pets.web.controllers;
 
 import com.yanmark.pets.domain.models.bindings.pets.PetCreateBindingModel;
+import com.yanmark.pets.domain.models.bindings.pets.PetEditBindingModel;
 import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.views.pets.PetDetailsViewModel;
 import com.yanmark.pets.domain.models.views.pets.PetEditViewModel;
@@ -82,12 +83,16 @@ public class PetController extends BaseController {
 			petDetailsViewModel.setIsCastrated(petServiceModel.getName() + " is not castrated.");
 		}
 		if (petServiceModel.getVaccineDate() != null) {
+			LocalDate nextVaccine = petServiceModel.getVaccineDate().plusYears(1);
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 			String date = petServiceModel.getVaccineDate().format(formatter);
-			petDetailsViewModel.setVaccineDate(petServiceModel.getName() + " has been vaccinated on " + date);
+			String nextDate = nextVaccine.format(formatter);
+			petDetailsViewModel.setVaccineDate(date);
+			petDetailsViewModel.setNextVaccineDate(nextDate);
 		} else {
 			petDetailsViewModel.setVaccineDate(petServiceModel.getName() + " has not been vaccinated.");
 		}
+		modelAndView.addObject("vaccineDateExpired", this.petService.vaccineDateExpired(id));
 		modelAndView.addObject("pet", petDetailsViewModel);
 		return this.view("/pets/pet-details", modelAndView);
 	}
@@ -113,14 +118,14 @@ public class PetController extends BaseController {
 	
 	@PostMapping("/edit/{id}")
 	@PreAuthorize("isAuthenticated()")
-	public ModelAndView editConfirm(@ModelAttribute("petCreate") PetCreateBindingModel petCreate,
+	public ModelAndView editConfirm(@ModelAttribute("petEdit") PetEditBindingModel petEdit,
 	                                @PathVariable String id,
 	                                BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return view("/pets/edit-pet");
 		}
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
-		this.petService.updatePet(petServiceModel, petCreate);
+		this.petService.updatePet(petServiceModel, petEdit);
 		return redirect("/home");
 	}
 	

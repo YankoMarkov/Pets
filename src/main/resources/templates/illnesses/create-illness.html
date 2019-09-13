@@ -41,6 +41,8 @@
 			<hr class="bg-pets hr-2"/>
 			<div class="button-holder mt-4 d-flex justify-content-center">
 				<button type="submit" class="btn bg-pets text-white">Create</button>
+				<a class="btn btn-dark text-white ml-5" th:href="@{/illnesses/all/{id}(id=${petId})}"
+				   th:text="Cancel"></a>
 			</div>
 		</form>
 		<hr class="bg-pets hr-2 mt-5"/>

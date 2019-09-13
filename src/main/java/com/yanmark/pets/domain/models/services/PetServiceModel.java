@@ -3,8 +3,8 @@ package com.yanmark.pets.domain.models.services;
 import com.yanmark.pets.domain.enums.Gender;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PetServiceModel extends BaseServiceModel {
 	
@@ -17,11 +17,11 @@ public class PetServiceModel extends BaseServiceModel {
 	private Gender gender;
 	private boolean isCastrated;
 	private LocalDate vaccineDate;
-	private List<IllnessServiceModel> illnesses;
+	private Set<IllnessServiceModel> illnesses;
 	private UserServiceModel owner;
 	
 	public PetServiceModel() {
-		this.illnesses = new ArrayList<>();
+		this.illnesses = new HashSet<>();
 	}
 	
 	public String getImage() {
@@ -96,11 +96,11 @@ public class PetServiceModel extends BaseServiceModel {
 		this.vaccineDate = vaccineDate;
 	}
 	
-	public List<IllnessServiceModel> getIllnesses() {
+	public Set<IllnessServiceModel> getIllnesses() {
 		return illnesses;
 	}
 	
-	public void setIllnesses(List<IllnessServiceModel> illnesses) {
+	public void setIllnesses(Set<IllnessServiceModel> illnesses) {
 		this.illnesses = illnesses;
 	}
 	

@@ -44,8 +44,30 @@
 					<td class="col-md-3 text-center">
 						<a th:href="@{/pets/details/{id}(id=${pet.id})}"
 						   class="btn btn-success font-weight-bold text-white">Edit</a>
-						<a th:href="@{/pets/delete/{id}(id=${pet.id})}"
-						   class="btn btn-danger font-weight-bold text-white">Delete</a>
+						<button type="button" class="btn btn-danger font-weight-bold text-white" data-toggle="modal"
+						        data-target="#myModal">
+							Delete
+						</button>
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header justify-content-center">
+										<h4 class="modal-title">Delete Pet</h4>
+									</div>
+									<div class="modal-body">
+										<p>Аre you sure you want to delete <span th:text="${pet.name}"></span>.</p>
+									</div>
+									<div class="modal-footer justify-content-center">
+										<a th:href="@{/pets/delete/{id}(id=${pet.id})}"
+										   class="btn btn-danger font-weight-bold text-white">Yes</a>
+										<a th:href="@{/home}"
+										   class="btn btn-success font-weight-bold text-white">No</a>
+									</div>
+								</div>
+							</div>
+						</div>
+<!--						<a th:href="@{/pets/delete/{id}(id=${pet.id})}"-->
+<!--						   class="btn btn-danger font-weight-bold text-white">Delete1</a>-->
 					</td>
 				</tr>
 			</th:block>

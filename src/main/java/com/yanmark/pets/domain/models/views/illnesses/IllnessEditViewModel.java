@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class IllnessEditViewModel {
 	
 	private String id;
+	private String date;
 	private String name;
 	private String description;
 	private MultipartFile image;
@@ -15,6 +16,14 @@ public class IllnessEditViewModel {
 	
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+	
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 	public String getName() {

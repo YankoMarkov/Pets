@@ -2,8 +2,8 @@ package com.yanmark.pets.domain.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "illnesses")
 public class Illness extends BaseEntity {
@@ -11,11 +11,11 @@ public class Illness extends BaseEntity {
 	private LocalDate date;
 	private String name;
 	private String description;
-	private List<Image> images;
+	private Set<Image> images;
 	private Pet pet;
 	
 	public Illness() {
-		this.images = new ArrayList<>();
+		this.images = new HashSet<>();
 	}
 	
 	@Column(name = "date", nullable = false)
@@ -46,11 +46,11 @@ public class Illness extends BaseEntity {
 	}
 	
 	@OneToMany(targetEntity = Image.class, mappedBy = "illness", cascade = CascadeType.ALL)
-	public List<Image> getImages() {
+	public Set<Image> getImages() {
 		return images;
 	}
 	
-	public void setImages(List<Image> images) {
+	public void setImages(Set<Image> images) {
 		this.images = images;
 	}
 	

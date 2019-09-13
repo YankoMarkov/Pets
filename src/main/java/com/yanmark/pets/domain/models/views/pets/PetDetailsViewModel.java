@@ -9,8 +9,11 @@ public class PetDetailsViewModel {
 	private int ageInYears;
 	private int ageInMonths;
 	private String gender;
+	private String breed;
+	private String furColor;
 	private String isCastrated;
 	private String vaccineDate;
+	private String nextVaccineDate;
 	
 	public String getId() {
 		return id;
@@ -68,6 +71,22 @@ public class PetDetailsViewModel {
 		this.gender = gender;
 	}
 	
+	public String getBreed() {
+		return breed;
+	}
+	
+	public void setBreed(String breed) {
+		this.breed = breed;
+	}
+	
+	public String getFurColor() {
+		return furColor;
+	}
+	
+	public void setFurColor(String furColor) {
+		this.furColor = furColor;
+	}
+	
 	public String getIsCastrated() {
 		return isCastrated;
 	}
@@ -82,5 +101,13 @@ public class PetDetailsViewModel {
 	
 	public void setVaccineDate(String vaccineDate) {
 		this.vaccineDate = vaccineDate;
+	}
+	
+	public String getNextVaccineDate() {
+		return nextVaccineDate;
+	}
+	
+	public void setNextVaccineDate(String nextVaccineDate) {
+		this.nextVaccineDate = nextVaccineDate;
 	}
 }

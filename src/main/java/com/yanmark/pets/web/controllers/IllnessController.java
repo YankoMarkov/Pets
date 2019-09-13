@@ -93,6 +93,7 @@ public class IllnessController extends BaseController {
 	@GetMapping("/details/{id}")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView details(@PathVariable String id,
+	                            @RequestParam("petId") String petId,
 	                            ModelAndView modelAndView) {
 		IllnessServiceModel illnessServiceModel = this.illnessService.getIllnessById(id);
 		IllnessDetailsViewModel illnessDetailsViewModel = this.modelMapper.map(illnessServiceModel, IllnessDetailsViewModel.class);
@@ -100,21 +101,25 @@ public class IllnessController extends BaseController {
 		String date = illnessServiceModel.getDate().format(formatter);
 		illnessDetailsViewModel.setDate(date);
 		if (!illnessServiceModel.getImages().isEmpty()) {
+			illnessDetailsViewModel.setImages(new ArrayList<>());
 			for (ImageServiceModel image : illnessServiceModel.getImages()) {
 				illnessDetailsViewModel.getImages().add(image.getImage());
 			}
 		}
 		modelAndView.addObject("illness", illnessDetailsViewModel);
+		modelAndView.addObject("petId", petId);
 		return this.view("/illnesses/illness-details", modelAndView);
 	}
 	
 	@GetMapping("/edit/{id}")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView edit(@PathVariable String id,
+	                         @RequestParam("petId") String petId,
 	                         ModelAndView modelAndView) {
 		IllnessServiceModel illnessServiceModel = this.illnessService.getIllnessById(id);
 		IllnessEditViewModel illnessEditViewModel = this.modelMapper.map(illnessServiceModel, IllnessEditViewModel.class);
 		modelAndView.addObject("illness", illnessEditViewModel);
+		modelAndView.addObject("petId", petId);
 		return this.view("/illnesses/edit-illness", modelAndView);
 	}
 	

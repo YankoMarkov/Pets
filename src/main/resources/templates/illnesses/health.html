@@ -30,9 +30,9 @@
 					<td class="col-md-4 text-center" th:text="${illness.name}"></td>
 					<td class="col-md-3 text-center" th:text="${illness.date}"></td>
 					<td class="col-md-3 text-center">
-						<a th:href="@{/illnesses/details/{id}(id=${illness.id})}"
+						<a th:href="@{/illnesses/details/{id}(id=${illness.id},petId=${petId})}"
 						   class="btn bg-pets font-weight-bold text-white">Edit</a>
-						<a th:href="@{/illnesses/edit/{id}(id=${illness.id})}"
+						<a th:href="@{/illnesses/edit/{id}(id=${illness.id},petId=${petId})}"
 						   class="btn btn-success font-weight-bold text-white">Update</a>
 					</td>
 				</tr>
@@ -41,6 +41,8 @@
 		</table>
 		<div class="d-flex justify-content-center">
 			<a th:href="@{/illnesses/add/{id}(id=${petId})}" class="btn bg-pets text-white">Add</a>
+			<a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}(id=${petId})}"
+			   th:text="Back"></a>
 		</div>
 		<hr class="bg-pets hr-2 mt-5"/>
 	</main>

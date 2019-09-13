@@ -7,9 +7,18 @@ import javax.validation.constraints.NotNull;
 
 public class IllnessEditBindingModel {
 	
+	private String date;
 	private String name;
 	private String description;
 	private MultipartFile image;
+	
+	public String getDate() {
+		return date;
+	}
+	
+	public void setDate(String date) {
+		this.date = date;
+	}
 	
 	@NotNull(message = "Name cannot be null.")
 	@NotBlank(message = "Name cannot be empty.")

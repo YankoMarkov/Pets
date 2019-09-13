@@ -1,6 +1,6 @@
 package com.yanmark.pets.domain.models.services;
 
-public class ImageServiceModel {
+public class ImageServiceModel extends BaseServiceModel {
 	
 	private String image;
 	private IllnessServiceModel illness;

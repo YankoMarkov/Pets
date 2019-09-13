@@ -4,8 +4,8 @@ import com.yanmark.pets.domain.enums.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "pets")
 public class Pet extends BaseEntity {
@@ -19,11 +19,11 @@ public class Pet extends BaseEntity {
 	private Gender gender;
 	private boolean isCastrated;
 	private LocalDate vaccineDate;
-	private List<Illness> illnesses;
+	private Set<Illness> illnesses;
 	private User owner;
 	
 	public Pet() {
-		this.illnesses = new ArrayList<>();
+		this.illnesses = new HashSet<>();
 	}
 	
 	@Column(name = "image", nullable = false)
@@ -72,7 +72,7 @@ public class Pet extends BaseEntity {
 		this.breed = breed;
 	}
 	
-	@Column(name = "fur_color")
+	@Column(name = "fur_color", nullable = false)
 	public String getFurColor() {
 		return furColor;
 	}
@@ -110,11 +110,11 @@ public class Pet extends BaseEntity {
 	}
 	
 	@OneToMany(targetEntity = Illness.class, mappedBy = "pet", cascade = CascadeType.ALL)
-	public List<Illness> getIllnesses() {
+	public Set<Illness> getIllnesses() {
 		return illnesses;
 	}
 	
-	public void setIllnesses(List<Illness> illnesses) {
+	public void setIllnesses(Set<Illness> illnesses) {
 		this.illnesses = illnesses;
 	}
 	
