@@ -29,12 +29,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 public class UserController extends BaseController {
 	
-	private static final String USERS_REGISTER = "/users/register";
-	private static final String USERS_LOGIN = "/users/login";
-	private static final String USERS_PROFILE = "/users/profile";
-	private static final String USERS_EDIT_PROFILE = "/users/edit-profile";
-	private static final String USERS_ALL_USERS = "/users/all-users";
-	private static final String USERS_ALL = "/users/all";
+	private static final String USERS_REGISTER = "users/register";
+	private static final String USERS_LOGIN = "users/login";
+	private static final String USERS_PROFILE = "users/profile";
+	private static final String USERS_EDIT_PROFILE = "users/edit-profile";
+	private static final String USERS_ALL_USERS = "users/all-users";
+	private static final String USERS_ALL = "users/all";
 	
 	private final UserService userService;
 	private final UserRoleService userRoleService;
