@@ -6,12 +6,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.6.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.yanmark</groupId>
     <artifactId>pets</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
     <name>pets</name>
     <description>pets web site</description>
 
