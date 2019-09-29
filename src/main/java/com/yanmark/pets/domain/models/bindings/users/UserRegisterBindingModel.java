@@ -24,6 +24,7 @@ public class UserRegisterBindingModel {
 
     @NotNull(message = "Password cannot be null.")
     @NotBlank(message = "Password cannot be empty.")
+    @Size(min = 6, message = "Password must be minimum 6 symbols.")
     public String getPassword() {
         return this.password;
     }
@@ -34,6 +35,7 @@ public class UserRegisterBindingModel {
 
     @NotNull(message = "Confirm Password cannot be null.")
     @NotBlank(message = "Confirm Password cannot be empty.")
+    @Size(min = 6, message = "Confirm Password must be minimum 6 symbols.")
     public String getConfirmPassword() {
         return this.confirmPassword;
     }
