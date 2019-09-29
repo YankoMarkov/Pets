@@ -23,7 +23,7 @@ public class AnimalController extends BaseController {
 	
 	private static final String ALL_ANIMALS = "animals/all-animals";
 	private static final String CREATE_ANIMAL = "animals/create-animal";
-	private static final String HOME = "home";
+	private static final String HOME = "/home";
 	private static final String EDIT_ANIMAL = "animals/edit-animal";
 	
 	private final AnimalService animalService;

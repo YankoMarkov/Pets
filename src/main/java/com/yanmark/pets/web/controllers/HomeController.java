@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Controller
 public class HomeController extends BaseController {
 	
+	private static final String HOMES = "/home";
 	private static final String HOME = "home";
 	private static final String INDEX = "index";
 	
@@ -42,7 +43,7 @@ public class HomeController extends BaseController {
 	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6F\uD835\uDD8E\uD835\uDD86\uD835\uDD97\uD835\uDD9E")
 	ModelAndView index(Principal principal) {
 		if (principal != null) {
-			return this.redirect(HOME);
+			return this.redirect(HOMES);
 		}
 		return this.view(INDEX);
 	}

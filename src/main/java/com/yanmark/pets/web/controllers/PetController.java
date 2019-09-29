@@ -26,7 +26,7 @@ import java.time.temporal.ChronoUnit;
 @RequestMapping("/pets")
 public class PetController extends BaseController {
 	
-	private static final String HOME = "home";
+	private static final String HOME = "/home";
 	private static final String EDIT_PET = "pets/edit-pet";
 	private static final String CREATE_PET = "pets/create-pet";
 	private static final String CASTRATED = " is castrated.";

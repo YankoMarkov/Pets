@@ -30,8 +30,10 @@ import java.util.stream.Collectors;
 public class UserController extends BaseController {
 	
 	private static final String REGISTER = "users/register";
-	private static final String LOGIN = "users/login";
+	private static final String LOGIN = "/users/login";
+	private static final String LOGINS = "users/login";
 	private static final String PROFILE = "users/profile";
+	private static final String PROFILES = "/users/profile";
 	private static final String EDIT_PROFILE = "users/edit-profile";
 	private static final String ALL_USERS = "users/all-users";
 	private static final String ALL = "/users/all";
@@ -75,7 +77,7 @@ public class UserController extends BaseController {
 	@PreAuthorize("isAnonymous()")
 	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97 \uD835\uDD77\uD835\uDD94\uD835\uDD8C\uD835\uDD8E\uD835\uDD93")
 	public ModelAndView login(@ModelAttribute("userLogin") UserLoginBindingModel userLogin) {
-		return this.view(LOGIN);
+		return this.view(LOGINS);
 	}
 	
 	@GetMapping("/profile")
@@ -113,7 +115,7 @@ public class UserController extends BaseController {
 		}
 		UserServiceModel userServiceModel = this.modelMapper.map(userEdit, UserServiceModel.class);
 		this.userService.updateUser(userServiceModel, userEdit);
-		return this.redirect(PROFILE);
+		return this.redirect(PROFILES);
 	}
 	
 	@GetMapping("/all")
