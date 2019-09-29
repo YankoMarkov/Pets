@@ -17,7 +17,7 @@ public class TitleInterceptor extends HandlerInterceptorAdapter {
                            HttpServletResponse response,
                            Object handler,
                            ModelAndView modelAndView) {
-        String title = "\uD835\uDC40\uD835\uDC9C\uD835\uDC45\uD835\uDCA6\uD835\uDCAA\uD835\uDCA9\uD835\uDC3C";
+        String title = "\uD835\uDD7B\uD835\uDD8A\uD835\uDD99\uD835\uDD98";
 
         if (modelAndView == null) {
             modelAndView = new ModelAndView();
