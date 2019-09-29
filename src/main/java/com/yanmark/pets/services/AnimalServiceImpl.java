@@ -14,6 +14,10 @@ import java.util.stream.Collectors;
 @Service
 public class AnimalServiceImpl implements AnimalService {
 	
+	private static final String ANIMAL_NAME_ALREADY_EXIST = "Animal with this name already exist!";
+	private static final String ANIMAL_ID_WAS_NOT_FOUND = "Animal with this id was not found!";
+	private static final String ANIMAL_NAME_WAS_NOT_FOUND = "Animal with this name was not found!";
+	
 	private final AnimalRepository animalRepository;
 	private final ModelMapper modelMapper;
 	
@@ -29,7 +33,7 @@ public class AnimalServiceImpl implements AnimalService {
 		Animal checkAnimal = this.animalRepository.findByName(animalService.getName())
 				.orElse(null);
 		if (checkAnimal != null) {
-			throw new IllegalArgumentException("Animal with this name already exist!");
+			throw new IllegalArgumentException(ANIMAL_NAME_ALREADY_EXIST);
 		}
 		Animal animal = this.modelMapper.map(animalService, Animal.class);
 		try {
@@ -43,7 +47,7 @@ public class AnimalServiceImpl implements AnimalService {
 	@Override
 	public AnimalServiceModel editAnimal(AnimalCreateBindingModel animalCreate, String id) {
 		Animal animal = this.animalRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Animal with this id was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(ANIMAL_ID_WAS_NOT_FOUND));
 		AnimalServiceModel animalServiceModel = this.modelMapper.map(animal, AnimalServiceModel.class);
 		animalServiceModel.setName(animalCreate.getName());
 		return saveAnimal(animalServiceModel);
@@ -61,14 +65,14 @@ public class AnimalServiceImpl implements AnimalService {
 	@Override
 	public AnimalServiceModel getAnimalById(String id) {
 		Animal animal = this.animalRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Animal with this id was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(ANIMAL_ID_WAS_NOT_FOUND));
 		return this.modelMapper.map(animal, AnimalServiceModel.class);
 	}
 	
 	@Override
 	public AnimalServiceModel getAnimalByName(String name) {
 		Animal animal = this.animalRepository.findByName(name)
-				.orElseThrow(() -> new IllegalArgumentException("Animal with this name was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(ANIMAL_NAME_WAS_NOT_FOUND));
 		return this.modelMapper.map(animal, AnimalServiceModel.class);
 		
 	}

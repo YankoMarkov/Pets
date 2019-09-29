@@ -12,27 +12,29 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
-
-    private final UserRoleRepository userRoleRepository;
-    private final ModelMapper modelMapper;
-
-    @Autowired
-    public UserRoleServiceImpl(UserRoleRepository userRoleRepository, ModelMapper modelMapper) {
-        this.userRoleRepository = userRoleRepository;
-        this.modelMapper = modelMapper;
-    }
-
-    @Override
-    public UserRoleServiceModel getRoleByName(String name) {
-        UserRole role = this.userRoleRepository.findByAuthority(name)
-                .orElseThrow(() -> new IllegalArgumentException("Role was not found!"));
-        return this.modelMapper.map(role, UserRoleServiceModel.class);
-    }
-
-    @Override
-    public Set<UserRoleServiceModel> getAllRoles() {
-        return this.userRoleRepository.findAll().stream()
-                .map(role -> this.modelMapper.map(role, UserRoleServiceModel.class))
-                .collect(Collectors.toUnmodifiableSet());
-    }
+	
+	private static final String ROLE_NOT_FOUND = "Role was not found!";
+	
+	private final UserRoleRepository userRoleRepository;
+	private final ModelMapper modelMapper;
+	
+	@Autowired
+	public UserRoleServiceImpl(UserRoleRepository userRoleRepository, ModelMapper modelMapper) {
+		this.userRoleRepository = userRoleRepository;
+		this.modelMapper = modelMapper;
+	}
+	
+	@Override
+	public UserRoleServiceModel getRoleByName(String name) {
+		UserRole role = this.userRoleRepository.findByAuthority(name)
+				.orElseThrow(() -> new IllegalArgumentException(ROLE_NOT_FOUND));
+		return this.modelMapper.map(role, UserRoleServiceModel.class);
+	}
+	
+	@Override
+	public Set<UserRoleServiceModel> getAllRoles() {
+		return this.userRoleRepository.findAll().stream()
+				.map(role -> this.modelMapper.map(role, UserRoleServiceModel.class))
+				.collect(Collectors.toUnmodifiableSet());
+	}
 }

@@ -11,7 +11,6 @@ import com.yanmark.pets.domain.models.services.UserServiceModel;
 import com.yanmark.pets.repositories.PetRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,6 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class PetServiceImpl implements PetService {
+	
+	private static final String PET_NOT_FOUND = "Pet was not found!";
 	
 	private final ModelMapper modelMapper;
 	private final PetRepository petRepository;
@@ -163,14 +164,14 @@ public class PetServiceImpl implements PetService {
 	@Override
 	public PetServiceModel getPetByName(String name) {
 		Pet pet = this.petRepository.getByName(name)
-				.orElseThrow(() -> new IllegalArgumentException("Pet was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(PET_NOT_FOUND));
 		return this.modelMapper.map(pet, PetServiceModel.class);
 	}
 	
 	@Override
 	public PetServiceModel getPetById(String id) {
 		Pet pet = this.petRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Pet was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(PET_NOT_FOUND));
 		return this.modelMapper.map(pet, PetServiceModel.class);
 	}
 	
@@ -179,7 +180,7 @@ public class PetServiceImpl implements PetService {
 		boolean result = false;
 		LocalDate date = LocalDate.now().plusDays(5);
 		Pet pet = this.petRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Pet was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(PET_NOT_FOUND));
 		if (pet.getVaccineDate() != null && date.isAfter(pet.getVaccineDate().plusYears(1))) {
 			result = true;
 		}

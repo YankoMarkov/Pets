@@ -19,6 +19,8 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class IllnessServiceImpl implements IllnessService {
 	
+	private static final String ILLNESS_NOT_FOUND = "Illness was not found!";
+	
 	private final IllnessRepository illnessRepository;
 	private final ImageService imageService;
 	private final PetService petService;
@@ -106,7 +108,7 @@ public class IllnessServiceImpl implements IllnessService {
 	@Override
 	public IllnessServiceModel getIllnessById(String id) {
 		Illness illness = this.illnessRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Illness was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(ILLNESS_NOT_FOUND));
 		return this.modelMapper.map(illness, IllnessServiceModel.class);
 	}
 	
@@ -114,7 +116,7 @@ public class IllnessServiceImpl implements IllnessService {
 	public IllnessServiceModel getIllnessByPet(PetServiceModel petService) {
 		Pet pet = this.modelMapper.map(petService, Pet.class);
 		Illness illness = this.illnessRepository.findByPet(pet)
-				.orElseThrow(() -> new IllegalArgumentException("Illness was not found!"));
+				.orElseThrow(() -> new IllegalArgumentException(ILLNESS_NOT_FOUND));
 		return this.modelMapper.map(illness, IllnessServiceModel.class);
 	}
 }
