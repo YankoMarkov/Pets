@@ -51,7 +51,7 @@ public class UserController extends BaseController {
 	
 	@GetMapping("/register")
 	@PreAuthorize("isAnonymous()")
-	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD7D\uD835\uDD8A\uD835\uDD8C\uD835\uDD8E\uD835\uDD98\uD835\uDD99\uD835\uDD8A\uD835\uDD97")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97 \uD835\uDD7D\uD835\uDD8A\uD835\uDD8C\uD835\uDD8E\uD835\uDD98\uD835\uDD99\uD835\uDD8A\uD835\uDD97")
 	public ModelAndView register(@ModelAttribute("userRegister") UserRegisterBindingModel userRegister) {
 		return this.view(REGISTER);
 	}
@@ -73,14 +73,14 @@ public class UserController extends BaseController {
 	
 	@GetMapping("/login")
 	@PreAuthorize("isAnonymous()")
-	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD77\uD835\uDD94\uD835\uDD8C\uD835\uDD8E\uD835\uDD93")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97 \uD835\uDD77\uD835\uDD94\uD835\uDD8C\uD835\uDD8E\uD835\uDD93")
 	public ModelAndView login(@ModelAttribute("userLogin") UserLoginBindingModel userLogin) {
 		return this.view(LOGIN);
 	}
 	
 	@GetMapping("/profile")
 	@PreAuthorize("isAuthenticated()")
-	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD7B\uD835\uDD97\uD835\uDD94\uD835\uDD8B\uD835\uDD8E\uD835\uDD91\uD835\uDD8A")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97 \uD835\uDD77\uD835\uDD94\uD835\uDD8C\uD835\uDD8E\uD835\uDD93")
 	public ModelAndView profile(Principal principal,
 	                            ModelAndView modelAndView) {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
@@ -91,7 +91,7 @@ public class UserController extends BaseController {
 	
 	@GetMapping("/edit")
 	@PreAuthorize("isAuthenticated()")
-	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
 	public ModelAndView edit(Principal principal,
 	                         @ModelAttribute("userEdit") UserEditBindingModel userEdit,
 	                         ModelAndView modelAndView) {
@@ -118,7 +118,7 @@ public class UserController extends BaseController {
 	
 	@GetMapping("/all")
 	@PreAuthorize("hasAuthority('ROOT')")
-	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD6C\uD835\uDD91\uD835\uDD91")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97 \uD835\uDD6C\uD835\uDD91\uD835\uDD91")
 	public ModelAndView usersAll(@ModelAttribute("allUsers") UserAllViewModel allUsers,
 	                             ModelAndView modelAndView) {
 		List<UserServiceModel> userServiceModels = this.userService.getAllUsers();
