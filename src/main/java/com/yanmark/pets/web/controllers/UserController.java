@@ -29,12 +29,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 public class UserController extends BaseController {
 	
-	private static final String USERS_REGISTER = "users/register";
-	private static final String USERS_LOGIN = "users/login";
-	private static final String USERS_PROFILE = "users/profile";
-	private static final String USERS_EDIT_PROFILE = "users/edit-profile";
-	private static final String USERS_ALL_USERS = "users/all-users";
-	private static final String USERS_ALL = "users/all";
+	private static final String REGISTER = "users/register";
+	private static final String LOGIN = "users/login";
+	private static final String PROFILE = "users/profile";
+	private static final String EDIT_PROFILE = "users/edit-profile";
+	private static final String ALL_USERS = "users/all-users";
+	private static final String ALL = "/users/all";
 	
 	private final UserService userService;
 	private final UserRoleService userRoleService;
@@ -51,9 +51,9 @@ public class UserController extends BaseController {
 	
 	@GetMapping("/register")
 	@PreAuthorize("isAnonymous()")
-	@PageTitle("\uD835\uDCB0\uD835\uDCC8\uD835\uDC52\uD835\uDCC7 \uD835\uDC45\uD835\uDC52\uD835\uDC54\uD835\uDCBE\uD835\uDCC8\uD835\uDCC9\uD835\uDC52\uD835\uDCC7")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD7D\uD835\uDD8A\uD835\uDD8C\uD835\uDD8E\uD835\uDD98\uD835\uDD99\uD835\uDD8A\uD835\uDD97")
 	public ModelAndView register(@ModelAttribute("userRegister") UserRegisterBindingModel userRegister) {
-		return this.view(USERS_REGISTER);
+		return this.view(REGISTER);
 	}
 	
 	@PostMapping("/register")
@@ -61,44 +61,44 @@ public class UserController extends BaseController {
 	public ModelAndView registerConfirm(@Valid @ModelAttribute("userRegister") UserRegisterBindingModel userRegister,
 	                                    BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return this.view(USERS_REGISTER);
+			return this.view(REGISTER);
 		}
 		if (!userRegister.getPassword().equals(userRegister.getConfirmPassword())) {
-			return this.view(USERS_REGISTER);
+			return this.view(REGISTER);
 		}
 		UserServiceModel userServiceModel = this.modelMapper.map(userRegister, UserServiceModel.class);
 		this.userService.saveUser(userServiceModel);
-		return this.redirect(USERS_LOGIN);
+		return this.redirect(LOGIN);
 	}
 	
 	@GetMapping("/login")
 	@PreAuthorize("isAnonymous()")
-	@PageTitle("\uD835\uDCB0\uD835\uDCC8\uD835\uDC52\uD835\uDCC7 \uD835\uDC3F\uD835\uDC5C\uD835\uDC54\uD835\uDCBE\uD835\uDCC3")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD77\uD835\uDD94\uD835\uDD8C\uD835\uDD8E\uD835\uDD93")
 	public ModelAndView login(@ModelAttribute("userLogin") UserLoginBindingModel userLogin) {
-		return this.view(USERS_LOGIN);
+		return this.view(LOGIN);
 	}
 	
 	@GetMapping("/profile")
 	@PreAuthorize("isAuthenticated()")
-	@PageTitle("\uD835\uDCB0\uD835\uDCC8\uD835\uDC52\uD835\uDCC7 \uD835\uDCAB\uD835\uDCC7\uD835\uDC5C\uD835\uDCBB\uD835\uDCBE\uD835\uDCC1\uD835\uDC52")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD7B\uD835\uDD97\uD835\uDD94\uD835\uDD8B\uD835\uDD8E\uD835\uDD91\uD835\uDD8A")
 	public ModelAndView profile(Principal principal,
 	                            ModelAndView modelAndView) {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
 		UserProfileViewModel userProfileViewModel = this.modelMapper.map(userServiceModel, UserProfileViewModel.class);
 		modelAndView.addObject("userProfile", userProfileViewModel);
-		return this.view(USERS_PROFILE, modelAndView);
+		return this.view(PROFILE, modelAndView);
 	}
 	
 	@GetMapping("/edit")
 	@PreAuthorize("isAuthenticated()")
-	@PageTitle("\uD835\uDCB0\uD835\uDCC8\uD835\uDC52\uD835\uDCC7 \uD835\uDC38\uD835\uDCB9\uD835\uDCBE\uD835\uDCC9")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
 	public ModelAndView edit(Principal principal,
 	                         @ModelAttribute("userEdit") UserEditBindingModel userEdit,
 	                         ModelAndView modelAndView) {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
 		UserProfileViewModel userProfileViewModel = this.modelMapper.map(userServiceModel, UserProfileViewModel.class);
 		modelAndView.addObject("user", userProfileViewModel);
-		return this.view(USERS_EDIT_PROFILE, modelAndView);
+		return this.view(EDIT_PROFILE, modelAndView);
 	}
 	
 	@PostMapping("/edit")
@@ -106,19 +106,19 @@ public class UserController extends BaseController {
 	public ModelAndView editConfirm(@Valid @ModelAttribute("userEdit") UserEditBindingModel userEdit,
 	                                BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return this.view(USERS_EDIT_PROFILE);
+			return this.view(EDIT_PROFILE);
 		}
 		if (!userEdit.getNewPassword().equals(userEdit.getConfirmNewPassword())) {
-			return this.view(USERS_EDIT_PROFILE);
+			return this.view(EDIT_PROFILE);
 		}
 		UserServiceModel userServiceModel = this.modelMapper.map(userEdit, UserServiceModel.class);
 		this.userService.updateUser(userServiceModel, userEdit);
-		return this.redirect(USERS_PROFILE);
+		return this.redirect(PROFILE);
 	}
 	
 	@GetMapping("/all")
 	@PreAuthorize("hasAuthority('ROOT')")
-	@PageTitle("\uD835\uDC9C\uD835\uDCC1\uD835\uDCC1 \uD835\uDCB0\uD835\uDCC8\uD835\uDC52\uD835\uDCC7\uD835\uDCC8")
+	@PageTitle("\uD835\uDD80\uD835\uDD98\uD835\uDD8A\uD835\uDD97\uD835\uDD98 \uD835\uDD6C\uD835\uDD91\uD835\uDD91")
 	public ModelAndView usersAll(@ModelAttribute("allUsers") UserAllViewModel allUsers,
 	                             ModelAndView modelAndView) {
 		List<UserServiceModel> userServiceModels = this.userService.getAllUsers();
@@ -134,7 +134,7 @@ public class UserController extends BaseController {
 				.collect(Collectors.toList());
 		
 		modelAndView.addObject("allUsers", usersViewModels);
-		return this.view(USERS_ALL_USERS, modelAndView);
+		return this.view(ALL_USERS, modelAndView);
 	}
 	
 	@PostMapping("/changeRole")
@@ -143,15 +143,15 @@ public class UserController extends BaseController {
 	                               @Valid @ModelAttribute("role") RoleViewModel role,
 	                               BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return this.view(USERS_ALL_USERS);
+			return this.view(ALL_USERS);
 		}
 		UserServiceModel userServiceModel = this.userService.getUserById(id);
 		if (userServiceModel.getAuthorities().stream()
 				.anyMatch(auth -> auth.getAuthority().equals("ROOT"))) {
-			return this.redirect(USERS_ALL);
+			return this.redirect(ALL);
 		}
 		UserRoleServiceModel userRoleServiceModel = this.userRoleService.getRoleByName(role.getAuthority());
 		this.userService.updateUsersRole(userServiceModel, userRoleServiceModel);
-		return this.redirect(USERS_ALL);
+		return this.redirect(ALL);
 	}
 }

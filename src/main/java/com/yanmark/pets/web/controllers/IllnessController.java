@@ -28,6 +28,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/illnesses")
 public class IllnessController extends BaseController {
 	
+	private static final String HEALTH = "illnesses/health";
+	private static final String CREATE_ILLNESS = "illnesses/create-illness";
+	private static final String ALL = "/illnesses/all/";
+	private static final String ILLNESS_DETAILS = "illnesses/illness-details";
+	private static final String EDIT_ILLNESS = "illnesses/edit-illness";
+	
 	private final IllnessService illnessService;
 	private final PetService petService;
 	private final ModelMapper modelMapper;
@@ -60,7 +66,7 @@ public class IllnessController extends BaseController {
 		}
 		modelAndView.addObject("illnesses", illnessViewModels);
 		modelAndView.addObject("petId", id);
-		return view("/illnesses/health", modelAndView);
+		return view(HEALTH, modelAndView);
 	}
 	
 	@GetMapping("/add/{id}")
@@ -69,7 +75,7 @@ public class IllnessController extends BaseController {
 	                        @ModelAttribute("illnessCreate") IllnessCreateBindingModel illnessCreate,
 	                        ModelAndView modelAndView) {
 		modelAndView.addObject("petId", id);
-		return this.view("/illnesses/create-illness", modelAndView);
+		return this.view(CREATE_ILLNESS, modelAndView);
 	}
 	
 	@PostMapping("/add/{id}")
@@ -80,14 +86,14 @@ public class IllnessController extends BaseController {
 	                               ModelAndView modelAndView) {
 		modelAndView.addObject("petId", id);
 		if (bindingResult.hasErrors()) {
-			return this.view("/illnesses/create-illness", modelAndView);
+			return this.view(CREATE_ILLNESS, modelAndView);
 		}
 		try {
 			this.illnessService.saveIllness(illnessCreate, id);
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		return this.redirect("/illnesses/all/" + id);
+		return this.redirect(ALL + id);
 	}
 	
 	@GetMapping("/details/{id}")
@@ -108,7 +114,7 @@ public class IllnessController extends BaseController {
 		}
 		modelAndView.addObject("illness", illnessDetailsViewModel);
 		modelAndView.addObject("petId", petId);
-		return this.view("/illnesses/illness-details", modelAndView);
+		return this.view(ILLNESS_DETAILS, modelAndView);
 	}
 	
 	@GetMapping("/edit/{id}")
@@ -120,7 +126,7 @@ public class IllnessController extends BaseController {
 		IllnessEditViewModel illnessEditViewModel = this.modelMapper.map(illnessServiceModel, IllnessEditViewModel.class);
 		modelAndView.addObject("illness", illnessEditViewModel);
 		modelAndView.addObject("petId", petId);
-		return this.view("/illnesses/edit-illness", modelAndView);
+		return this.view(EDIT_ILLNESS, modelAndView);
 	}
 	
 	@PostMapping("/edit/{id}")
@@ -129,7 +135,7 @@ public class IllnessController extends BaseController {
 	                                @ModelAttribute("illnessEdit") IllnessEditBindingModel illnessEdit,
 	                                BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return view("/illnesses/edit-illness");
+			return view(EDIT_ILLNESS);
 		}
 		IllnessServiceModel illnessServiceModel = this.illnessService.getIllnessById(id);
 		try {
@@ -137,6 +143,6 @@ public class IllnessController extends BaseController {
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		return this.redirect("/illnesses/all/" + illnessServiceModel.getPet().getId());
+		return this.redirect(ALL + illnessServiceModel.getPet().getId());
 	}
 }

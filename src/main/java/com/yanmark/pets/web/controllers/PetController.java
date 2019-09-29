@@ -25,6 +25,14 @@ import java.time.temporal.ChronoUnit;
 @RequestMapping("/pets")
 public class PetController extends BaseController {
 	
+	private static final String HOME = "home";
+	private static final String EDIT_PET = "pets/edit-pet";
+	private static final String CREATE_PET = "pets/create-pet";
+	private static final String CASTRATED = " is castrated.";
+	private static final String NOT_CASTRATED = " is not castrated.";
+	private static final String NOT_BEEN_VACCINATED = " has not been vaccinated.";
+	private static final String PET_DETAILS = "pets/pet-details";
+	
 	private final PetService petService;
 	private final ModelMapper modelMapper;
 	private final UserService userService;
@@ -41,7 +49,7 @@ public class PetController extends BaseController {
 	@GetMapping("/add")
 	@PreAuthorize("isAuthenticated()")
 	ModelAndView create(@ModelAttribute("petCreate") PetCreateBindingModel petCreate) {
-		return this.view("/pets/create-pet");
+		return this.view(CREATE_PET);
 	}
 	
 	@PostMapping("/add")
@@ -50,10 +58,10 @@ public class PetController extends BaseController {
 	                           BindingResult bindingResult,
 	                           Principal principal) {
 		if (bindingResult.hasErrors()) {
-			return view("/pets/create-pet");
+			return view(CREATE_PET);
 		}
 		if (petCreate.getImage().isEmpty()) {
-			return view("/pets/create-pet");
+			return view(CREATE_PET);
 		}
 		PetServiceModel petServiceModel = this.modelMapper.map(petCreate, PetServiceModel.class);
 		try {
@@ -61,7 +69,7 @@ public class PetController extends BaseController {
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		return this.redirect("/home");
+		return this.redirect(HOME);
 	}
 	
 	@GetMapping("/details/{id}")
@@ -78,9 +86,9 @@ public class PetController extends BaseController {
 		petDetailsViewModel.setGender(petServiceModel.getGender().getGender());
 		petDetailsViewModel.setAnimal(petServiceModel.getAnimal().getName());
 		if (petServiceModel.isCastrated()) {
-			petDetailsViewModel.setIsCastrated(petServiceModel.getName() + " is castrated.");
+			petDetailsViewModel.setIsCastrated(petServiceModel.getName() + CASTRATED);
 		} else {
-			petDetailsViewModel.setIsCastrated(petServiceModel.getName() + " is not castrated.");
+			petDetailsViewModel.setIsCastrated(petServiceModel.getName() + NOT_CASTRATED);
 		}
 		if (petServiceModel.getVaccineDate() != null) {
 			LocalDate nextVaccine = petServiceModel.getVaccineDate().plusYears(1);
@@ -90,11 +98,11 @@ public class PetController extends BaseController {
 			petDetailsViewModel.setVaccineDate(date);
 			petDetailsViewModel.setNextVaccineDate(nextDate);
 		} else {
-			petDetailsViewModel.setVaccineDate(petServiceModel.getName() + " has not been vaccinated.");
+			petDetailsViewModel.setVaccineDate(petServiceModel.getName() + NOT_BEEN_VACCINATED);
 		}
 		modelAndView.addObject("vaccineDateExpired", this.petService.vaccineDateExpired(id));
 		modelAndView.addObject("pet", petDetailsViewModel);
-		return this.view("/pets/pet-details", modelAndView);
+		return this.view(PET_DETAILS, modelAndView);
 	}
 	
 	@GetMapping("/edit/{id}")
@@ -113,7 +121,7 @@ public class PetController extends BaseController {
 		}
 		petEditViewModel.setGender(petServiceModel.getGender().getGender());
 		modelAndView.addObject("pet", petEditViewModel);
-		return view("/pets/edit-pet", modelAndView);
+		return view(EDIT_PET, modelAndView);
 	}
 	
 	@PostMapping("/edit/{id}")
@@ -122,17 +130,17 @@ public class PetController extends BaseController {
 	                                @PathVariable String id,
 	                                BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return view("/pets/edit-pet");
+			return view(EDIT_PET);
 		}
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
 		this.petService.updatePet(petServiceModel, petEdit);
-		return redirect("/home");
+		return redirect(HOME);
 	}
 	
 	@GetMapping("/delete/{id}")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView delete(@PathVariable String id) {
 		this.petService.deletePet(id);
-		return redirect("/home");
+		return redirect(HOME);
 	}
 }

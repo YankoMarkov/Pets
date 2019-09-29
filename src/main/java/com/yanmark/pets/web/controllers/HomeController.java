@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 @Controller
 public class HomeController extends BaseController {
 	
+	private static final String HOME = "home";
+	private static final String INDEX = "index";
+	
 	private final HomeService homeService;
 	private final AnimalService animalService;
 	private final ModelMapper modelMapper;
@@ -39,9 +42,9 @@ public class HomeController extends BaseController {
 	@PageTitle("\uD835\uDC3C\uD835\uDCC3\uD835\uDCB9\uD835\uDC52\uD835\uDCCD")
 	ModelAndView index(Principal principal) {
 		if (principal != null) {
-			return this.redirect("/home");
+			return this.redirect(HOME);
 		}
-		return this.view("index");
+		return this.view(INDEX);
 	}
 	
 	@GetMapping("/home")
@@ -69,6 +72,6 @@ public class HomeController extends BaseController {
 						.collect(Collectors.toList());
 		modelAndView.addObject("animals", animalViewModels);
 		modelAndView.addObject("pets", petHomeViewModels);
-		return this.view("home", modelAndView);
+		return this.view(HOME, modelAndView);
 	}
 }
