@@ -39,7 +39,7 @@ public class HomeController extends BaseController {
 	}
 	
 	@GetMapping("/")
-	@PageTitle("\uD835\uDC3C\uD835\uDCC3\uD835\uDCB9\uD835\uDC52\uD835\uDCCD")
+	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6F\uD835\uDD8E\uD835\uDD86\uD835\uDD97\uD835\uDD9E")
 	ModelAndView index(Principal principal) {
 		if (principal != null) {
 			return this.redirect(HOME);
@@ -49,7 +49,7 @@ public class HomeController extends BaseController {
 	
 	@GetMapping("/home")
 	@PreAuthorize("isAuthenticated()")
-	@PageTitle("\uD835\uDC3C\uD835\uDCC3\uD835\uDCB9\uD835\uDC52\uD835\uDCCD")
+	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6F\uD835\uDD8E\uD835\uDD86\uD835\uDD97\uD835\uDD9E")
 	ModelAndView home(ModelAndView modelAndView,
 	                  Principal principal,
 	                  @RequestParam(required = false) String animalId) {
