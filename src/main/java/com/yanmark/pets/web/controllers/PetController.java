@@ -7,6 +7,7 @@ import com.yanmark.pets.domain.models.views.pets.PetDetailsViewModel;
 import com.yanmark.pets.domain.models.views.pets.PetEditViewModel;
 import com.yanmark.pets.services.PetService;
 import com.yanmark.pets.services.UserService;
+import com.yanmark.pets.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,6 +48,7 @@ public class PetController extends BaseController {
 	}
 	
 	@GetMapping("/add")
+	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6C\uD835\uDD89\uD835\uDD89")
 	@PreAuthorize("isAuthenticated()")
 	ModelAndView create(@ModelAttribute("petCreate") PetCreateBindingModel petCreate) {
 		return this.view(CREATE_PET);
@@ -73,6 +75,7 @@ public class PetController extends BaseController {
 	}
 	
 	@GetMapping("/details/{id}")
+	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6F\uD835\uDD8A\uD835\uDD99\uD835\uDD86\uD835\uDD8E\uD835\uDD91\uD835\uDD98")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView details(@PathVariable String id,
 	                            ModelAndView modelAndView) {
@@ -106,6 +109,7 @@ public class PetController extends BaseController {
 	}
 	
 	@GetMapping("/edit/{id}")
+	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView edit(@PathVariable String id,
 	                         ModelAndView modelAndView) {
@@ -138,6 +142,7 @@ public class PetController extends BaseController {
 	}
 	
 	@GetMapping("/delete/{id}")
+	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6F\uD835\uDD8A\uD835\uDD91\uD835\uDD8A\uD835\uDD99\uD835\uDD8A")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView delete(@PathVariable String id) {
 		this.petService.deletePet(id);

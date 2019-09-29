@@ -10,6 +10,7 @@ import com.yanmark.pets.domain.models.views.illnesses.IllnessEditViewModel;
 import com.yanmark.pets.domain.models.views.illnesses.IllnessViewModel;
 import com.yanmark.pets.services.IllnessService;
 import com.yanmark.pets.services.PetService;
+import com.yanmark.pets.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,6 +49,7 @@ public class IllnessController extends BaseController {
 	}
 	
 	@GetMapping("/all/{id}")
+	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD6C\uD835\uDD91\uD835\uDD91")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView all(@PathVariable String id,
 	                        ModelAndView modelAndView) {
@@ -70,6 +72,7 @@ public class IllnessController extends BaseController {
 	}
 	
 	@GetMapping("/add/{id}")
+	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD6C\uD835\uDD89\uD835\uDD89")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView add(@PathVariable String id,
 	                        @ModelAttribute("illnessCreate") IllnessCreateBindingModel illnessCreate,
@@ -97,6 +100,7 @@ public class IllnessController extends BaseController {
 	}
 	
 	@GetMapping("/details/{id}")
+	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD6F\uD835\uDD8A\uD835\uDD99\uD835\uDD86\uD835\uDD8E\uD835\uDD91\uD835\uDD98")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView details(@PathVariable String id,
 	                            @RequestParam("petId") String petId,
@@ -118,6 +122,7 @@ public class IllnessController extends BaseController {
 	}
 	
 	@GetMapping("/edit/{id}")
+	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView edit(@PathVariable String id,
 	                         @RequestParam("petId") String petId,

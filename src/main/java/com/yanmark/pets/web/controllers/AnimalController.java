@@ -4,6 +4,7 @@ import com.yanmark.pets.domain.models.bindings.animals.AnimalCreateBindingModel;
 import com.yanmark.pets.domain.models.services.AnimalServiceModel;
 import com.yanmark.pets.domain.models.views.animals.AnimalViewModel;
 import com.yanmark.pets.services.AnimalService;
+import com.yanmark.pets.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +37,7 @@ public class AnimalController extends BaseController {
 	}
 	
 	@GetMapping("/all")
+	@PageTitle("\uD835\uDD6C\uD835\uDD93\uD835\uDD8E\uD835\uDD92\uD835\uDD86\uD835\uDD91 \uD835\uDD6C\uD835\uDD91\uD835\uDD91")
 	@PreAuthorize("hasAnyAuthority('ADMIN','MODERATOR')")
 	ModelAndView all(ModelAndView modelAndView) {
 		List<AnimalViewModel> animalViewModels = this.animalService.getAllAnimals().stream()
@@ -46,6 +48,7 @@ public class AnimalController extends BaseController {
 	}
 	
 	@GetMapping("/add")
+	@PageTitle("\uD835\uDD6C\uD835\uDD93\uD835\uDD8E\uD835\uDD92\uD835\uDD86\uD835\uDD91 \uD835\uDD6C\uD835\uDD89\uD835\uDD89")
 	@PreAuthorize("hasAnyAuthority('ADMIN','MODERATOR')")
 	ModelAndView create(@ModelAttribute("animalCreate") AnimalCreateBindingModel animalCreate) {
 		return this.view(CREATE_ANIMAL);
@@ -64,6 +67,7 @@ public class AnimalController extends BaseController {
 	}
 	
 	@GetMapping("/edit/{id}")
+	@PageTitle("\uD835\uDD6C\uD835\uDD93\uD835\uDD8E\uD835\uDD92\uD835\uDD86\uD835\uDD91 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
 	@PreAuthorize("hasAnyAuthority('ADMIN','MODERATOR')")
 	ModelAndView edit(@ModelAttribute("animalCreate") AnimalCreateBindingModel animalCreate,
 	                  @PathVariable String id,
