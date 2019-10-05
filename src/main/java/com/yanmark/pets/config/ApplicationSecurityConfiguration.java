@@ -30,7 +30,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 				.antMatchers("/animals/**").hasAnyAuthority("ADMIN", "MODERATOR")
 				.antMatchers("/home",
 						"/users/profile",
-						"/users/edit/**").authenticated()
+						"/users/edit/**",
+						"/pets/**",
+						"/illnesses/**").authenticated()
 				.antMatchers("/users/all",
 						"/users/changeRole").hasAuthority("ROOT")
 				.anyRequest().authenticated()
