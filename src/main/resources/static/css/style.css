@@ -95,3 +95,7 @@ textarea {
     width: 480px;
     word-wrap: break-word;
 }
+
+img {
+    image-orientation: from-image;
+}
