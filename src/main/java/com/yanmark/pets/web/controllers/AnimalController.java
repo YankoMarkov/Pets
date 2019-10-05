@@ -98,7 +98,7 @@ public class AnimalController extends BaseController {
 	}
 	
 	@GetMapping("/fetch")
-	@PreAuthorize("hasAnyAuthority('ADMIN','MODERATOR')")
+	@PreAuthorize("isAuthenticated()")
 	@ResponseBody
 	List<AnimalViewModel> fetch() {
 		return this.animalService.getAllAnimals().stream()
