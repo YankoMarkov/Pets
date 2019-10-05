@@ -27,10 +27,14 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 						"/").permitAll()
 				.antMatchers("/users/login",
 						"/users/register").anonymous()
-				.antMatchers("/animals/**").hasAnyAuthority("ADMIN", "MODERATOR")
+				.antMatchers("/animals/all",
+						"/animals/add",
+						"/animals/edit/**",
+						"/animals/delete/**").hasAnyAuthority("ADMIN", "MODERATOR")
 				.antMatchers("/home",
 						"/users/profile",
 						"/users/edit/**",
+						"/animals/fetch",
 						"/pets/**",
 						"/illnesses/**").authenticated()
 				.antMatchers("/users/all",
