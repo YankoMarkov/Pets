@@ -18,6 +18,7 @@ public class PetCreateBindingModel {
 	private String isCastrated;
 	private String vaccineDate;
 	
+	@NotNull(message = "Image cannot be null.")
 	public MultipartFile getImage() {
 		return image;
 	}

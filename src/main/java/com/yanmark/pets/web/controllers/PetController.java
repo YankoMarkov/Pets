@@ -62,6 +62,9 @@ public class PetController extends BaseController {
 		if (bindingResult.hasErrors()) {
 			return view(CREATE_PET);
 		}
+		if (petCreate.getImage().isEmpty()) {
+			return view(CREATE_PET);
+		}
 		PetServiceModel petServiceModel = this.modelMapper.map(petCreate, PetServiceModel.class);
 		try {
 			this.petService.savePet(petServiceModel, petCreate, principal);

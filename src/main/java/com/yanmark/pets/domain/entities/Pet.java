@@ -26,7 +26,7 @@ public class Pet extends BaseEntity {
 		this.illnesses = new HashSet<>();
 	}
 	
-	@Column(name = "image")
+	@Column(name = "image", nullable = false)
 	public String getImage() {
 		return image;
 	}
