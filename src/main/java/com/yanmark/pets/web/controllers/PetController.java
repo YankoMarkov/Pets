@@ -31,7 +31,7 @@ public class PetController extends BaseController {
 	private static final String CREATE_PET = "pets/create-pet";
 	private static final String CASTRATED = " is castrated.";
 	private static final String NOT_CASTRATED = " is not castrated.";
-	private static final String NOT_BEEN_VACCINATED = " has not been vaccinated.";
+	private static final String NOT_BEEN_VACCINATED = " not vaccinated.";
 	private static final String PET_DETAILS = "pets/pet-details";
 	
 	private final PetService petService;
@@ -101,7 +101,7 @@ public class PetController extends BaseController {
 			petDetailsViewModel.setVaccineDate(date);
 			petDetailsViewModel.setNextVaccineDate(nextDate);
 		} else {
-			petDetailsViewModel.setVaccineDate(petServiceModel.getName() + NOT_BEEN_VACCINATED);
+			petDetailsViewModel.setVaccineDate(NOT_BEEN_VACCINATED);
 		}
 		modelAndView.addObject("vaccineDateExpired", this.petService.vaccineDateExpired(id));
 		modelAndView.addObject("pet", petDetailsViewModel);
