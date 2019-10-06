@@ -156,7 +156,7 @@ public class PetServiceImpl implements PetService {
 	@Override
 	public List<PetServiceModel> getAllPetsByOwner(UserServiceModel userService) {
 		User owner = this.modelMapper.map(userService, User.class);
-		return this.petRepository.getAllByOwnerOrderByBirthDate(owner).stream()
+		return this.petRepository.getAllByOwnerOrderByBirthDateDesc(owner).stream()
 				.map(pet -> this.modelMapper.map(pet, PetServiceModel.class))
 				.collect(Collectors.toUnmodifiableList());
 	}

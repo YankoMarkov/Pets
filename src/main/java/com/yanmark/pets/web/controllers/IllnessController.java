@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,6 +65,7 @@ public class IllnessController extends BaseController {
 						illnessViewModel.setDate(date);
 						return illnessViewModel;
 					})
+					.sorted((a,b) -> a.getDate().compareTo(b.getDate()))
 					.collect(Collectors.toList());
 		}
 		modelAndView.addObject("illnesses", illnessViewModels);
