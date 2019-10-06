@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface PetRepository extends JpaRepository<Pet, String> {
 	
-	List<Pet> getAllByOwner(User owner);
+	List<Pet> getAllByOwnerOrderByBirthDate(User owner);
 	
 	Optional<Pet> getByName(String name);
 }
