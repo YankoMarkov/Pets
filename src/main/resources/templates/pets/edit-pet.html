@@ -22,6 +22,11 @@
 				       th:field="*{name}"/>
 				<h6 th:each="error : ${#fields.errors('name')}" th:text="${error}"></h6>
 			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('image')}? 'text-danger'">
+				<label for="image" class="text-pets">Image</label>
+				<input type="file" class="form-control-file" id="image" name="image"/>
+				<h6 th:each="error : ${#fields.errors('image')}" th:text="${error}"></h6>
+			</div>
 			<div class="form-group" th:classappend="${#fields.hasErrors('breed')}? 'text-danger'">
 				<label for="breed" class="text-pets">Breed</label>
 				<input type="text" class="form-control" id="breed" placeholder="Breed..." name="breed"

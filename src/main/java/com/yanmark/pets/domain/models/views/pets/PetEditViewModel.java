@@ -1,5 +1,7 @@
 package com.yanmark.pets.domain.models.views.pets;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class PetEditViewModel {
 	
 	private String id;
