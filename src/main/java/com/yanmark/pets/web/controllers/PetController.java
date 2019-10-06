@@ -137,7 +137,11 @@ public class PetController extends BaseController {
 			return view(EDIT_PET);
 		}
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
-		this.petService.updatePet(petServiceModel, petEdit);
+		try {
+			this.petService.updatePet(petServiceModel, petEdit);
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 		return redirect(HOME);
 	}
 	

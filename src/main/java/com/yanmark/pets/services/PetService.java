@@ -16,7 +16,7 @@ public interface PetService {
 	                        Principal principal) throws IOException;
 	
 	PetServiceModel updatePet(PetServiceModel petService,
-	                          PetEditBindingModel petEdit);
+	                          PetEditBindingModel petEdit) throws IOException;
 	
 	PetServiceModel addIllness(PetServiceModel petService);
 	

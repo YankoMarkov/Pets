@@ -83,7 +83,7 @@ public class PetServiceImpl implements PetService {
 	}
 	
 	@Override
-	public PetServiceModel updatePet(PetServiceModel petService, PetEditBindingModel petEdit) {
+	public PetServiceModel updatePet(PetServiceModel petService, PetEditBindingModel petEdit) throws IOException {
 		DateTimeFormatter stringFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
@@ -91,7 +91,9 @@ public class PetServiceImpl implements PetService {
 		if (petService.isCastrated()) {
 			castrated = "true";
 		}
-		
+		if (!petEdit.getImage().isEmpty()) {
+			petService.setImage(this.cloudinaryService.uploadImage(petEdit.getImage()));
+		}
 		String birthDate = petService.getBirthDate().format(stringFormatter);
 		String vaccineDate = "";
 		
