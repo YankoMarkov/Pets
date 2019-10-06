@@ -58,7 +58,7 @@ public class IllnessController extends BaseController {
 		List<IllnessViewModel> illnessViewModels = new ArrayList<>();
 		if (!petServiceModel.getIllnesses().isEmpty()) {
 			illnessViewModels = petServiceModel.getIllnesses().stream()
-					.sorted((a,b) -> a.getDate().compareTo(b.getDate()))
+					.sorted((a,b) -> b.getDate().compareTo(a.getDate()))
 					.map(illness -> {
 						IllnessViewModel illnessViewModel = this.modelMapper.map(illness, IllnessViewModel.class);
 						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
