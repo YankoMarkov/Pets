@@ -86,7 +86,7 @@
 					</a>
 				</li>
 				<li class="page-item" th:classappend="${i == pets.number + 1} ? 'active'"
-				    th:each="i : ${#numbers.sequence(pets.number + 1 > pets.totalPages - 2 ? pets.totalPages - 2 : pets.number + 1, pets.totalPages > pets.number + 3 ? pets.number + 3 : pets.totalPages, 1)}">
+				    th:each="i : ${#numbers.sequence(pets.number + 1, pets.totalPages > pets.number + 3 ? pets.number + 3 : pets.totalPages, 1)}">
 					<a class="page-link" th:href="@{/home?page={id}(id=${i})}" th:text="${i}"></a>
 				</li>
 				<li class="page-item" th:classappend="${pets.number + 1 == pets.totalPages} ? 'disabled'">
