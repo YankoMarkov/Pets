@@ -1,12 +1,18 @@
 package com.yanmark.pets.domain.models.services;
 
+import com.yanmark.pets.domain.entities.Illness;
+import com.yanmark.pets.domain.entities.Pet;
 import com.yanmark.pets.domain.enums.Gender;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PetServiceModel extends BaseServiceModel {
+	
+	private ModelMapper modelMapper;
 	
 	private String image;
 	private AnimalServiceModel animal;
@@ -22,6 +28,21 @@ public class PetServiceModel extends BaseServiceModel {
 	
 	public PetServiceModel() {
 		this.illnesses = new HashSet<>();
+	}
+	
+	public PetServiceModel(Pet pet) {
+		this.modelMapper = new ModelMapper();
+		this.image = pet.getImage();
+		this.animal = this.modelMapper.map(pet.getAnimal(), AnimalServiceModel.class);
+		this.name = pet.getName();
+		this.birthDate = pet.getBirthDate();
+		this.breed = pet.getBreed();
+		this.furColor = pet.getFurColor();
+		this.gender = pet.getGender();
+		this.isCastrated = pet.isCastrated();
+		this.vaccineDate = pet.getVaccineDate();
+		this.illnesses = getIllnessesService(pet.getIllnesses());
+		this.owner = this.modelMapper.map(pet.getOwner(), UserServiceModel.class);
 	}
 	
 	public String getImage() {
@@ -110,5 +131,11 @@ public class PetServiceModel extends BaseServiceModel {
 	
 	public void setOwner(UserServiceModel owner) {
 		this.owner = owner;
+	}
+	
+	private Set<IllnessServiceModel> getIllnessesService(Set<Illness> illnesses) {
+		return illnesses.stream()
+				.map(illness -> this.modelMapper.map(illness, IllnessServiceModel.class))
+				.collect(Collectors.toSet());
 	}
 }

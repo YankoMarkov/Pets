@@ -4,12 +4,12 @@ import com.yanmark.pets.domain.models.services.AnimalServiceModel;
 import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.services.UserServiceModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class HomeServiceImpl implements HomeService {
@@ -28,19 +28,16 @@ public class HomeServiceImpl implements HomeService {
 	}
 	
 	@Override
-	public List<PetServiceModel> takePets(String animalId,
+	public Page<PetServiceModel> takePets(String animalId,
 	                                      ModelAndView modelAndView,
-	                                      Principal principal) {
+	                                      Principal principal,
+	                                      HttpServletRequest request) {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
-		List<PetServiceModel> petServiceModels = this.petService.getAllPetsByOwner(userServiceModel);
+		Page<PetServiceModel> petServiceModels = this.petService.getAllPetsByOwner(userServiceModel, request);
 		if (animalId != null && animalId.length() > 0) {
 			AnimalServiceModel animalServiceModel = this.animalService.getAnimalById(animalId);
-			if (animalServiceModel != null) {
-				petServiceModels = petServiceModels.stream()
-						.filter(pet -> pet.getAnimal().getId().equals(animalId))
-						.collect(Collectors.toList());
-				modelAndView.addObject("animalName", animalServiceModel.getName());
-			}
+			petServiceModels = this.petService.getAllPetsByOwnerAndAnimal(userServiceModel, animalServiceModel, request);
+			modelAndView.addObject("animalName", animalServiceModel.getName());
 		}
 		return petServiceModels;
 	}

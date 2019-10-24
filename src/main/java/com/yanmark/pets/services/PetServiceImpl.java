@@ -1,5 +1,6 @@
 package com.yanmark.pets.services;
 
+import com.yanmark.pets.domain.entities.Animal;
 import com.yanmark.pets.domain.entities.Pet;
 import com.yanmark.pets.domain.entities.User;
 import com.yanmark.pets.domain.enums.Gender;
@@ -11,14 +12,15 @@ import com.yanmark.pets.domain.models.services.UserServiceModel;
 import com.yanmark.pets.repositories.PetRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PetServiceImpl implements PetService {
@@ -156,11 +158,41 @@ public class PetServiceImpl implements PetService {
 	}
 	
 	@Override
-	public List<PetServiceModel> getAllPetsByOwner(UserServiceModel userService) {
+	public Page<PetServiceModel> getAllPetsByOwner(UserServiceModel userService,
+	                                               HttpServletRequest request) {
 		User owner = this.modelMapper.map(userService, User.class);
-		return this.petRepository.getAllByOwnerOrderByBirthDateDesc(owner).stream()
-				.map(pet -> this.modelMapper.map(pet, PetServiceModel.class))
-				.collect(Collectors.toUnmodifiableList());
+		
+		int page = 0;
+		int size = 10;
+		
+		if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+			page = Integer.parseInt(request.getParameter("page")) - 1;
+		}
+		if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+			size = Integer.parseInt(request.getParameter("size"));
+		}
+		Page<Pet> pets = this.petRepository.getAllByOwnerOrderByBirthDateDesc(owner, PageRequest.of(page, size));
+		return pets.map(PetServiceModel::new);
+	}
+	
+	@Override
+	public Page<PetServiceModel> getAllPetsByOwnerAndAnimal(UserServiceModel userService,
+	                                                        AnimalServiceModel animalService,
+	                                                        HttpServletRequest request) {
+		User owner = this.modelMapper.map(userService, User.class);
+		Animal animal = this.modelMapper.map(animalService, Animal.class);
+		
+		int page = 0;
+		int size = 10;
+		
+		if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+			page = Integer.parseInt(request.getParameter("page")) - 1;
+		}
+		if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+			size = Integer.parseInt(request.getParameter("size"));
+		}
+		Page<Pet> pets = this.petRepository.getAllByOwnerAndAnimalOrderByBirthDateDesc(owner, animal, PageRequest.of(page, size));
+		return pets.map(PetServiceModel::new);
 	}
 	
 	@Override

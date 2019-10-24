@@ -1,5 +1,10 @@
 package com.yanmark.pets.domain.models.views.pets;
 
+import com.yanmark.pets.domain.models.services.PetServiceModel;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class PetHomeViewModel {
 	
 	private String id;
@@ -9,6 +14,19 @@ public class PetHomeViewModel {
 	private int ageInYears;
 	private int ageInMonths;
 	private String gender;
+	
+	public PetHomeViewModel() {
+	}
+	
+	public PetHomeViewModel(PetServiceModel petService) {
+		setId(petService.getId());
+		setImage(petService.getImage());
+		setAnimal(petService.getAnimal().getName());
+		setName(petService.getName());
+		setAgeInYears(petService);
+		setAgeInMonths(petService);
+		setGender(petService.getGender().getGender());
+	}
 	
 	public String getId() {
 		return id;
@@ -46,16 +64,22 @@ public class PetHomeViewModel {
 		return ageInYears;
 	}
 	
-	public void setAgeInYears(int ageInYears) {
-		this.ageInYears = ageInYears;
+	public void setAgeInYears(PetServiceModel petService) {
+		long age = ChronoUnit.MONTHS.between(
+				petService.getBirthDate().withDayOfMonth(1),
+				LocalDate.now().withDayOfMonth(1));
+		this.ageInYears = (int) age / 12;
 	}
 	
 	public int getAgeInMonths() {
 		return ageInMonths;
 	}
 	
-	public void setAgeInMonths(int ageInMonths) {
-		this.ageInMonths = ageInMonths;
+	public void setAgeInMonths(PetServiceModel petService) {
+		long age = ChronoUnit.MONTHS.between(
+				petService.getBirthDate().withDayOfMonth(1),
+				LocalDate.now().withDayOfMonth(1));
+		this.ageInMonths = (int) age % 12;
 	}
 	
 	public String getGender() {
