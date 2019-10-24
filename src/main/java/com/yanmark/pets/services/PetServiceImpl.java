@@ -168,7 +168,7 @@ public class PetServiceImpl implements PetService {
 		if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
 			size = Integer.parseInt(request.getParameter("size"));
 		}
-		Page<Pet> pets = this.petRepository.findAll(PageRequest.of(page, size));
+		Page<Pet> pets = this.petRepository.getAllByOrderByBirthDateDesc(PageRequest.of(page, size));
 		return pets.map(PetServiceModel::new);
 	}
 	

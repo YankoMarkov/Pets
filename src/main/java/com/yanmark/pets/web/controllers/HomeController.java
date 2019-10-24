@@ -4,8 +4,10 @@ import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.views.animals.AnimalViewModel;
 import com.yanmark.pets.domain.models.views.pets.AllPetsViewModel;
 import com.yanmark.pets.domain.models.views.pets.PetHomeViewModel;
+import com.yanmark.pets.domain.models.views.users.UserViewModel;
 import com.yanmark.pets.services.AnimalService;
 import com.yanmark.pets.services.HomeService;
+import com.yanmark.pets.services.UserService;
 import com.yanmark.pets.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,17 @@ public class HomeController extends BaseController {
 	
 	private final HomeService homeService;
 	private final AnimalService animalService;
+	private final UserService userService;
 	private final ModelMapper modelMapper;
 	
 	@Autowired
 	public HomeController(HomeService homeService,
 	                      AnimalService animalService,
+	                      UserService userService,
 	                      ModelMapper modelMapper) {
 		this.homeService = homeService;
 		this.animalService = animalService;
+		this.userService = userService;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -73,13 +78,13 @@ public class HomeController extends BaseController {
 	@PageTitle("\uD835\uDD6C\uD835\uDD91\uD835\uDD91 \uD835\uDD7B\uD835\uDD8A\uD835\uDD99\uD835\uDD98")
 	ModelAndView allPets(ModelAndView modelAndView,
 	                     HttpServletRequest request,
-	                     @RequestParam(required = false) String animalId) {
-		List<AnimalViewModel> animalViewModels = this.animalService.getAllAnimals().stream()
-				.map(animal -> this.modelMapper.map(animal, AnimalViewModel.class))
+	                     @RequestParam(required = false) String userId) {
+		List<UserViewModel> userViewModels = this.userService.getAllUsers().stream()
+				.map(user -> this.modelMapper.map(user, UserViewModel.class))
 				.collect(Collectors.toList());
-		Page<PetServiceModel> petServiceModels = this.homeService.takeAllPets(animalId, modelAndView, request);
+		Page<PetServiceModel> petServiceModels = this.homeService.takeAllPets(userId, modelAndView, request);
 		Page<AllPetsViewModel> allPetsViewModels = petServiceModels.map(AllPetsViewModel::new);
-		modelAndView.addObject("animals", animalViewModels);
+		modelAndView.addObject("users", userViewModels);
 		modelAndView.addObject("pets", allPetsViewModels);
 		return this.view(ALL_PETS, modelAndView);
 	}

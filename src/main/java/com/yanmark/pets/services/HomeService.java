@@ -14,7 +14,7 @@ public interface HomeService {
 	                                     Principal principal,
 	                                     HttpServletRequest request);
 	
-	Page<PetServiceModel> takeAllPets(String animalId,
+	Page<PetServiceModel> takeAllPets(String userId,
 	                                  ModelAndView modelAndView,
 	                                  HttpServletRequest request);
 }

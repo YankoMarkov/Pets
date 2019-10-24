@@ -43,12 +43,13 @@ public class HomeServiceImpl implements HomeService {
 	}
 	
 	@Override
-	public Page<PetServiceModel> takeAllPets(String animalId, ModelAndView modelAndView, HttpServletRequest request) {
+	public Page<PetServiceModel> takeAllPets(String userId,
+	                                         ModelAndView modelAndView,
+	                                         HttpServletRequest request) {
 		Page<PetServiceModel> petServiceModels = this.petService.getAllPets(request);
-		if (animalId != null && animalId.length() > 0) {
-			AnimalServiceModel animalServiceModel = this.animalService.getAnimalById(animalId);
-			petServiceModels = this.petService.getAllPetsByAnimal(animalServiceModel, request);
-			modelAndView.addObject("animalName", animalServiceModel.getName());
+		if (userId != null && userId.length() > 0) {
+			UserServiceModel userServiceModel = this.userService.getUserById(userId);
+			petServiceModels = this.petService.getAllPetsByOwner(userServiceModel, request);
 		}
 		return petServiceModels;
 	}

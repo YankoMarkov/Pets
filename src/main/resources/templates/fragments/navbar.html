@@ -7,7 +7,7 @@
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
-		<th:block th:unless="${#authentication.getName() == 'anonymousUser'}">
+		<th:block sec:authorize="isAuthenticated()">
 			<div class="btn-group">
 				<form th:action="@{/home}" th:method="get">
 					<select type="button" class="btn btn-info dropdown-toggle" onchange="submit();"
@@ -47,6 +47,20 @@
 				<li class="nav-item active" sec:authorize="hasAuthority('ROOT')">
 					<a class="nav-link nav-link-white" th:href="@{/allPets}">All Pets</a>
 				</li>
+				<th:block sec:authorize="hasAuthority('ROOT')">
+					<div class="btn-group">
+						<form th:action="@{/allPets}" th:method="get">
+							<select type="button" class="btn btn-info dropdown-toggle" onchange="submit();"
+							        th:name="userId">
+								<option value="">Select User...</option>
+								<option th:each="user : ${users}"
+								        th:value="${user.id}"
+								        th:text="${user.username}"
+								        th:selected="${user.id == userId}"></option>
+							</select>
+						</form>
+					</div>
+				</th:block>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active" sec:authorize="hasAuthority('ROOT')">
