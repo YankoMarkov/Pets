@@ -44,6 +44,9 @@
 						</div>
 					</div>
 				</li>
+				<li class="nav-item active" sec:authorize="hasAuthority('ROOT')">
+					<a class="nav-link nav-link-white" th:href="@{/allPets}">All Pets</a>
+				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active" sec:authorize="hasAuthority('ROOT')">

@@ -59,7 +59,23 @@ public class HomeController extends BaseController {
 		List<AnimalViewModel> animalViewModels = this.animalService.getAllAnimals().stream()
 				.map(animal -> this.modelMapper.map(animal, AnimalViewModel.class))
 				.collect(Collectors.toList());
-		Page<PetServiceModel> petServiceModels = this.homeService.takePets(animalId, modelAndView, principal, request);
+		Page<PetServiceModel> petServiceModels = this.homeService.takePetsByUser(animalId, modelAndView, principal, request);
+		Page<PetHomeViewModel> petHomeViewModels = petServiceModels.map(PetHomeViewModel::new);
+		modelAndView.addObject("animals", animalViewModels);
+		modelAndView.addObject("pets", petHomeViewModels);
+		return this.view(HOME, modelAndView);
+	}
+	
+	@GetMapping("/allPets")
+	@PreAuthorize("hasAuthority('ROOT')")
+	@PageTitle("\uD835\uDD6C\uD835\uDD91\uD835\uDD91 \uD835\uDD7B\uD835\uDD8A\uD835\uDD99\uD835\uDD98")
+	ModelAndView allPets(ModelAndView modelAndView,
+	                     HttpServletRequest request,
+	                     @RequestParam(required = false) String animalId) {
+		List<AnimalViewModel> animalViewModels = this.animalService.getAllAnimals().stream()
+				.map(animal -> this.modelMapper.map(animal, AnimalViewModel.class))
+				.collect(Collectors.toList());
+		Page<PetServiceModel> petServiceModels = this.homeService.takeAllPets(animalId, modelAndView, request);
 		Page<PetHomeViewModel> petHomeViewModels = petServiceModels.map(PetHomeViewModel::new);
 		modelAndView.addObject("animals", animalViewModels);
 		modelAndView.addObject("pets", petHomeViewModels);

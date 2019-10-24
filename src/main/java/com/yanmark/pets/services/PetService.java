@@ -22,6 +22,11 @@ public interface PetService {
 	
 	PetServiceModel addIllness(PetServiceModel petService);
 	
+	Page<PetServiceModel> getAllPets(HttpServletRequest request);
+	
+	Page<PetServiceModel> getAllPetsByAnimal(AnimalServiceModel animalService,
+	                                         HttpServletRequest request);
+	
 	Page<PetServiceModel> getAllPetsByOwner(UserServiceModel userService,
 	                                        HttpServletRequest request);
 	

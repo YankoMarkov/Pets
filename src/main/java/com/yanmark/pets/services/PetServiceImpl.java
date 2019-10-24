@@ -158,6 +158,39 @@ public class PetServiceImpl implements PetService {
 	}
 	
 	@Override
+	public Page<PetServiceModel> getAllPets(HttpServletRequest request) {
+		int page = 0;
+		int size = 10;
+		
+		if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+			page = Integer.parseInt(request.getParameter("page")) - 1;
+		}
+		if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+			size = Integer.parseInt(request.getParameter("size"));
+		}
+		Page<Pet> pets = this.petRepository.findAll(PageRequest.of(page, size));
+		return pets.map(PetServiceModel::new);
+	}
+	
+	@Override
+	public Page<PetServiceModel> getAllPetsByAnimal(AnimalServiceModel animalService,
+	                                                HttpServletRequest request) {
+		Animal animal = this.modelMapper.map(animalService, Animal.class);
+		
+		int page = 0;
+		int size = 10;
+		
+		if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+			page = Integer.parseInt(request.getParameter("page")) - 1;
+		}
+		if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+			size = Integer.parseInt(request.getParameter("size"));
+		}
+		Page<Pet> pets = this.petRepository.getAllByAnimalOrderByBirthDateDesc(animal, PageRequest.of(page, size));
+		return pets.map(PetServiceModel::new);
+	}
+	
+	@Override
 	public Page<PetServiceModel> getAllPetsByOwner(UserServiceModel userService,
 	                                               HttpServletRequest request) {
 		User owner = this.modelMapper.map(userService, User.class);
