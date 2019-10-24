@@ -32,7 +32,7 @@ public class PetServiceModel extends BaseServiceModel {
 	public PetServiceModel(Pet pet) {
 		this.modelMapper = new ModelMapper();
 		setImage(pet.getImage());
-		setAnimal(pet);
+		setAnimal(this.modelMapper.map(pet.getAnimal(), AnimalServiceModel.class));
 		setName(pet.getName());
 		setBirthDate(pet.getBirthDate());
 		setBreed(pet.getBreed());
@@ -40,8 +40,8 @@ public class PetServiceModel extends BaseServiceModel {
 		setGender(pet.getGender());
 		setCastrated(pet.isCastrated());
 		setVaccineDate(pet.getVaccineDate());
-		setIllnesses(pet);
-		setOwner(pet);
+		setIllnesses(getIllnessService(pet));
+		setOwner(this.modelMapper.map(pet.getOwner(), UserServiceModel.class));
 	}
 	
 	public String getImage() {
@@ -56,9 +56,8 @@ public class PetServiceModel extends BaseServiceModel {
 		return animal;
 	}
 	
-	public void setAnimal(Pet pet) {
-		this.animal = this.modelMapper.map(pet.getAnimal(), AnimalServiceModel.class);
-		;
+	public void setAnimal(AnimalServiceModel animal) {
+		this.animal = animal;
 	}
 	
 	public String getName() {
@@ -121,17 +120,21 @@ public class PetServiceModel extends BaseServiceModel {
 		return illnesses;
 	}
 	
-	public void setIllnesses(Pet pet) {
-		this.illnesses = pet.getIllnesses().stream()
-				.map(illness -> this.modelMapper.map(illness, IllnessServiceModel.class))
-				.collect(Collectors.toSet());
+	public void setIllnesses(Set<IllnessServiceModel> illnesses) {
+		this.illnesses = illnesses;
 	}
 	
 	public UserServiceModel getOwner() {
 		return owner;
 	}
 	
-	public void setOwner(Pet pet) {
-		this.owner = this.modelMapper.map(pet.getOwner(), UserServiceModel.class);
+	public void setOwner(UserServiceModel owner) {
+		this.owner = owner;
+	}
+	
+	private Set<IllnessServiceModel> getIllnessService(Pet pet) {
+		return pet.getIllnesses().stream()
+				.map(illness -> this.modelMapper.map(illness, IllnessServiceModel.class))
+				.collect(Collectors.toSet());
 	}
 }
