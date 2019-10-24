@@ -5,8 +5,7 @@ import com.yanmark.pets.domain.models.services.PetServiceModel;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class PetHomeViewModel {
-	
+public class AllPetsViewModel {
 	private String id;
 	private String image;
 	private String animal;
@@ -14,11 +13,12 @@ public class PetHomeViewModel {
 	private int ageInYears;
 	private int ageInMonths;
 	private String gender;
+	private String user;
 	
-	public PetHomeViewModel() {
+	public AllPetsViewModel() {
 	}
 	
-	public PetHomeViewModel(PetServiceModel petService) {
+	public AllPetsViewModel(PetServiceModel petService) {
 		setId(petService.getId());
 		setImage(petService.getImage());
 		setAnimal(petService.getAnimal().getName());
@@ -26,6 +26,7 @@ public class PetHomeViewModel {
 		setAgeInYears(petService);
 		setAgeInMonths(petService);
 		setGender(petService.getGender().getGender());
+		setUser(petService.getOwner().getUsername());
 	}
 	
 	public String getId() {
@@ -88,5 +89,13 @@ public class PetHomeViewModel {
 	
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	
+	public String getUser() {
+		return user;
+	}
+	
+	public void setUser(String user) {
+		this.user = user;
 	}
 }

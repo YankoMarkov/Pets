@@ -2,6 +2,7 @@ package com.yanmark.pets.web.controllers;
 
 import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.views.animals.AnimalViewModel;
+import com.yanmark.pets.domain.models.views.pets.AllPetsViewModel;
 import com.yanmark.pets.domain.models.views.pets.PetHomeViewModel;
 import com.yanmark.pets.services.AnimalService;
 import com.yanmark.pets.services.HomeService;
@@ -25,6 +26,7 @@ public class HomeController extends BaseController {
 	
 	private static final String HOMES = "/home";
 	private static final String HOME = "home";
+	private static final String ALL_PETS = "pets/all-pets";
 	private static final String INDEX = "index";
 	
 	private final HomeService homeService;
@@ -76,9 +78,9 @@ public class HomeController extends BaseController {
 				.map(animal -> this.modelMapper.map(animal, AnimalViewModel.class))
 				.collect(Collectors.toList());
 		Page<PetServiceModel> petServiceModels = this.homeService.takeAllPets(animalId, modelAndView, request);
-		Page<PetHomeViewModel> petHomeViewModels = petServiceModels.map(PetHomeViewModel::new);
+		Page<AllPetsViewModel> allPetsViewModels = petServiceModels.map(AllPetsViewModel::new);
 		modelAndView.addObject("animals", animalViewModels);
-		modelAndView.addObject("pets", petHomeViewModels);
-		return this.view(HOME, modelAndView);
+		modelAndView.addObject("pets", allPetsViewModels);
+		return this.view(ALL_PETS, modelAndView);
 	}
 }

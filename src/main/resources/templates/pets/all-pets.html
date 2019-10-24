@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<th:block th:replace="fragments/head"/>
+</head>
+<body>
+<div class="container-fluid">
+	<header>
+		<th:block th:replace="fragments/navbar"/>
+	</header>
+	<main class="mt-3">
+		<hr class="bg-pets hr-2"/>
+		<h1 class="text-center text-pets">All Pets</h1>
+		<hr class="bg-pets w-25 hr-2"/>
+		<table class="table table-hover w-75 mx-auto">
+			<thead>
+			<tr class="row mx-auto">
+				<th class="col-md-1 text-center">#</th>
+				<th class="col-md-1 text-center">User</th>
+				<th class="col-md-1 text-center">Animal</th>
+				<th class="col-md-2 text-center">Image</th>
+				<th class="col-md-2 text-center">Name</th>
+				<th class="col-md-1 text-center">Age</th>
+				<th class="col-md-1 text-center">Gender</th>
+				<th class="col-md-3 text-center">Actions</th>
+			</tr>
+			</thead>
+			<tbody>
+			<th:block th:each="pet,iter : ${pets.content}">
+				<tr class="row mx-auto">
+					<th:block th:if="${pets.number > 0}">
+						<th class="col-md-1 text-center" th:text="${iter.index + 1 + pets.size * pets.number}"></th>
+					</th:block>
+					<th:block th:if="${pets.number == 0}">
+						<th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
+					</th:block>
+					<td class="col-md-1 text-center" th:text="${pet.user}"></td>
+					<td class="col-md-1 text-center" th:text="${pet.animal}"></td>
+					<td class="col-md-2 text-center">
+						<div class="text-center">
+							<a th:href="${pet.image}">
+								<img th:src="${pet.image}" height="60" width="auto" alt="Image">
+							</a>
+						</div>
+					</td>
+					<td class="col-md-2 text-center" th:text="${pet.name}"></td>
+					<td class="col-md-1 text-center" th:text="|${pet.ageInYears}y ${pet.ageInMonths}m|"></td>
+					<td class="col-md-1 text-center" th:text="${pet.gender}"></td>
+					<td class="col-md-3 text-center">
+						<a th:href="@{/pets/details/{id}(id=${pet.id})}"
+						   class="btn btn-success font-weight-bold text-white">Edit</a>
+						<button type="button" class="btn btn-danger font-weight-bold text-white" data-toggle="modal"
+						        data-target="#myModal">
+							Delete
+						</button>
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header justify-content-center">
+										<h4 class="modal-title">Delete Pet</h4>
+									</div>
+									<div class="modal-body">
+										<p>Аre you sure you want to delete <span th:text="${pet.name}"></span>.</p>
+									</div>
+									<div class="modal-footer justify-content-center">
+										<a th:href="@{/pets/delete/{id}(id=${pet.id})}"
+										   class="btn btn-danger font-weight-bold text-white">Yes</a>
+										<a th:href="@{/home}"
+										   class="btn btn-success font-weight-bold text-white">No</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</th:block>
+			</tbody>
+		</table>
+		<nav th:if="${pets.totalPages > 0}">
+			<ul class="d-flex justify-content-center">
+				<li class="page-item" th:classappend="${pets.number == 0} ? 'disabled'">
+					<a class="page-link" th:href="@{/home?page={id}(id=${pets.number < 2 ? 1 : pets.number})}"
+					   aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Previous</span>
+					</a>
+				</li>
+				<li class="page-item" th:classappend="${i == pets.number + 1} ? 'active'"
+				    th:each="i : ${#numbers.sequence(pets.number + 1, pets.totalPages > pets.number + 3 ? pets.number + 3 : pets.totalPages, 1)}">
+					<a class="page-link" th:href="@{/home?page={id}(id=${i})}" th:text="${i}"></a>
+				</li>
+				<li class="page-item" th:classappend="${pets.number + 1 == pets.totalPages} ? 'disabled'">
+					<a class="page-link" th:href="@{/home?page={id}(id=${pets.number + 2})}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+						<span class="sr-only">Next</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="d-flex justify-content-center">
+			<a th:href="@{/pets/add}" class="btn bg-pets text-white">Add</a>
+		</div>
+		<hr class="bg-pets hr-2 mt-5"/>
+	</main>
+	<footer>
+		<th:block th:replace="fragments/footer"/>
+	</footer>
+</div>
+</body>
+</html>

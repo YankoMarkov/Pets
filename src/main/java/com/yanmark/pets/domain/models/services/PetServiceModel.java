@@ -1,6 +1,5 @@
 package com.yanmark.pets.domain.models.services;
 
-import com.yanmark.pets.domain.entities.Illness;
 import com.yanmark.pets.domain.entities.Pet;
 import com.yanmark.pets.domain.enums.Gender;
 import org.modelmapper.ModelMapper;
@@ -32,17 +31,17 @@ public class PetServiceModel extends BaseServiceModel {
 	
 	public PetServiceModel(Pet pet) {
 		this.modelMapper = new ModelMapper();
-		this.image = pet.getImage();
-		this.animal = this.modelMapper.map(pet.getAnimal(), AnimalServiceModel.class);
-		this.name = pet.getName();
-		this.birthDate = pet.getBirthDate();
-		this.breed = pet.getBreed();
-		this.furColor = pet.getFurColor();
-		this.gender = pet.getGender();
-		this.isCastrated = pet.isCastrated();
-		this.vaccineDate = pet.getVaccineDate();
-		this.illnesses = getIllnessesService(pet.getIllnesses());
-		this.owner = this.modelMapper.map(pet.getOwner(), UserServiceModel.class);
+		setImage(pet.getImage());
+		setAnimal(pet);
+		setName(pet.getName());
+		setBirthDate(pet.getBirthDate());
+		setBreed(pet.getBreed());
+		setFurColor(pet.getFurColor());
+		setGender(pet.getGender());
+		setCastrated(pet.isCastrated());
+		setVaccineDate(pet.getVaccineDate());
+		setIllnesses(pet);
+		setOwner(pet);
 	}
 	
 	public String getImage() {
@@ -57,8 +56,9 @@ public class PetServiceModel extends BaseServiceModel {
 		return animal;
 	}
 	
-	public void setAnimal(AnimalServiceModel animal) {
-		this.animal = animal;
+	public void setAnimal(Pet pet) {
+		this.animal = this.modelMapper.map(pet.getAnimal(), AnimalServiceModel.class);
+		;
 	}
 	
 	public String getName() {
@@ -121,21 +121,17 @@ public class PetServiceModel extends BaseServiceModel {
 		return illnesses;
 	}
 	
-	public void setIllnesses(Set<IllnessServiceModel> illnesses) {
-		this.illnesses = illnesses;
+	public void setIllnesses(Pet pet) {
+		this.illnesses = pet.getIllnesses().stream()
+				.map(illness -> this.modelMapper.map(illness, IllnessServiceModel.class))
+				.collect(Collectors.toSet());
 	}
 	
 	public UserServiceModel getOwner() {
 		return owner;
 	}
 	
-	public void setOwner(UserServiceModel owner) {
-		this.owner = owner;
-	}
-	
-	private Set<IllnessServiceModel> getIllnessesService(Set<Illness> illnesses) {
-		return illnesses.stream()
-				.map(illness -> this.modelMapper.map(illness, IllnessServiceModel.class))
-				.collect(Collectors.toSet());
+	public void setOwner(Pet pet) {
+		this.owner = this.modelMapper.map(pet.getOwner(), UserServiceModel.class);
 	}
 }
