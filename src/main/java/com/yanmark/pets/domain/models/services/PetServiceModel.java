@@ -31,6 +31,7 @@ public class PetServiceModel extends BaseServiceModel {
 	
 	public PetServiceModel(Pet pet) {
 		this.modelMapper = new ModelMapper();
+		setId(pet.getId());
 		setImage(pet.getImage());
 		setAnimal(this.modelMapper.map(pet.getAnimal(), AnimalServiceModel.class));
 		setName(pet.getName());
