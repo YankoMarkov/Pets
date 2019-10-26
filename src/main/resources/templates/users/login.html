@@ -18,7 +18,7 @@
 			<th:block th:if="${param.error}">
 				<h5 class="text-center" style="color: red">Bad Credentials</h5>
 			</th:block>
-			<form class="mx-auto w-25" th:method="post" th:action="@{/users/login}">
+			<form id="submitLog" class="mx-auto w-25" th:method="post" th:action="@{/users/login}">
 				<div class="form-group">
 					<label for="username" class="text-pets">Username</label>
 					<input type="text" class="form-control" id="username" placeholder="Username..." name="username"/>
@@ -30,7 +30,7 @@
 				</div>
 				<hr class="bg-pets hr-2"/>
 				<div class="button-holder d-flex justify-content-center">
-					<button type="submit" class="btn bg-pets text-white">Login</button>
+					<button id="btnLog" type="submit" class="btn bg-pets text-white">Login</button>
 				</div>
 			</form>
 		</div>
@@ -40,5 +40,10 @@
 		<th:block th:replace="fragments/footer"/>
 	</footer>
 </div>
+<script>
+	$('#submitLog').submit(function () {
+		$('#btnLog').prop('disabled', true).text('Loading...');
+	});
+</script>
 </body>
 </html>

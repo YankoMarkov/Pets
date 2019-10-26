@@ -14,7 +14,7 @@
         <hr class="bg-pets hr-2"/>
         <h1 class="text-center text-pets">Edit Profile</h1>
         <hr class="bg-pets w-25 hr-2"/>
-        <form class="form w-25 mx-auto" th:action="@{/users/edit}" th:method="post" th:object="${userEdit}">
+        <form id="submitEdit" class="form w-25 mx-auto" th:action="@{/users/edit}" th:method="post" th:object="${userEdit}">
             <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'text-danger'">
                 <label for="username" class="text-pets">Username</label>
                 <input type="text" class="form-control" name="username" id="username"
@@ -48,7 +48,9 @@
             </div>
             <hr class="hr-2 bg-pets">
             <div class="button-holder d-flex justify-content-center">
-                <button type="submit" class="btn bg-pets text-white">Edit</button>
+                <button id="btnEdit" type="submit" class="btn bg-pets text-white">Update</button>
+                <a class="btn btn-dark text-white ml-5" th:href="@{/users/profile}"
+                   th:text="Cancel"></a>
             </div>
         </form>
         <hr class="bg-pets hr-2 mt-5"/>
@@ -57,5 +59,10 @@
         <th:block th:replace="fragments/footer"/>
     </footer>
 </div>
+<script>
+    $('#submitEdit').submit(function () {
+        $('#btnEdit').prop('disabled', true).text('Updating...');
+    });
+</script>
 </body>
 </html>

@@ -14,7 +14,7 @@
 		<hr class="bg-pets hr-2"/>
 		<h1 class="text-center text-pets">Edit Pet</h1>
 		<hr class="bg-pets w-25 hr-2"/>
-		<form class="mx-auto w-25" th:object="${pet}" th:method="post" th:action="@{/pets/edit/{id}(id=*{id})}"
+		<form id="submitUpdate" class="mx-auto w-25" th:object="${pet}" th:method="post" th:action="@{/pets/edit/{id}(id=*{id})}"
 		      enctype="multipart/form-data">
 			<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
 				<label for="name" class="text-pets">Name</label>
@@ -73,7 +73,7 @@
 			</div>
 			<hr class="bg-pets hr-2"/>
 			<div class="button-holder mt-4 d-flex justify-content-center">
-				<button type="submit" class="btn bg-pets text-white">Update</button>
+				<button id="btnUpdate" type="submit" class="btn bg-pets text-white">Update</button>
 				<a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}(id=*{id})}"
 				   th:text="Cancel"></a>
 			</div>
@@ -92,6 +92,9 @@
 				.append(`<option value="${animals.id}">${animals.name}</option>`));
 		})
 		.catch((err) => console.log(err));
+	$('#submitUpdate').submit(function () {
+		$('#btnUpdate').prop('disabled', true).text('Updating...');
+	});
 </script>
 </body>
 </html>

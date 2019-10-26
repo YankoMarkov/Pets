@@ -14,7 +14,7 @@
         <hr class="bg-pets hr-2"/>
         <h1 class="text-center text-pets">Edit Animal</h1>
         <hr class="bg-pets w-25 hr-2"/>
-        <form th:action="@{/animals/edit/{id}(id=${animal.id})}" th:method="post"
+        <form id="submitEdit" th:action="@{/animals/edit/{id}(id=${animal.id})}" th:method="post"
               class="form w-25 mx-auto" th:object="${animal}">
             <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
                 <label for="edit-animal-name" class="font-weight-bold">Name</label>
@@ -24,7 +24,7 @@
             </div>
             <hr class="hr-2 bg-dark">
             <div class="button-holder d-flex justify-content-center">
-                <button type="submit" class="btn btn-info">Edit Animal</button>
+                <button id="btnEdit" type="submit" class="btn btn-info">Update</button>
             </div>
         </form>
         <hr class="bg-pets hr-2 mt-5"/>
@@ -33,5 +33,10 @@
         <th:block th:replace="fragments/footer"/>
     </footer>
 </div>
+<script>
+    $('#submitEdit').submit(function () {
+        $('#btnEdit').prop('disabled', true).text('Updating...');
+    });
+</script>
 </body>
 </html>

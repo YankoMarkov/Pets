@@ -14,7 +14,7 @@
 		<hr class="bg-pets hr-2"/>
 		<h1 class="text-center text-pets">Create Illness</h1>
 		<hr class="bg-pets w-25 hr-2"/>
-		<form class="mx-auto w-25" th:object="${illnessCreate}" th:method="post" th:action="@{/illnesses/add/{id}(id=${petId})}"
+		<form id="submitIllness" class="mx-auto w-25" th:object="${illnessCreate}" th:method="post" th:action="@{/illnesses/add/{id}(id=${petId})}"
 		      enctype="multipart/form-data">
 			<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
 				<label for="name" class="text-pets">Name</label>
@@ -40,7 +40,7 @@
 			</div>
 			<hr class="bg-pets hr-2"/>
 			<div class="button-holder mt-4 d-flex justify-content-center">
-				<button type="submit" class="btn bg-pets text-white">Create</button>
+				<button id="btnCreate" type="submit" class="btn bg-pets text-white">Create</button>
 				<a class="btn btn-dark text-white ml-5" th:href="@{/illnesses/all/{id}(id=${petId})}"
 				   th:text="Cancel"></a>
 			</div>
@@ -51,5 +51,10 @@
 		<th:block th:replace="fragments/footer"/>
 	</footer>
 </div>
+<script>
+	$('#submitIllness').submit(function () {
+		$('#btnCreate').prop('disabled', true).text('Creating...');
+	});
+</script>
 </body>
 </html>
