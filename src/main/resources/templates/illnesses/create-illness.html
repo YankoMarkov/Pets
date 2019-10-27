@@ -12,7 +12,7 @@
 	</header>
 	<main class="mt-3">
 		<hr class="bg-pets hr-2"/>
-		<h1 class="text-center text-pets">Create Illness</h1>
+		<h1 class="text-center text-pets font-italic">Create Illness</h1>
 		<hr class="bg-pets w-25 hr-2"/>
 		<form id="submitIllness" class="mx-auto w-25" th:object="${illnessCreate}" th:method="post" th:action="@{/illnesses/add/{id}(id=${petId})}"
 		      enctype="multipart/form-data">
@@ -53,7 +53,7 @@
 </div>
 <script>
 	$('#submitIllness').submit(function () {
-		$('#btnCreate').prop('disabled', true).text('Creating...');
+		$('#btnCreate').prop('disabled', true).text('Loading...');
 	});
 </script>
 </body>

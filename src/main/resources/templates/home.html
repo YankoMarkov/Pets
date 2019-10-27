@@ -12,7 +12,12 @@
 	</header>
 	<main class="mt-3">
 		<hr class="bg-pets hr-2"/>
-		<h1 class="text-center text-pets">All Pets</h1>
+		<th:block th:if="${animalName}">
+			<h1 class="text-center text-pets font-italic" th:text="|${animalName}s|"></h1>
+		</th:block>
+		<th:block th:unless="${animalName}">
+			<h1 class="text-center text-pets font-italic">All Pets</h1>
+		</th:block>
 		<hr class="bg-pets w-25 hr-2"/>
 		<table class="table table-hover w-75 mx-auto">
 			<thead>
@@ -38,7 +43,7 @@
 					<td class="col-md-1 text-center" th:text="${pet.animal}"></td>
 					<td class="col-md-3 text-center">
 						<div class="text-center">
-							<a th:href="${pet.image}">
+							<a th:href="${pet.image}" target="popup">
 								<img th:src="${pet.image}" height="60" width="auto" alt="Image">
 							</a>
 						</div>
@@ -50,10 +55,10 @@
 						<a th:href="@{/pets/details/{id}(id=${pet.id})}"
 						   class="btn btn-success font-weight-bold text-white">Edit</a>
 						<button type="button" class="btn btn-danger font-weight-bold text-white" data-toggle="modal"
-						        data-target="#myModal">
+						        data-target="#deleteModal">
 							Delete
 						</button>
-						<div class="modal fade" id="myModal" role="dialog">
+						<div class="modal fade" id="deleteModal" role="dialog">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header justify-content-center">
@@ -65,8 +70,9 @@
 									<div class="modal-footer justify-content-center">
 										<a th:href="@{/pets/delete/{id}(id=${pet.id})}"
 										   class="btn btn-danger font-weight-bold text-white">Yes</a>
-										<a th:href="@{/home}"
-										   class="btn btn-success font-weight-bold text-white">No</a>
+										<button type="button" class="btn btn-success font-weight-bold text-white"
+										        data-dismiss="modal" aria-label="Close">No
+										</button>
 									</div>
 								</div>
 							</div>

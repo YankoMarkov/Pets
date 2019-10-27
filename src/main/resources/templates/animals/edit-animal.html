@@ -12,7 +12,7 @@
     </header>
     <main class="mt-3">
         <hr class="bg-pets hr-2"/>
-        <h1 class="text-center text-pets">Edit Animal</h1>
+        <h1 class="text-center text-pets font-italic">Update Animal</h1>
         <hr class="bg-pets w-25 hr-2"/>
         <form id="submitEdit" th:action="@{/animals/edit/{id}(id=${animal.id})}" th:method="post"
               class="form w-25 mx-auto" th:object="${animal}">
@@ -35,7 +35,7 @@
 </div>
 <script>
     $('#submitEdit').submit(function () {
-        $('#btnEdit').prop('disabled', true).text('Updating...');
+        $('#btnEdit').prop('disabled', true).text('Loading...');
     });
 </script>
 </body>

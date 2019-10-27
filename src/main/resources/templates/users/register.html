@@ -13,7 +13,7 @@
 	<main class="mt-3">
 		<hr class="bg-pets hr-2"/>
 		<div class="bg-2">
-			<h1 class="text-center text-pets">Register</h1>
+			<h1 class="text-center text-pets font-italic">Register</h1>
 			<hr class="bg-pets w-25 hr-2"/>
 			<form id="submitReg" class="mx-auto w-25" th:method="post" th:action="@{/users/register}" th:object="${userRegister}">
 				<div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'text-danger'">
@@ -54,7 +54,7 @@
 </div>
 <script>
 	$('#submitReg').submit(function () {
-		$('#btnReg').prop('disabled', true).text('Registering...');
+		$('#btnReg').prop('disabled', true).text('Loading...');
 	});
 </script>
 </body>

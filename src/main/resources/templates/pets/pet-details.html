@@ -12,14 +12,14 @@
 	</header>
 	<main class="mt-3">
 		<hr class="bg-pets hr-2"/>
-		<h1 class="text-center text-pets">Pet Details</h1>
+		<h1 class="text-center text-pets font-italic">Pet Details</h1>
 		<hr class="bg-pets w-25 hr-2"/>
 		<div class="container text-center">
 			<div class="row">
 				<div class="col-md-6">
 					<article class="gallery-wrap">
 						<div class="img-big-wrap pb-3">
-							<a th:href="${pet.image}">
+							<a th:href="${pet.image}" target="popup">
 								<img class="img-thumbnail" th:src="${pet.image}" alt="Image">
 							</a>
 						</div>
@@ -33,17 +33,17 @@
 					</div>
 					<div class="row mt-2">
 						<div class="col-md-12">
-							<h4>Name: <span th:text="${pet.name}"></span></h4>
+							<h4><span class="font-italic">Name:</span> <span th:text="${pet.name}"></span></h4>
 						</div>
 					</div>
 					<div class="row mt-2">
 						<div class="col-md-12">
-							<h4>Breed: <span th:text="${pet.breed}"></span></h4>
+							<h4><span class="font-italic">Breed:</span> <span th:text="${pet.breed}"></span></h4>
 						</div>
 					</div>
 					<div class="row mt-2">
 						<div class="col-md-12">
-							<h4>Fur Color: <span th:text="${pet.furColor}"></span></h4>
+							<h4><span class="font-italic">Fur Color:</span> <span th:text="${pet.furColor}"></span></h4>
 						</div>
 					</div>
 					<div class="row mt-2">
@@ -53,23 +53,28 @@
 					</div>
 					<div class="row mt-2">
 						<div class="col-md-12">
-							<h4>Age: <span th:text="|${pet.ageInYears} year and ${pet.ageInMonths} month|"></span>
+							<h4><span class="font-italic">Age:</span> <span
+									th:text="|${pet.ageInYears} year and ${pet.ageInMonths} month|"></span>
 							</h4>
 						</div>
 					</div>
 					<th:block th:if="${vaccineDateExpired}">
 						<div class="row mt-2" style="background-color: red">
 							<div class="col-md-12">
-								<h4>Vaccine date: <span th:text="${pet.vaccineDate}"></span></h4>
-								<h4>Next vaccine date: <span th:text="${pet.nextVaccineDate}"></span></h4>
+								<h4><span class="font-italic">Vaccine date:</span> <span
+										th:text="${pet.vaccineDate}"></span></h4>
+								<h4><span class="font-italic">Next vaccine date:</span> <span
+										th:text="${pet.nextVaccineDate}"></span></h4>
 							</div>
 						</div>
 					</th:block>
 					<th:block th:unless="${vaccineDateExpired}">
 						<div class="row mt-2">
 							<div class="col-md-12">
-								<h4>Vaccine date: <span th:text="${pet.vaccineDate}"></span></h4>
-								<h4>Next vaccine date: <span th:text="${pet.nextVaccineDate}"></span></h4>
+								<h4><span class="font-italic">Vaccine date:</span> <span
+										th:text="${pet.vaccineDate}"></span></h4>
+								<h4><span class="font-italic">Next vaccine date:</span> <span
+										th:text="${pet.nextVaccineDate}"></span></h4>
 							</div>
 						</div>
 					</th:block>

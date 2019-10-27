@@ -12,7 +12,7 @@
 	</header>
 	<main class="mt-3">
 		<hr class="bg-pets hr-2"/>
-		<h1 class="text-center text-pets">Create Pet</h1>
+		<h1 class="text-center text-pets font-italic">Create Pet</h1>
 		<hr class="bg-pets w-25 hr-2"/>
 		<form id="submitAdd" class="mx-auto w-25" th:method="post" th:action="@{/pets/add}" th:object="${petCreate}"
 		      enctype="multipart/form-data">
@@ -93,7 +93,7 @@
 		})
 		.catch((err) => console.log(err));
 	$('#submitAdd').submit(function () {
-		$('#btnAdd').prop('disabled', true).text('Creating...');
+		$('#btnAdd').prop('disabled', true).text('Loading...');
 	});
 </script>
 </body>

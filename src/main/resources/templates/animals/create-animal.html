@@ -12,7 +12,7 @@
 	</header>
 	<main class="mt-3">
 		<hr class="bg-pets hr-2"/>
-		<h1 class="text-center text-pets">Animal</h1>
+		<h1 class="text-center text-pets font-italic">Create Animal</h1>
 		<hr class="bg-pets w-25 hr-2"/>
 		<form id="submitCreate" class="mx-auto w-25" th:method="post" th:action="@{/animals/add}" th:object="${animalCreate}">
 			<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
@@ -34,7 +34,7 @@
 </div>
 <script>
 	$('#submitCreate').submit(function () {
-		$('#btnCreate').prop('disabled', true).text('Creating...');
+		$('#btnCreate').prop('disabled', true).text('Loading...');
 	});
 </script>
 </body>
