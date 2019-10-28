@@ -15,6 +15,5 @@ public interface HomeService {
 	                                     HttpServletRequest request);
 	
 	Page<PetServiceModel> takeAllPets(String userId,
-	                                  ModelAndView modelAndView,
 	                                  HttpServletRequest request);
 }

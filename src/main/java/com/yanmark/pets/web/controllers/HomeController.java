@@ -82,7 +82,7 @@ public class HomeController extends BaseController {
 		List<UserViewModel> userViewModels = this.userService.getAllUsers().stream()
 				.map(user -> this.modelMapper.map(user, UserViewModel.class))
 				.collect(Collectors.toList());
-		Page<PetServiceModel> petServiceModels = this.homeService.takeAllPets(userId, modelAndView, request);
+		Page<PetServiceModel> petServiceModels = this.homeService.takeAllPets(userId, request);
 		Page<AllPetsViewModel> allPetsViewModels = petServiceModels.map(AllPetsViewModel::new);
 		modelAndView.addObject("users", userViewModels);
 		modelAndView.addObject("pets", allPetsViewModels);

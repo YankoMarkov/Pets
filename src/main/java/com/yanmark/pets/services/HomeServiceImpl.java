@@ -44,7 +44,6 @@ public class HomeServiceImpl implements HomeService {
 	
 	@Override
 	public Page<PetServiceModel> takeAllPets(String userId,
-	                                         ModelAndView modelAndView,
 	                                         HttpServletRequest request) {
 		Page<PetServiceModel> petServiceModels = this.petService.getAllPets(request);
 		if (userId != null && userId.length() > 0) {
