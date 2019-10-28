@@ -38,7 +38,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 						"/pets/**",
 						"/illnesses/**").authenticated()
 				.antMatchers("/users/all",
-						"/users/changeRole").hasAuthority("ROOT")
+						"/users/changeRole",
+						"/allPets").hasAuthority("ROOT")
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()
