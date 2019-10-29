@@ -1,7 +1,12 @@
 package com.yanmark.pets.domain.models.views.illnesses;
 
+import com.yanmark.pets.domain.models.services.IllnessServiceModel;
+import com.yanmark.pets.domain.models.services.ImageServiceModel;
+
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class IllnessDetailsViewModel {
 	
@@ -13,6 +18,14 @@ public class IllnessDetailsViewModel {
 	
 	public IllnessDetailsViewModel() {
 		this.images = new ArrayList<>();
+	}
+	
+	public IllnessDetailsViewModel(IllnessServiceModel illnessService) {
+		setId(illnessService.getId());
+		setDate(illnessService);
+		setName(illnessService.getName());
+		setDescription(illnessService.getDescription());
+		setImages(illnessService.getImages());
 	}
 	
 	public String getId() {
@@ -27,8 +40,9 @@ public class IllnessDetailsViewModel {
 		return date;
 	}
 	
-	public void setDate(String date) {
-		this.date = date;
+	private void setDate(IllnessServiceModel illnessService) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+		this.date = illnessService.getDate().format(formatter);
 	}
 	
 	public String getName() {
@@ -51,7 +65,12 @@ public class IllnessDetailsViewModel {
 		return images;
 	}
 	
-	public void setImages(List<String> images) {
-		this.images = images;
+	private void setImages(Set<ImageServiceModel> imageServices) {
+		this.images = new ArrayList<>();
+		if (!imageServices.isEmpty()) {
+			for (ImageServiceModel imageService : imageServices) {
+				this.images.add(imageService.getImage());
+			}
+		}
 	}
 }

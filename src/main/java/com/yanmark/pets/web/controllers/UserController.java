@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -87,6 +86,7 @@ public class UserController extends BaseController {
 	                            ModelAndView modelAndView) {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
 		UserProfileViewModel userProfileViewModel = this.modelMapper.map(userServiceModel, UserProfileViewModel.class);
+		
 		modelAndView.addObject("userProfile", userProfileViewModel);
 		return this.view(PROFILE, modelAndView);
 	}
@@ -99,6 +99,7 @@ public class UserController extends BaseController {
 	                         ModelAndView modelAndView) {
 		UserServiceModel userServiceModel = this.userService.getUserByUsername(principal.getName());
 		UserProfileViewModel userProfileViewModel = this.modelMapper.map(userServiceModel, UserProfileViewModel.class);
+		
 		modelAndView.addObject("user", userProfileViewModel);
 		return this.view(EDIT_PROFILE, modelAndView);
 	}
@@ -125,14 +126,7 @@ public class UserController extends BaseController {
 	                             ModelAndView modelAndView) {
 		List<UserServiceModel> userServiceModels = this.userService.getAllUsers();
 		List<UserAllViewModel> usersViewModels = userServiceModels.stream()
-				.map(user -> {
-					UserAllViewModel usersViewModel = this.modelMapper.map(user, UserAllViewModel.class);
-					Set<String> authorities = user.getAuthorities().stream()
-							.map(UserRoleServiceModel::getAuthority)
-							.collect(Collectors.toSet());
-					usersViewModel.setAuthorities(authorities);
-					return usersViewModel;
-				})
+				.map(UserAllViewModel::new)
 				.collect(Collectors.toList());
 		
 		modelAndView.addObject("allUsers", usersViewModels);

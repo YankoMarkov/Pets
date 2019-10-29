@@ -3,7 +3,6 @@ package com.yanmark.pets.web.controllers;
 import com.yanmark.pets.domain.models.bindings.illnesses.IllnessCreateBindingModel;
 import com.yanmark.pets.domain.models.bindings.illnesses.IllnessEditBindingModel;
 import com.yanmark.pets.domain.models.services.IllnessServiceModel;
-import com.yanmark.pets.domain.models.services.ImageServiceModel;
 import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.views.illnesses.IllnessDetailsViewModel;
 import com.yanmark.pets.domain.models.views.illnesses.IllnessEditViewModel;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,14 +55,8 @@ public class IllnessController extends BaseController {
 		List<IllnessViewModel> illnessViewModels = new ArrayList<>();
 		if (!petServiceModel.getIllnesses().isEmpty()) {
 			illnessViewModels = petServiceModel.getIllnesses().stream()
-					.sorted((a,b) -> b.getDate().compareTo(a.getDate()))
-					.map(illness -> {
-						IllnessViewModel illnessViewModel = this.modelMapper.map(illness, IllnessViewModel.class);
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-						String date = illness.getDate().format(formatter);
-						illnessViewModel.setDate(date);
-						return illnessViewModel;
-					})
+					.sorted((a, b) -> b.getDate().compareTo(a.getDate()))
+					.map(IllnessViewModel::new)
 					.collect(Collectors.toList());
 		}
 		modelAndView.addObject("illnesses", illnessViewModels);
@@ -108,16 +99,8 @@ public class IllnessController extends BaseController {
 	                            @RequestParam("petId") String petId,
 	                            ModelAndView modelAndView) {
 		IllnessServiceModel illnessServiceModel = this.illnessService.getIllnessById(id);
-		IllnessDetailsViewModel illnessDetailsViewModel = this.modelMapper.map(illnessServiceModel, IllnessDetailsViewModel.class);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-		String date = illnessServiceModel.getDate().format(formatter);
-		illnessDetailsViewModel.setDate(date);
-		if (!illnessServiceModel.getImages().isEmpty()) {
-			illnessDetailsViewModel.setImages(new ArrayList<>());
-			for (ImageServiceModel image : illnessServiceModel.getImages()) {
-				illnessDetailsViewModel.getImages().add(image.getImage());
-			}
-		}
+		IllnessDetailsViewModel illnessDetailsViewModel = new IllnessDetailsViewModel(illnessServiceModel);
+		
 		modelAndView.addObject("illness", illnessDetailsViewModel);
 		modelAndView.addObject("petId", petId);
 		return this.view(ILLNESS_DETAILS, modelAndView);
@@ -131,6 +114,7 @@ public class IllnessController extends BaseController {
 	                         ModelAndView modelAndView) {
 		IllnessServiceModel illnessServiceModel = this.illnessService.getIllnessById(id);
 		IllnessEditViewModel illnessEditViewModel = this.modelMapper.map(illnessServiceModel, IllnessEditViewModel.class);
+		
 		modelAndView.addObject("illness", illnessEditViewModel);
 		modelAndView.addObject("petId", petId);
 		return this.view(EDIT_ILLNESS, modelAndView);

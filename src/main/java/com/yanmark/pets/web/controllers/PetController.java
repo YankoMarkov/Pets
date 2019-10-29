@@ -6,7 +6,6 @@ import com.yanmark.pets.domain.models.services.PetServiceModel;
 import com.yanmark.pets.domain.models.views.pets.PetDetailsViewModel;
 import com.yanmark.pets.domain.models.views.pets.PetEditViewModel;
 import com.yanmark.pets.services.PetService;
-import com.yanmark.pets.services.UserService;
 import com.yanmark.pets.web.annotations.PageTitle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 @Controller
 @RequestMapping("/pets")
@@ -29,22 +25,16 @@ public class PetController extends BaseController {
 	private static final String HOME = "/home";
 	private static final String EDIT_PET = "pets/edit-pet";
 	private static final String CREATE_PET = "pets/create-pet";
-	private static final String CASTRATED = " is castrated.";
-	private static final String NOT_CASTRATED = " is not castrated.";
-	private static final String NOT_BEEN_VACCINATED = " not vaccinated.";
 	private static final String PET_DETAILS = "pets/pet-details";
 	
 	private final PetService petService;
 	private final ModelMapper modelMapper;
-	private final UserService userService;
 	
 	@Autowired
 	public PetController(PetService petService,
-	                     ModelMapper modelMapper,
-	                     UserService userService) {
+	                     ModelMapper modelMapper) {
 		this.petService = petService;
 		this.modelMapper = modelMapper;
-		this.userService = userService;
 	}
 	
 	@GetMapping("/add")
@@ -80,29 +70,8 @@ public class PetController extends BaseController {
 	public ModelAndView details(@PathVariable String id,
 	                            ModelAndView modelAndView) {
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
-		PetDetailsViewModel petDetailsViewModel = this.modelMapper.map(petServiceModel, PetDetailsViewModel.class);
-		long age = ChronoUnit.MONTHS.between(
-				petServiceModel.getBirthDate().withDayOfMonth(1),
-				LocalDate.now().withDayOfMonth(1));
-		petDetailsViewModel.setAgeInYears((int) age / 12);
-		petDetailsViewModel.setAgeInMonths((int) age % 12);
-		petDetailsViewModel.setGender(petServiceModel.getGender().getGender());
-		petDetailsViewModel.setAnimal(petServiceModel.getAnimal().getName());
-		if (petServiceModel.isCastrated()) {
-			petDetailsViewModel.setIsCastrated(petServiceModel.getName() + CASTRATED);
-		} else {
-			petDetailsViewModel.setIsCastrated(petServiceModel.getName() + NOT_CASTRATED);
-		}
-		if (petServiceModel.getVaccineDate() != null) {
-			LocalDate nextVaccine = petServiceModel.getVaccineDate().plusYears(1);
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-			String date = petServiceModel.getVaccineDate().format(formatter);
-			String nextDate = nextVaccine.format(formatter);
-			petDetailsViewModel.setVaccineDate(date);
-			petDetailsViewModel.setNextVaccineDate(nextDate);
-		} else {
-			petDetailsViewModel.setVaccineDate(NOT_BEEN_VACCINATED);
-		}
+		PetDetailsViewModel petDetailsViewModel = new PetDetailsViewModel(petServiceModel);
+		
 		modelAndView.addObject("vaccineDateExpired", this.petService.vaccineDateExpired(id));
 		modelAndView.addObject("pet", petDetailsViewModel);
 		return this.view(PET_DETAILS, modelAndView);
@@ -114,16 +83,8 @@ public class PetController extends BaseController {
 	public ModelAndView edit(@PathVariable String id,
 	                         ModelAndView modelAndView) {
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
-		PetEditViewModel petEditViewModel = this.modelMapper.map(petServiceModel, PetEditViewModel.class);
-		petEditViewModel.setAnimal(petServiceModel.getAnimal().getName());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-		String birthDate = petServiceModel.getBirthDate().format(formatter);
-		petEditViewModel.setBirthDate(birthDate);
-		if (petServiceModel.getVaccineDate() != null) {
-			String vaccineDate = petServiceModel.getVaccineDate().format(formatter);
-			petEditViewModel.setVaccineDate(vaccineDate);
-		}
-		petEditViewModel.setGender(petServiceModel.getGender().getGender());
+		PetEditViewModel petEditViewModel = new PetEditViewModel(petServiceModel);
+		
 		modelAndView.addObject("pet", petEditViewModel);
 		return view(EDIT_PET, modelAndView);
 	}

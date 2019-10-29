@@ -1,6 +1,16 @@
 package com.yanmark.pets.domain.models.views.pets;
 
+import com.yanmark.pets.domain.models.services.PetServiceModel;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 public class PetDetailsViewModel {
+	
+	private static final String CASTRATED = " is castrated.";
+	private static final String NOT_CASTRATED = " is not castrated.";
+	private static final String NOT_BEEN_VACCINATED = " not vaccinated.";
 	
 	private String id;
 	private String image;
@@ -14,6 +24,24 @@ public class PetDetailsViewModel {
 	private String isCastrated;
 	private String vaccineDate;
 	private String nextVaccineDate;
+	
+	public PetDetailsViewModel() {
+	}
+	
+	public PetDetailsViewModel(PetServiceModel petService) {
+		setId(petService.getId());
+		setImage(petService.getImage());
+		setName(petService.getName());
+		setAnimal(petService.getAnimal().getName());
+		setAgeInYears(petService);
+		setAgeInMonths(petService);
+		setGender(petService.getGender().getGender());
+		setBreed(petService.getBreed());
+		setFurColor(petService.getFurColor());
+		setIsCastrated(petService);
+		setVaccineDate(petService);
+		setNextVaccineDate(petService);
+	}
 	
 	public String getId() {
 		return id;
@@ -51,16 +79,22 @@ public class PetDetailsViewModel {
 		return ageInYears;
 	}
 	
-	public void setAgeInYears(int ageInYears) {
-		this.ageInYears = ageInYears;
+	private void setAgeInYears(PetServiceModel petService) {
+		long age = ChronoUnit.MONTHS.between(
+				petService.getBirthDate().withDayOfMonth(1),
+				LocalDate.now().withDayOfMonth(1));
+		this.ageInYears = (int) age / 12;
 	}
 	
 	public int getAgeInMonths() {
 		return ageInMonths;
 	}
 	
-	public void setAgeInMonths(int ageInMonths) {
-		this.ageInMonths = ageInMonths;
+	private void setAgeInMonths(PetServiceModel petService) {
+		long age = ChronoUnit.MONTHS.between(
+				petService.getBirthDate().withDayOfMonth(1),
+				LocalDate.now().withDayOfMonth(1));
+		this.ageInMonths = (int) age % 12;
 	}
 	
 	public String getGender() {
@@ -91,23 +125,37 @@ public class PetDetailsViewModel {
 		return isCastrated;
 	}
 	
-	public void setIsCastrated(String isCastrated) {
-		this.isCastrated = isCastrated;
+	private void setIsCastrated(PetServiceModel petService) {
+		if (petService.isCastrated()) {
+			this.isCastrated = petService.getName() + CASTRATED;
+		} else {
+			this.isCastrated = petService.getName() + NOT_CASTRATED;
+		}
 	}
 	
 	public String getVaccineDate() {
 		return vaccineDate;
 	}
 	
-	public void setVaccineDate(String vaccineDate) {
-		this.vaccineDate = vaccineDate;
+	private void setVaccineDate(PetServiceModel petService) {
+		if (petService.getVaccineDate() != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+			this.vaccineDate = petService.getVaccineDate().format(formatter);
+		} else {
+			this.vaccineDate = NOT_BEEN_VACCINATED;
+		}
 	}
 	
 	public String getNextVaccineDate() {
 		return nextVaccineDate;
 	}
 	
-	public void setNextVaccineDate(String nextVaccineDate) {
-		this.nextVaccineDate = nextVaccineDate;
+	private void setNextVaccineDate(PetServiceModel petService) {
+		this.nextVaccineDate = "";
+		if (petService.getVaccineDate() != null) {
+			LocalDate nextVaccine = petService.getVaccineDate().plusYears(1);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+			this.nextVaccineDate = nextVaccine.format(formatter);
+		}
 	}
 }

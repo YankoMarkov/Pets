@@ -1,6 +1,9 @@
 package com.yanmark.pets.domain.models.views.pets;
 
+import com.yanmark.pets.domain.models.services.PetServiceModel;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.format.DateTimeFormatter;
 
 public class PetEditViewModel {
 	
@@ -14,6 +17,22 @@ public class PetEditViewModel {
 	private String gender;
 	private String isCastrated;
 	private String vaccineDate;
+	
+	public PetEditViewModel() {
+	}
+	
+	public PetEditViewModel(PetServiceModel petService) {
+		setId(petService.getId());
+		setImage(null);
+		setAnimal(petService.getAnimal().getName());
+		setName(petService.getName());
+		setBirthDate(petService);
+		setBreed(petService.getBreed());
+		setFurColor(petService.getFurColor());
+		setGender(petService.getGender().getGender());
+		setIsCastrated(null);
+		setVaccineDate(petService);
+	}
 	
 	public String getId() {
 		return id;
@@ -51,8 +70,9 @@ public class PetEditViewModel {
 		return birthDate;
 	}
 	
-	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
+	private void setBirthDate(PetServiceModel petService) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+		this.birthDate = petService.getBirthDate().format(formatter);
 	}
 	
 	public String getBreed() {
@@ -91,7 +111,11 @@ public class PetEditViewModel {
 		return vaccineDate;
 	}
 	
-	public void setVaccineDate(String vaccineDate) {
-		this.vaccineDate = vaccineDate;
+	public void setVaccineDate(PetServiceModel petService) {
+		this.vaccineDate = "";
+		if (petService.getVaccineDate() != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+			this.vaccineDate = petService.getVaccineDate().format(formatter);
+		}
 	}
 }

@@ -68,6 +68,7 @@ public class HomeController extends BaseController {
 				.collect(Collectors.toList());
 		Page<PetServiceModel> petServiceModels = this.homeService.takePetsByUser(animalId, modelAndView, principal, request);
 		Page<PetHomeViewModel> petHomeViewModels = petServiceModels.map(PetHomeViewModel::new);
+		
 		modelAndView.addObject("animals", animalViewModels);
 		modelAndView.addObject("pets", petHomeViewModels);
 		return this.view(HOME, modelAndView);
@@ -84,6 +85,7 @@ public class HomeController extends BaseController {
 				.collect(Collectors.toList());
 		Page<PetServiceModel> petServiceModels = this.homeService.takeAllPets(userId, request);
 		Page<AllPetsViewModel> allPetsViewModels = petServiceModels.map(AllPetsViewModel::new);
+		
 		modelAndView.addObject("users", userViewModels);
 		modelAndView.addObject("pets", allPetsViewModels);
 		return this.view(ALL_PETS, modelAndView);

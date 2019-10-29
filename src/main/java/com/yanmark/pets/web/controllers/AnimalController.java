@@ -43,6 +43,7 @@ public class AnimalController extends BaseController {
 		List<AnimalViewModel> animalViewModels = this.animalService.getAllAnimals().stream()
 				.map(animal -> this.modelMapper.map(animal, AnimalViewModel.class))
 				.collect(Collectors.toList());
+		
 		modelAndView.addObject("animals", animalViewModels);
 		return this.view(ALL_ANIMALS, modelAndView);
 	}
@@ -74,6 +75,7 @@ public class AnimalController extends BaseController {
 	                  ModelAndView modelAndView) {
 		AnimalServiceModel animalServiceModel = this.animalService.getAnimalById(id);
 		AnimalViewModel animalViewModel = this.modelMapper.map(animalServiceModel, AnimalViewModel.class);
+		
 		modelAndView.addObject("animal", animalViewModel);
 		return this.view(EDIT_ANIMAL, modelAndView);
 	}
