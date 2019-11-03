@@ -20,7 +20,7 @@
 				<th class="col-md-1 text-center">#</th>
 				<th class="col-md-4 text-center">Name</th>
 				<th class="col-md-3 text-center">Date</th>
-				<th class="col-md-3 text-center">Actions</th>
+				<th class="col-md-4 text-center">Actions</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -29,19 +29,42 @@
 					<th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
 					<td class="col-md-4 text-center" th:text="${illness.name}"></td>
 					<td class="col-md-3 text-center" th:text="${illness.date}"></td>
-					<td class="col-md-3 text-center">
-						<a th:href="@{/illnesses/details/{id}(id=${illness.id},petId=${petId})}"
+					<td class="col-md-4 text-center">
+						<a th:href="@{/illnesses/details/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}"
 						   class="btn bg-pets font-weight-bold text-white">Edit</a>
-						<a th:href="@{/illnesses/edit/{id}(id=${illness.id},petId=${petId})}"
+						<a th:href="@{/illnesses/edit/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}"
 						   class="btn btn-success font-weight-bold text-white">Update</a>
+						<button type="button" class="btn btn-danger font-weight-bold text-white" data-toggle="modal"
+						        data-target="#deleteModal">
+							Delete
+						</button>
+						<div class="modal fade" id="deleteModal" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header justify-content-center">
+										<h4 class="modal-title">Delete Illness</h4>
+									</div>
+									<div class="modal-body">
+										<p>Аre you sure you want to delete <span th:text="${illness.name}"></span>.</p>
+									</div>
+									<div class="modal-footer justify-content-center">
+										<a th:href="@{/illnesses/delete/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}"
+										   class="btn btn-danger font-weight-bold text-white">Yes</a>
+										<button type="button" class="btn btn-success font-weight-bold text-white"
+										        data-dismiss="modal" aria-label="Close">No
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</td>
 				</tr>
 			</th:block>
 			</tbody>
 		</table>
 		<div class="d-flex justify-content-center">
-			<a th:href="@{/illnesses/add/{id}(id=${petId})}" class="btn bg-pets text-white">Add</a>
-			<a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}(id=${petId})}"
+			<a th:href="@{/illnesses/add/{id}/{page}(id=${petId},page=${page})}" class="btn bg-pets text-white">Add</a>
+			<a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}/{page}(id=${petId},page=${page})}"
 			   th:text="Back"></a>
 		</div>
 		<hr class="bg-pets hr-2 mt-5"/>

@@ -79,9 +79,9 @@
 						</div>
 					</th:block>
 					<div class="row mt-4 d-flex justify-content-center">
-						<a class="btn bg-pets text-white" th:href="@{/illnesses/all/{id}(id=${pet.id})}"
+						<a class="btn bg-pets text-white" th:href="@{/illnesses/all/{id}/{page}(id=${pet.id},page=${page})}"
 						   th:text="Health"></a>
-						<a class="btn btn-success text-white ml-5" th:href="@{/pets/edit/{id}(id=${pet.id})}"
+						<a class="btn btn-success text-white ml-5" th:href="@{/pets/edit/{id}/{page}(id=${pet.id},page=${page})}"
 						   th:text="Update"></a>
 						<a class="btn btn-dark text-white ml-5" th:href="@{/home?page={num}(num=${page})}"
 						   th:text="Back"></a>

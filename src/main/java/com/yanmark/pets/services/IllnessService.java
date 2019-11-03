@@ -16,4 +16,6 @@ public interface IllnessService {
 	IllnessServiceModel getIllnessById(String id);
 	
 	IllnessServiceModel getIllnessByPet(PetServiceModel petService);
+	
+	void deleteIllness(String id);
 }

@@ -13,7 +13,7 @@
 	<main class="mt-3">
 		<hr class="bg-pets hr-2"/>
 		<th:block th:if="${animalName}">
-			<h1 class="text-center text-pets font-italic" th:text="|${animalName}s|"></h1>
+			<h1 class="text-center text-pets font-italic" th:text="|All ${animalName}s|"></h1>
 		</th:block>
 		<th:block th:unless="${animalName}">
 			<h1 class="text-center text-pets font-italic">All Pets</h1>

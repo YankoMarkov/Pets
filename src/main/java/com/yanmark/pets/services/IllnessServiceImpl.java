@@ -119,4 +119,13 @@ public class IllnessServiceImpl implements IllnessService {
 				.orElseThrow(() -> new IllegalArgumentException(ILLNESS_NOT_FOUND));
 		return this.modelMapper.map(illness, IllnessServiceModel.class);
 	}
+	
+	@Override
+	public void deleteIllness(String id) {
+		try {
+			this.illnessRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+	}
 }

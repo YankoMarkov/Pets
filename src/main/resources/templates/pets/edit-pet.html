@@ -14,7 +14,8 @@
 		<hr class="bg-pets hr-2"/>
 		<h1 class="text-center text-pets font-italic">Update Pet</h1>
 		<hr class="bg-pets w-25 hr-2"/>
-		<form id="submitUpdate" class="mx-auto w-25" th:object="${pet}" th:method="post" th:action="@{/pets/edit/{id}(id=*{id})}"
+		<form id="submitUpdate" class="mx-auto w-25" th:object="${pet}" th:method="post"
+		      th:action="@{/pets/edit/{id}/{page}(id=*{id},page=${page})}"
 		      enctype="multipart/form-data">
 			<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
 				<label for="name" class="text-pets">Name</label>
@@ -74,7 +75,7 @@
 			<hr class="bg-pets hr-2"/>
 			<div class="button-holder mt-4 d-flex justify-content-center">
 				<button id="btnUpdate" type="submit" class="btn bg-pets text-white">Update</button>
-				<a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}(id=*{id})}"
+				<a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}/{page}(id=*{id},page=${page})}"
 				   th:text="Cancel"></a>
 			</div>
 		</form>

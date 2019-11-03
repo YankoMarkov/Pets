@@ -17,18 +17,21 @@
 		<div class="jumbotron bg-pets">
 			<div class="row mt-2 text-center">
 				<div class="col-md-12">
-					<h4 class="text-white"><span class="font-italic">Name:</span> <span th:text="${illness.name}"></span></h4>
+					<h4 class="text-white"><span class="font-italic">Name:</span> <span
+							th:text="${illness.name}"></span></h4>
 				</div>
 			</div>
 			<div class="row mt-2 text-center">
 				<div class="col-md-12">
-					<h4 class="text-white"><span class="font-italic">Date:</span> <span th:text="${illness.date}"></span></h4>
+					<h4 class="text-white"><span class="font-italic">Date:</span> <span
+							th:text="${illness.date}"></span></h4>
 				</div>
 			</div>
 			<th:block th:unless="${illness.description == ''}">
 				<div class="row mt-2 text-center">
 					<div class="col-md-12">
-						<h4 class="text-white"><span class="font-italic">Description:</span> <span th:text="${illness.description}"></span></h4>
+						<h4 class="text-white"><span class="font-italic">Description:</span> <span
+								th:text="${illness.description}"></span></h4>
 					</div>
 				</div>
 			</th:block>
@@ -50,7 +53,7 @@
 			</th:block>
 		</div>
 		<div class="d-flex justify-content-center">
-			<a class="btn btn-dark text-white ml-5" th:href="@{/illnesses/all/{id}(id=${petId})}"
+			<a class="btn btn-dark text-white ml-5" th:href="@{/illnesses/all/{id}/{page}(id=${petId},page=${page})}"
 			   th:text="Back"></a>
 		</div>
 		<hr class="bg-pets hr-2 mt-5"/>

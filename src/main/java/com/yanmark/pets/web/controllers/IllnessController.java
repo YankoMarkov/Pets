@@ -46,10 +46,11 @@ public class IllnessController extends BaseController {
 		this.modelMapper = modelMapper;
 	}
 	
-	@GetMapping("/all/{id}")
+	@GetMapping("/all/{id}/{page}")
 	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD6C\uD835\uDD91\uD835\uDD91")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView all(@PathVariable String id,
+	                        @PathVariable String page,
 	                        ModelAndView modelAndView) {
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
 		List<IllnessViewModel> illnessViewModels = new ArrayList<>();
@@ -61,22 +62,26 @@ public class IllnessController extends BaseController {
 		}
 		modelAndView.addObject("illnesses", illnessViewModels);
 		modelAndView.addObject("petId", id);
+		modelAndView.addObject("page", page);
 		return view(HEALTH, modelAndView);
 	}
 	
-	@GetMapping("/add/{id}")
+	@GetMapping("/add/{id}/{page}")
 	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD6C\uD835\uDD89\uD835\uDD89")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView add(@PathVariable String id,
+	                        @PathVariable String page,
 	                        @ModelAttribute("illnessCreate") IllnessCreateBindingModel illnessCreate,
 	                        ModelAndView modelAndView) {
 		modelAndView.addObject("petId", id);
+		modelAndView.addObject("page", page);
 		return this.view(CREATE_ILLNESS, modelAndView);
 	}
 	
-	@PostMapping("/add/{id}")
+	@PostMapping("/add/{id}/{page}")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView addConfirm(@PathVariable String id,
+	                               @PathVariable String page,
 	                               @ModelAttribute("illnessCreate") IllnessCreateBindingModel illnessCreate,
 	                               BindingResult bindingResult,
 	                               ModelAndView modelAndView) {
@@ -89,13 +94,14 @@ public class IllnessController extends BaseController {
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		return this.redirect(ALL + id);
+		return this.redirect(ALL + id + "/" + page);
 	}
 	
-	@GetMapping("/details/{id}")
+	@GetMapping("/details/{id}/{page}")
 	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD6F\uD835\uDD8A\uD835\uDD99\uD835\uDD86\uD835\uDD8E\uD835\uDD91\uD835\uDD98")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView details(@PathVariable String id,
+	                            @PathVariable String page,
 	                            @RequestParam("petId") String petId,
 	                            ModelAndView modelAndView) {
 		IllnessServiceModel illnessServiceModel = this.illnessService.getIllnessById(id);
@@ -103,13 +109,15 @@ public class IllnessController extends BaseController {
 		
 		modelAndView.addObject("illness", illnessDetailsViewModel);
 		modelAndView.addObject("petId", petId);
+		modelAndView.addObject("page", page);
 		return this.view(ILLNESS_DETAILS, modelAndView);
 	}
 	
-	@GetMapping("/edit/{id}")
+	@GetMapping("/edit/{id}/{page}")
 	@PageTitle("\uD835\uDD74\uD835\uDD91\uD835\uDD91\uD835\uDD93\uD835\uDD8A\uD835\uDD98\uD835\uDD98 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView edit(@PathVariable String id,
+	                         @PathVariable String page,
 	                         @RequestParam("petId") String petId,
 	                         ModelAndView modelAndView) {
 		IllnessServiceModel illnessServiceModel = this.illnessService.getIllnessById(id);
@@ -117,12 +125,14 @@ public class IllnessController extends BaseController {
 		
 		modelAndView.addObject("illness", illnessEditViewModel);
 		modelAndView.addObject("petId", petId);
+		modelAndView.addObject("page", page);
 		return this.view(EDIT_ILLNESS, modelAndView);
 	}
 	
-	@PostMapping("/edit/{id}")
+	@PostMapping("/edit/{id}/{page}")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView editConfirm(@PathVariable String id,
+	                                @PathVariable String page,
 	                                @ModelAttribute("illnessEdit") IllnessEditBindingModel illnessEdit,
 	                                BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -134,6 +144,16 @@ public class IllnessController extends BaseController {
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		return this.redirect(ALL + illnessServiceModel.getPet().getId());
+		return this.redirect(ALL + illnessServiceModel.getPet().getId() + "/" + page);
+	}
+	
+	@GetMapping("/delete/{id}/{page}")
+	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6F\uD835\uDD8A\uD835\uDD91\uD835\uDD8A\uD835\uDD99\uD835\uDD8A")
+	@PreAuthorize("isAuthenticated()")
+	public ModelAndView delete(@PathVariable String id,
+	                           @PathVariable String page,
+	                           @RequestParam("petId") String petId) {
+		this.illnessService.deleteIllness(id);
+		return redirect(ALL + petId + "/" + page);
 	}
 }

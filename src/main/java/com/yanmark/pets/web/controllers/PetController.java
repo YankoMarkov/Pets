@@ -23,6 +23,7 @@ import java.security.Principal;
 public class PetController extends BaseController {
 	
 	private static final String HOME = "/home";
+	private static final String DETAILS_PET = "/pets/details/";
 	private static final String EDIT_PET = "pets/edit-pet";
 	private static final String CREATE_PET = "pets/create-pet";
 	private static final String PET_DETAILS = "pets/pet-details";
@@ -79,22 +80,25 @@ public class PetController extends BaseController {
 		return this.view(PET_DETAILS, modelAndView);
 	}
 	
-	@GetMapping("/edit/{id}")
+	@GetMapping("/edit/{id}/{page}")
 	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD70\uD835\uDD89\uD835\uDD8E\uD835\uDD99")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView edit(@PathVariable String id,
+	                         @PathVariable String page,
 	                         ModelAndView modelAndView) {
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
 		PetEditViewModel petEditViewModel = new PetEditViewModel(petServiceModel);
 		
 		modelAndView.addObject("pet", petEditViewModel);
+		modelAndView.addObject("page", page);
 		return view(EDIT_PET, modelAndView);
 	}
 	
-	@PostMapping("/edit/{id}")
+	@PostMapping("/edit/{id}/{page}")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView editConfirm(@ModelAttribute("petEdit") PetEditBindingModel petEdit,
 	                                @PathVariable String id,
+	                                @PathVariable String page,
 	                                BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return view(EDIT_PET);
@@ -105,7 +109,7 @@ public class PetController extends BaseController {
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-		return redirect(HOME);
+		return redirect(DETAILS_PET + id + "/" + page);
 	}
 	
 	@GetMapping("/delete/{id}")

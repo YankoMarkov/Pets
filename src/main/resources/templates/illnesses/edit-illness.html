@@ -14,7 +14,8 @@
 		<hr class="bg-pets hr-2"/>
 		<h1 class="text-center text-pets font-italic">Update Illness</h1>
 		<hr class="bg-pets w-25 hr-2"/>
-		<form id="submitEdit" class="mx-auto w-25" th:object="${illness}" th:method="post" th:action="@{/illnesses/edit/{id}(id=*{id},petId=${petId})}"
+		<form id="submitEdit" class="mx-auto w-25" th:object="${illness}" th:method="post"
+		      th:action="@{/illnesses/edit/{id}/{page}(id=*{id},page=${page},petId=${petId})}"
 		      enctype="multipart/form-data">
 			<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
 				<label for="name" class="text-pets">Name</label>
@@ -41,7 +42,7 @@
 			<hr class="bg-pets hr-2"/>
 			<div class="button-holder mt-4 d-flex justify-content-center">
 				<button id="btnEdit" type="submit" class="btn bg-pets text-white">Update</button>
-				<a class="btn btn-dark text-white ml-5" th:href="@{/illnesses/all/{id}(id=${petId})}"
+				<a class="btn btn-dark text-white ml-5" th:href="@{/illnesses/all/{id}/{page}(id=${petId},page=${page})}"
 				   th:text="Cancel"></a>
 			</div>
 		</form>
