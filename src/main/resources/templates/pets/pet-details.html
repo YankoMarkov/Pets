@@ -83,7 +83,7 @@
 						   th:text="Health"></a>
 						<a class="btn btn-success text-white ml-5" th:href="@{/pets/edit/{id}(id=${pet.id})}"
 						   th:text="Update"></a>
-						<a class="btn btn-dark text-white ml-5" th:href="@{/home}"
+						<a class="btn btn-dark text-white ml-5" th:href="@{/home?page={num}(num=${page})}"
 						   th:text="Back"></a>
 					</div>
 				</div>

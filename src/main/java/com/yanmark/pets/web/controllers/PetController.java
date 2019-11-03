@@ -64,16 +64,18 @@ public class PetController extends BaseController {
 		return this.redirect(HOME);
 	}
 	
-	@GetMapping("/details/{id}")
+	@GetMapping("/details/{id}/{page}")
 	@PageTitle("\uD835\uDD7B\uD835\uDD8A\uD835\uDD99 \uD835\uDD6F\uD835\uDD8A\uD835\uDD99\uD835\uDD86\uD835\uDD8E\uD835\uDD91\uD835\uDD98")
 	@PreAuthorize("isAuthenticated()")
 	public ModelAndView details(@PathVariable String id,
+	                            @PathVariable String page,
 	                            ModelAndView modelAndView) {
 		PetServiceModel petServiceModel = this.petService.getPetById(id);
 		PetDetailsViewModel petDetailsViewModel = new PetDetailsViewModel(petServiceModel);
 		
 		modelAndView.addObject("vaccineDateExpired", this.petService.vaccineDateExpired(id));
 		modelAndView.addObject("pet", petDetailsViewModel);
+		modelAndView.addObject("page", page);
 		return this.view(PET_DETAILS, modelAndView);
 	}
 	

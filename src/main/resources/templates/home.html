@@ -52,7 +52,7 @@
 					<td class="col-md-1 text-center" th:text="|${pet.ageInYears}y ${pet.ageInMonths}m|"></td>
 					<td class="col-md-1 text-center" th:text="${pet.gender}"></td>
 					<td class="col-md-3 text-center">
-						<a th:href="@{/pets/details/{id}(id=${pet.id})}"
+						<a th:href="@{/pets/details/{id}/{page}(id=${pet.id},page=${pets.number} + 1)}"
 						   class="btn btn-success font-weight-bold text-white">Edit</a>
 						<button type="button" class="btn btn-danger font-weight-bold text-white" data-toggle="modal"
 						        data-target="#deleteModal">
