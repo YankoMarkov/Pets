@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface UserRoleService {
 
-    UserRoleServiceModel getRoleByName(String name);
+  UserRoleServiceModel getRoleByName(String name);
 
-    Set<UserRoleServiceModel> getAllRoles();
+  Set<UserRoleServiceModel> getAllRoles();
 }

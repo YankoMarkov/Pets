@@ -3,47 +3,47 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<th:block th:replace="fragments/head"/>
+    <th:block th:replace="fragments/head"/>
 </head>
 <body>
 <div class="container-fluid">
-	<header>
-		<th:block th:replace="fragments/navbar"/>
-	</header>
-	<main class="mt-3">
-		<hr class="bg-pets hr-2"/>
-		<div class="bg-2">
-			<h1 class="text-center text-pets font-italic">Login</h1>
-			<hr class="bg-pets w-25 hr-2"/>
-			<th:block th:if="${param.error}">
-				<h5 class="text-center" style="color: red">Bad Credentials</h5>
-			</th:block>
-			<form id="submitLog" class="mx-auto w-25" th:method="post" th:action="@{/users/login}">
-				<div class="form-group">
-					<label for="username" class="text-pets">Username</label>
-					<input type="text" class="form-control" id="username" placeholder="Username..." name="username"/>
-				</div>
-				<div class="form-group">
-					<label for="password" class="text-pets">Password</label>
-					<input type="password" class="form-control" id="password" placeholder="Password..."
-					       name="password"/>
-				</div>
-				<hr class="bg-pets hr-2"/>
-				<div class="button-holder d-flex justify-content-center">
-					<button id="btnLog" type="submit" class="btn bg-pets text-white">Login</button>
-				</div>
-			</form>
-		</div>
-		<hr class="bg-pets hr-2 mt-5"/>
-	</main>
-	<footer>
-		<th:block th:replace="fragments/footer"/>
-	</footer>
+    <header>
+        <th:block th:replace="fragments/navbar"/>
+    </header>
+    <main class="mt-3">
+        <hr class="bg-pets hr-2"/>
+        <div class="bg-2">
+            <h1 class="text-center text-pets font-italic">Login</h1>
+            <hr class="bg-pets w-25 hr-2"/>
+            <th:block th:if="${param.error}">
+                <h5 class="text-center" style="color: red">Bad Credentials</h5>
+            </th:block>
+            <form class="mx-auto w-25" id="submitLog" th:action="@{/users/login}" th:method="post">
+                <div class="form-group">
+                    <label class="text-pets" for="username">Username</label>
+                    <input class="form-control" id="username" name="username" placeholder="Username..." type="text"/>
+                </div>
+                <div class="form-group">
+                    <label class="text-pets" for="password">Password</label>
+                    <input class="form-control" id="password" name="password" placeholder="Password..."
+                           type="password"/>
+                </div>
+                <hr class="bg-pets hr-2"/>
+                <div class="button-holder d-flex justify-content-center">
+                    <button class="btn bg-pets text-white" id="btnLog" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+        <hr class="bg-pets hr-2 mt-5"/>
+    </main>
+    <footer>
+        <th:block th:replace="fragments/footer"/>
+    </footer>
 </div>
 <script>
-	$('#submitLog').submit(function () {
-		$('#btnLog').prop('disabled', true).text('Loading...');
-	});
+    $('#submitLog').submit(function () {
+        $('#btnLog').prop('disabled', true).text('Loading...');
+    });
 </script>
 </body>
 </html>

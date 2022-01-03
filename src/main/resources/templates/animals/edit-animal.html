@@ -14,17 +14,17 @@
         <hr class="bg-pets hr-2"/>
         <h1 class="text-center text-pets font-italic">Update Animal</h1>
         <hr class="bg-pets w-25 hr-2"/>
-        <form id="submitEdit" th:action="@{/animals/edit/{id}(id=${animal.id})}" th:method="post"
-              class="form w-25 mx-auto" th:object="${animal}">
+        <form class="form w-25 mx-auto" id="submitEdit" th:action="@{/animals/edit/{id}(id=${animal.id})}"
+              th:method="post" th:object="${animal}">
             <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
-                <label for="edit-animal-name" class="font-weight-bold">Name</label>
-                <input type="text" class="form-control text-center" id="edit-animal-name" name="name"
-                       th:field="*{name}">
+                <label class="font-weight-bold" for="edit-animal-name">Name</label>
+                <input class="form-control text-center" id="edit-animal-name" name="name" th:field="*{name}"
+                       type="text">
                 <h6 th:each="error : ${#fields.errors('name')}" th:text="${error}"></h6>
             </div>
             <hr class="hr-2 bg-dark">
             <div class="button-holder d-flex justify-content-center">
-                <button id="btnEdit" type="submit" class="btn btn-info">Update</button>
+                <button class="btn btn-info" id="btnEdit" type="submit">Update</button>
             </div>
         </form>
         <hr class="bg-pets hr-2 mt-5"/>

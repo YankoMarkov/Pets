@@ -7,51 +7,52 @@ import javax.validation.constraints.Size;
 
 public class UserRegisterBindingModel {
 
-    private String username;
-    private String password;
-    private String confirmPassword;
-    private String email;
+  private String username;
+  private String password;
+  private String confirmPassword;
+  private String email;
 
-    @NotNull(message = "Username cannot be null.")
-    @Size(min = 3, max = 15, message = "Username must be in range [3 - 15] symbols.")
-    public String getUsername() {
-        return this.username;
-    }
+  @NotNull(message = "Username cannot be null.")
+  @NotBlank(message = "Username cannot be empty.")
+  @Size(min = 3, max = 15, message = "Username must be in range [3 - 15] symbols.")
+  public String getUsername() {
+    return this.username;
+  }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    @NotNull(message = "Password cannot be null.")
-    @NotBlank(message = "Password cannot be empty.")
-    @Size(min = 6, message = "Password must be minimum 6 symbols.")
-    public String getPassword() {
-        return this.password;
-    }
+  @NotNull(message = "Password cannot be null.")
+  @NotBlank(message = "Password cannot be empty.")
+  @Size(min = 6, message = "Password must be minimum 6 symbols.")
+  public String getPassword() {
+    return this.password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    @NotNull(message = "Confirm Password cannot be null.")
-    @NotBlank(message = "Confirm Password cannot be empty.")
-    @Size(min = 6, message = "Confirm Password must be minimum 6 symbols.")
-    public String getConfirmPassword() {
-        return this.confirmPassword;
-    }
+  @NotNull(message = "Confirm Password cannot be null.")
+  @NotBlank(message = "Confirm Password cannot be empty.")
+  @Size(min = 6, message = "Confirm Password must be minimum 6 symbols.")
+  public String getConfirmPassword() {
+    return this.confirmPassword;
+  }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
+  public void setConfirmPassword(String confirmPassword) {
+    this.confirmPassword = confirmPassword;
+  }
 
-    @NotNull(message = "Email cannot be null.")
-    @NotBlank(message = "Email cannot be empty.")
-    @Email(message = "Invalid email.")
-    public String getEmail() {
-        return this.email;
-    }
+  @NotNull(message = "Email cannot be null.")
+  @NotBlank(message = "Email cannot be empty.")
+  @Email(message = "Invalid email.")
+  public String getEmail() {
+    return this.email;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 }

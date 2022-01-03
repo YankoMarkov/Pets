@@ -26,13 +26,13 @@
             <th:block th:each="user, iter : ${allUsers}" th:object="${user}">
                 <tr class="text-center" th:if="${user.username != #authentication.getPrincipal().getUsername()}">
                     <td th:text="*{username}"></td>
-                    <td th:if="*{#lists.contains(authorities, 'ROOT')}" colspan="2">
+                    <td colspan="2" th:if="*{#lists.contains(authorities, 'ROOT')}">
                         <strong>Sorry I am ROOT may be next time!!!</strong>
                     </td>
-                    <td th:unless="*{#lists.contains(authorities, 'ROOT')}" colspan="2"
-                        th:id="'form-role-' + ${iter.index}" style="display: none;">
-                        <form th:action="@{/users/changeRole(id=${user.id})}" th:method="post"
-                              class="form-inline justify-content-around">
+                    <td colspan="2" style="display: none;"
+                        th:id="'form-role-' + ${iter.index}" th:unless="*{#lists.contains(authorities, 'ROOT')}">
+                        <form class="form-inline justify-content-around" th:action="@{/users/changeRole(id=${user.id})}"
+                              th:method="post">
                             <select class="form-control" id="authority" name="authority">
                                 <option th:value="ADMIN">ADMIN</option>
                                 <option th:value="MODERATOR">MODERATOR</option>
@@ -40,10 +40,10 @@
                             <button type="submit">Change Role</button>
                         </form>
                     </td>
-                    <td th:unless="*{#lists.contains(authorities, 'ROOT')}" th:id="'user-' + ${iter.index}"
-                        th:text="*{#strings.listJoin(authorities, ' | ')}"></td>
-                    <td th:unless="*{#lists.contains(authorities, 'ROOT')}" th:id="'button-' + ${iter.index}">
-                        <a th:id="'change-role-' + ${iter.index}" class="btn btn-outline-secondary"
+                    <td th:id="'user-' + ${iter.index}" th:text="*{#strings.listJoin(authorities, ' | ')}"
+                        th:unless="*{#lists.contains(authorities, 'ROOT')}"></td>
+                    <td th:id="'button-' + ${iter.index}" th:unless="*{#lists.contains(authorities, 'ROOT')}">
+                        <a class="btn btn-outline-secondary" th:id="'change-role-' + ${iter.index}"
                            th:onclick="'changeRole(\'' + ${iter.index} + '\')'" th:text="Modify"></a>
                     </td>
                 </tr>

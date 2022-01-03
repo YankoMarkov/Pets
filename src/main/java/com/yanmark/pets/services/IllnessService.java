@@ -6,16 +6,19 @@ import com.yanmark.pets.domain.models.services.IllnessServiceModel;
 import com.yanmark.pets.domain.models.services.PetServiceModel;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface IllnessService {
-	
-	IllnessServiceModel saveIllness(IllnessCreateBindingModel illnessCreate, String healthId) throws IOException;
-	
-	IllnessServiceModel updateIllness(IllnessServiceModel illnessService, IllnessEditBindingModel illnessEdit) throws IOException;
-	
-	IllnessServiceModel getIllnessById(String id);
-	
-	IllnessServiceModel getIllnessByPet(PetServiceModel petService);
-	
-	void deleteIllness(String id);
+
+  IllnessServiceModel saveIllness(IllnessCreateBindingModel illnessCreate, String healthId)
+      throws IOException;
+
+  IllnessServiceModel updateIllness(
+      IllnessServiceModel illnessService, IllnessEditBindingModel illnessEdit) throws IOException;
+
+  IllnessServiceModel getIllnessById(String id);
+
+  List<IllnessServiceModel> getIllnessesByPet(PetServiceModel petService);
+
+  void deleteIllness(String id);
 }

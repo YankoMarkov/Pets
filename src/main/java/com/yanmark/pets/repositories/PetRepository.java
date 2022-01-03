@@ -12,14 +12,15 @@ import java.util.Optional;
 
 @Repository
 public interface PetRepository extends JpaRepository<Pet, String> {
-	
-	Page<Pet> getAllByOrderByBirthDateDesc(Pageable pageable);
-	
-	Page<Pet> getAllByAnimalOrderByBirthDateDesc(Animal animal, Pageable pageable);
-	
-	Page<Pet> getAllByOwnerOrderByBirthDateDesc(User owner, Pageable pageable);
-	
-	Page<Pet> getAllByOwnerAndAnimalOrderByBirthDateDesc(User owner, Animal animal, Pageable pageable);
-	
-	Optional<Pet> getByName(String name);
+
+  Page<Pet> getAllByOrderByBirthDateDesc(Pageable pageable);
+
+  Page<Pet> getAllByAnimalOrderByBirthDateDesc(Animal animal, Pageable pageable);
+
+  Page<Pet> getAllByOwnerOrderByBirthDateDesc(User owner, Pageable pageable);
+
+  Page<Pet> getAllByOwnerAndAnimalOrderByBirthDateDesc(
+      User owner, Animal animal, Pageable pageable);
+
+  Optional<Pet> getByName(String name);
 }

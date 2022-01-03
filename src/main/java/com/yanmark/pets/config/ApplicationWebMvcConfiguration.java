@@ -10,20 +10,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ApplicationWebMvcConfiguration implements WebMvcConfigurer {
 
-    private final TitleInterceptor titleInterceptor;
-    private final FaviconInterceptor faviconInterceptor;
+  private final TitleInterceptor titleInterceptor;
+  private final FaviconInterceptor faviconInterceptor;
 
-    @Autowired
-    public ApplicationWebMvcConfiguration(TitleInterceptor titleInterceptor,
-                                          FaviconInterceptor faviconInterceptor) {
-        this.titleInterceptor = titleInterceptor;
-        this.faviconInterceptor = faviconInterceptor;
-    }
+  @Autowired
+  public ApplicationWebMvcConfiguration(
+      TitleInterceptor titleInterceptor, FaviconInterceptor faviconInterceptor) {
+    this.titleInterceptor = titleInterceptor;
+    this.faviconInterceptor = faviconInterceptor;
+  }
 
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(this.titleInterceptor);
-        registry.addInterceptor(this.faviconInterceptor);
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(this.titleInterceptor);
+    registry.addInterceptor(this.faviconInterceptor);
+  }
 }

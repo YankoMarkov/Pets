@@ -2,22 +2,22 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Oops 404</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<link th:href="@{/css/reset-css.css}" rel="stylesheet"/>
-	<link th:href="@{//fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister}" rel="stylesheet"/>
-	<link th:href="@{/css/error-css.css}" rel="stylesheet" media="all"/>
+    <title>Oops 404</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <link rel="stylesheet" th:href="@{/css/reset-css.css}"/>
+    <link rel="stylesheet" th:href="@{//fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister}"/>
+    <link media="all" rel="stylesheet" th:href="@{/css/error-css.css}"/>
 </head>
 <body>
 <div class="wrap">
-	<div class="logo">
-		<p style="color: red">OOPS! - Something Went Wrong</p>
-		<img th:src="'https://http.cat/' + ${statusCode}" alt="ERROR">
-		<div class="sub">
-			<p th:text="${message}" style="color: red"></p>
-			<p><a th:href="@{/home}">Go To Homepage</a></p>
-		</div>
-	</div>
+    <div class="logo">
+        <p style="color: red">OOPS! - Something Went Wrong</p>
+        <img alt="ERROR" th:src="'https://http.cat/' + ${statusCode}">
+        <div class="sub">
+            <p style="color: red" th:text="${message}"></p>
+            <p><a th:href="@{/home}">Go To Homepage</a></p>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -8,22 +8,21 @@ import javax.persistence.Entity;
 @Entity(name = "roles")
 public class UserRole extends BaseEntity implements GrantedAuthority {
 
-    private String authority;
+  private String authority;
 
-    public UserRole() {
-    }
+  public UserRole() {}
 
-    public UserRole(String authority) {
-        this.authority = authority;
-    }
+  public UserRole(String authority) {
+    this.authority = authority;
+  }
 
-    @Override
-    @Column(name = "authority", nullable = false)
-    public String getAuthority() {
-        return authority;
-    }
+  @Override
+  @Column(name = "authority", nullable = false)
+  public String getAuthority() {
+    return authority;
+  }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
+  public void setAuthority(String authority) {
+    this.authority = authority;
+  }
 }

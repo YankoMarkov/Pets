@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class PetsApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(PetsApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(PetsApplication.class, args);
+    System.out.println("Open http://localhost:8000/");
+  }
 }

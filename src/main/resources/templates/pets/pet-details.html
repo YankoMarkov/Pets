@@ -3,96 +3,98 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<th:block th:replace="fragments/head"/>
+    <th:block th:replace="fragments/head"/>
 </head>
 <body>
 <div class="container-fluid">
-	<header>
-		<th:block th:replace="fragments/navbar"/>
-	</header>
-	<main class="mt-3">
-		<hr class="bg-pets hr-2"/>
-		<h1 class="text-center text-pets font-italic">Pet Details</h1>
-		<hr class="bg-pets w-25 hr-2"/>
-		<div class="container text-center">
-			<div class="row">
-				<div class="col-md-6">
-					<article class="gallery-wrap">
-						<div class="img-big-wrap pb-3">
-							<a th:href="${pet.image}" target="popup">
-								<img class="img-thumbnail" th:src="${pet.image}" alt="Image">
-							</a>
-						</div>
-					</article>
-				</div>
-				<div class="col-md-6">
-					<div class="row mt-2">
-						<div class="col-md-12">
-							<h4 th:text="|${pet.gender} ${pet.animal}|"></h4>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col-md-12">
-							<h4><span class="font-italic">Name:</span> <span th:text="${pet.name}"></span></h4>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col-md-12">
-							<h4><span class="font-italic">Breed:</span> <span th:text="${pet.breed}"></span></h4>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col-md-12">
-							<h4><span class="font-italic">Fur Color:</span> <span th:text="${pet.furColor}"></span></h4>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col-md-12">
-							<h4 th:text="${pet.isCastrated}"></h4>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col-md-12">
-							<h4><span class="font-italic">Age:</span> <span
-									th:text="|${pet.ageInYears} year and ${pet.ageInMonths} month|"></span>
-							</h4>
-						</div>
-					</div>
-					<th:block th:if="${vaccineDateExpired}">
-						<div class="row mt-2" style="background-color: red">
-							<div class="col-md-12">
-								<h4><span class="font-italic">Vaccine date:</span> <span
-										th:text="${pet.vaccineDate}"></span></h4>
-								<h4><span class="font-italic">Next vaccine date:</span> <span
-										th:text="${pet.nextVaccineDate}"></span></h4>
-							</div>
-						</div>
-					</th:block>
-					<th:block th:unless="${vaccineDateExpired}">
-						<div class="row mt-2">
-							<div class="col-md-12">
-								<h4><span class="font-italic">Vaccine date:</span> <span
-										th:text="${pet.vaccineDate}"></span></h4>
-								<h4><span class="font-italic">Next vaccine date:</span> <span
-										th:text="${pet.nextVaccineDate}"></span></h4>
-							</div>
-						</div>
-					</th:block>
-					<div class="row mt-4 d-flex justify-content-center">
-						<a class="btn bg-pets text-white" th:href="@{/illnesses/all/{id}/{page}(id=${pet.id},page=${page})}"
-						   th:text="Health"></a>
-						<a class="btn btn-success text-white ml-5" th:href="@{/pets/edit/{id}/{page}(id=${pet.id},page=${page})}"
-						   th:text="Update"></a>
-						<a class="btn btn-dark text-white ml-5" th:href="@{/home?page={num}(num=${page})}"
-						   th:text="Back"></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</main>
-	<footer>
-		<th:block th:replace="fragments/footer"/>
-	</footer>
+    <header>
+        <th:block th:replace="fragments/navbar"/>
+    </header>
+    <main class="mt-3">
+        <hr class="bg-pets hr-2"/>
+        <h1 class="text-center text-pets font-italic">Pet Details</h1>
+        <hr class="bg-pets w-25 hr-2"/>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap pb-3">
+                            <a target="popup" th:href="${pet.image}">
+                                <img alt="Image" class="img-thumbnail" th:src="${pet.image}">
+                            </a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6">
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <h4 th:text="|${pet.gender} ${pet.animal}|"></h4>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <h4><span class="font-italic">Name:</span> <span th:text="${pet.name}"></span></h4>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <h4><span class="font-italic">Breed:</span> <span th:text="${pet.breed}"></span></h4>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <h4><span class="font-italic">Fur Color:</span> <span th:text="${pet.furColor}"></span></h4>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <h4 th:text="${pet.isCastrated}"></h4>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12">
+                            <h4><span class="font-italic">Age:</span> <span
+                                    th:text="|${pet.ageInYears} year and ${pet.ageInMonths} month|"></span>
+                            </h4>
+                        </div>
+                    </div>
+                    <th:block th:if="${vaccineDateExpired}">
+                        <div class="row mt-2" style="background-color: red">
+                            <div class="col-md-12">
+                                <h4><span class="font-italic">Vaccine date:</span> <span
+                                        th:text="${pet.vaccineDate}"></span></h4>
+                                <h4><span class="font-italic">Next vaccine date:</span> <span
+                                        th:text="${pet.nextVaccineDate}"></span></h4>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${vaccineDateExpired}">
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <h4><span class="font-italic">Vaccine date:</span> <span
+                                        th:text="${pet.vaccineDate}"></span></h4>
+                                <h4><span class="font-italic">Next vaccine date:</span> <span
+                                        th:text="${pet.nextVaccineDate}"></span></h4>
+                            </div>
+                        </div>
+                    </th:block>
+                    <div class="row mt-4 d-flex justify-content-center">
+                        <a class="btn bg-pets text-white"
+                           th:href="@{/illnesses/all/{id}/{page}(id=${pet.id},page=${page})}"
+                           th:text="Health"></a>
+                        <a class="btn btn-success text-white ml-5"
+                           th:href="@{/pets/edit/{id}/{page}(id=${pet.id},page=${page})}"
+                           th:text="Update"></a>
+                        <a class="btn btn-dark text-white ml-5" th:href="@{/home?page={num}(num=${page})}"
+                           th:text="Back"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <th:block th:replace="fragments/footer"/>
+    </footer>
 </div>
 </body>
 </html>

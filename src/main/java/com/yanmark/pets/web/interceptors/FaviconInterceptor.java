@@ -10,15 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class FaviconInterceptor extends HandlerInterceptorAdapter {
 
-    @Override
-    public void postHandle(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Object handler,
-                           ModelAndView modelAndView) {
-        String link = "https://gopocketshop.com/assets/uploads/2016/05/cropped-favicon.png";
+  @Override
+  public void postHandle(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      Object handler,
+      ModelAndView modelAndView) {
+    String link = "https://gopocketshop.com/assets/uploads/2016/05/cropped-favicon.png";
 
-        if (modelAndView != null) {
-            modelAndView.addObject("favicon", link);
-        }
+    if (modelAndView != null) {
+      modelAndView.addObject("favicon", link);
     }
+  }
 }

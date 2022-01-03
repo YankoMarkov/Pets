@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, String> {
-	
-	@Query("SELECT a FROM animals a ORDER BY a.name")
-	List<Animal> findAllAnimals();
-	
-	Optional<Animal> findByName(String name);
+
+  @Query("SELECT a FROM animals a ORDER BY a.name")
+  List<Animal> findAllAnimals();
+
+  Optional<Animal> findByName(String name);
 }

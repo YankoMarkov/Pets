@@ -10,17 +10,17 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class BaseEntity {
 
-    private String id;
+  private String id;
 
-    @Id
-    @GeneratedValue(generator = "uuid-system")
-    @GenericGenerator(name = "uuid-system", strategy = "uuid")
-    @Column(name = "id", unique = true, nullable = false, updatable = false)
-    public String getId() {
-        return id;
-    }
+  @Id
+  @GeneratedValue(generator = "uuid-system")
+  @GenericGenerator(name = "uuid-system", strategy = "uuid")
+  @Column(name = "id", unique = true, nullable = false, updatable = false)
+  public String getId() {
+    return id;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 }

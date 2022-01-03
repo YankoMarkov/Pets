@@ -12,33 +12,29 @@ import java.io.IOException;
 import java.security.Principal;
 
 public interface PetService {
-	
-	PetServiceModel savePet(PetServiceModel petService,
-	                        PetCreateBindingModel petCreate,
-	                        Principal principal) throws IOException;
-	
-	PetServiceModel updatePet(PetServiceModel petService,
-	                          PetEditBindingModel petEdit) throws IOException;
-	
-	PetServiceModel addIllness(PetServiceModel petService);
-	
-	Page<PetServiceModel> getAllPets(HttpServletRequest request);
-	
-	Page<PetServiceModel> getAllPetsByAnimal(AnimalServiceModel animalService,
-	                                         HttpServletRequest request);
-	
-	Page<PetServiceModel> getAllPetsByOwner(UserServiceModel userService,
-	                                        HttpServletRequest request);
-	
-	Page<PetServiceModel> getAllPetsByOwnerAndAnimal(UserServiceModel userService,
-	                                                 AnimalServiceModel animalService,
-	                                                 HttpServletRequest request);
-	
-	PetServiceModel getPetByName(String name);
-	
-	PetServiceModel getPetById(String id);
-	
-	Boolean vaccineDateExpired(String id);
-	
-	void deletePet(String id);
+
+  PetServiceModel savePet(PetCreateBindingModel petCreate, Principal principal) throws IOException;
+
+  PetServiceModel updatePet(PetServiceModel petService, PetEditBindingModel petEdit)
+      throws IOException;
+
+  PetServiceModel addIllness(PetServiceModel petService);
+
+  Page<PetServiceModel> getAllPets(HttpServletRequest request);
+
+  Page<PetServiceModel> getAllPetsByAnimal(
+      AnimalServiceModel animalService, HttpServletRequest request);
+
+  Page<PetServiceModel> getAllPetsByOwner(UserServiceModel userService, HttpServletRequest request);
+
+  Page<PetServiceModel> getAllPetsByOwnerAndAnimal(
+      UserServiceModel userService, AnimalServiceModel animalService, HttpServletRequest request);
+
+  PetServiceModel getPetByName(String name);
+
+  PetServiceModel getPetById(String id);
+
+  Boolean vaccineDateExpired(String id);
+
+  void deletePet(String id);
 }

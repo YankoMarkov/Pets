@@ -8,12 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 public interface HomeService {
-	
-	Page<PetServiceModel> takePetsByUser(String animalId,
-	                                     ModelAndView modelAndView,
-	                                     Principal principal,
-	                                     HttpServletRequest request);
-	
-	Page<PetServiceModel> takeAllPets(String userId,
-	                                  HttpServletRequest request);
+
+  Page<PetServiceModel> takePetsByUser(
+      String animalId, ModelAndView modelAndView, Principal principal, HttpServletRequest request);
+
+  Page<PetServiceModel> takeAllPets(String userId, HttpServletRequest request);
 }

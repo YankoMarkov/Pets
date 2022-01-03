@@ -14,16 +14,16 @@
         <hr class="bg-pets hr-2"/>
         <h1 class="text-center text-pets font-italic">Delete Animal</h1>
         <hr class="bg-pets w-25 hr-2"/>
-        <form th:action="@{/animals/delete/{id}(id=${animal.id})}" th:method="post"
-              class="form w-25 mx-auto">
+        <form class="form w-25 mx-auto" th:action="@{/animals/delete/{id}(id=${animal.id})}"
+              th:method="post">
             <div class="form-group">
-                <label for="delete-animal-name" class="font-weight-bold">Name</label>
-                <input type="text" class="form-control text-center" id="delete-animal-name" name="name"
-                       th:value="${animal.name}" readonly/>
+                <label class="font-weight-bold" for="delete-animal-name">Name</label>
+                <input class="form-control text-center" id="delete-animal-name" name="name" readonly
+                       th:value="${animal.name}" type="text"/>
             </div>
             <hr class="hr-2 bg-dark">
             <div class="button-holder d-flex justify-content-center">
-                <button type="submit" class="btn btn-danger">Delete Animal</button>
+                <button class="btn btn-danger" type="submit">Delete Animal</button>
             </div>
         </form>
         <hr class="bg-pets hr-2 mt-5"/>

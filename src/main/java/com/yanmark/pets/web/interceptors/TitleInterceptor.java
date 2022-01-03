@@ -12,24 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class TitleInterceptor extends HandlerInterceptorAdapter {
 
-    @Override
-    public void postHandle(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Object handler,
-                           ModelAndView modelAndView) {
-        String title = "\uD835\uDD7B\uD835\uDD8A\uD835\uDD99\uD835\uDD98";
+  @Override
+  public void postHandle(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      Object handler,
+      ModelAndView modelAndView) {
+    String title = "\uD835\uDD7B\uD835\uDD8A\uD835\uDD99\uD835\uDD98";
 
-        if (modelAndView == null) {
-            modelAndView = new ModelAndView();
-        } else {
-            if (handler instanceof HandlerMethod) {
-                PageTitle methodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(PageTitle.class);
+    if (modelAndView == null) {
+      modelAndView = new ModelAndView();
+    } else {
+      if (handler instanceof HandlerMethod) {
+        PageTitle methodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(PageTitle.class);
 
-                if (methodAnnotation != null) {
-                    modelAndView
-                            .addObject("title", title + " - " + methodAnnotation.value());
-                }
-            }
+        if (methodAnnotation != null) {
+          modelAndView.addObject("title", title + " - " + methodAnnotation.value());
         }
+      }
     }
+  }
 }

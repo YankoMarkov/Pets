@@ -3,75 +3,75 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<th:block th:replace="fragments/head"/>
+    <th:block th:replace="fragments/head"/>
 </head>
 <body>
 <div class="container-fluid">
-	<header>
-		<th:block th:replace="fragments/navbar"/>
-	</header>
-	<main class="mt-3">
-		<hr class="bg-pets hr-2"/>
-		<h1 class="text-center text-pets font-italic">Health</h1>
-		<hr class="bg-pets w-25 hr-2"/>
-		<table class="table table-hover w-75 mx-auto">
-			<thead>
-			<tr class="row mx-auto">
-				<th class="col-md-1 text-center">#</th>
-				<th class="col-md-4 text-center">Name</th>
-				<th class="col-md-3 text-center">Date</th>
-				<th class="col-md-4 text-center">Actions</th>
-			</tr>
-			</thead>
-			<tbody>
-			<th:block th:each="illness,iter : ${illnesses}">
-				<tr class="row mx-auto">
-					<th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
-					<td class="col-md-4 text-center" th:text="${illness.name}"></td>
-					<td class="col-md-3 text-center" th:text="${illness.date}"></td>
-					<td class="col-md-4 text-center">
-						<a th:href="@{/illnesses/details/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}"
-						   class="btn bg-pets font-weight-bold text-white">Edit</a>
-						<a th:href="@{/illnesses/edit/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}"
-						   class="btn btn-success font-weight-bold text-white">Update</a>
-						<button type="button" class="btn btn-danger font-weight-bold text-white" data-toggle="modal"
-						        data-target="#deleteModal">
-							Delete
-						</button>
-						<div class="modal fade" id="deleteModal" role="dialog">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header justify-content-center">
-										<h4 class="modal-title">Delete Illness</h4>
-									</div>
-									<div class="modal-body">
-										<p>Аre you sure you want to delete <span th:text="${illness.name}"></span>.</p>
-									</div>
-									<div class="modal-footer justify-content-center">
-										<a th:href="@{/illnesses/delete/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}"
-										   class="btn btn-danger font-weight-bold text-white">Yes</a>
-										<button type="button" class="btn btn-success font-weight-bold text-white"
-										        data-dismiss="modal" aria-label="Close">No
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</th:block>
-			</tbody>
-		</table>
-		<div class="d-flex justify-content-center">
-			<a th:href="@{/illnesses/add/{id}/{page}(id=${petId},page=${page})}" class="btn bg-pets text-white">Add</a>
-			<a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}/{page}(id=${petId},page=${page})}"
-			   th:text="Back"></a>
-		</div>
-		<hr class="bg-pets hr-2 mt-5"/>
-	</main>
-	<footer>
-		<th:block th:replace="fragments/footer"/>
-	</footer>
+    <header>
+        <th:block th:replace="fragments/navbar"/>
+    </header>
+    <main class="mt-3">
+        <hr class="bg-pets hr-2"/>
+        <h1 class="text-center text-pets font-italic">Health</h1>
+        <hr class="bg-pets w-25 hr-2"/>
+        <table class="table table-hover w-75 mx-auto">
+            <thead>
+            <tr class="row mx-auto">
+                <th class="col-md-1 text-center">#</th>
+                <th class="col-md-4 text-center">Name</th>
+                <th class="col-md-3 text-center">Date</th>
+                <th class="col-md-4 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="illness,iter : ${illnesses}">
+                <tr class="row mx-auto">
+                    <th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
+                    <td class="col-md-4 text-center" th:text="${illness.name}"></td>
+                    <td class="col-md-3 text-center" th:text="${illness.date}"></td>
+                    <td class="col-md-4 text-center">
+                        <a class="btn bg-pets font-weight-bold text-white"
+                           th:href="@{/illnesses/details/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}">Edit</a>
+                        <a class="btn btn-success font-weight-bold text-white"
+                           th:href="@{/illnesses/edit/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}">Update</a>
+                        <button class="btn btn-danger font-weight-bold text-white" data-target="#deleteModal" data-toggle="modal"
+                                type="button">
+                            Delete
+                        </button>
+                        <div class="modal fade" id="deleteModal" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h4 class="modal-title">Delete Illness</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Аre you sure you want to delete <span th:text="${illness.name}"></span>.</p>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <a class="btn btn-danger font-weight-bold text-white"
+                                           th:href="@{/illnesses/delete/{id}/{page}(id=${illness.id},page=${page},petId=${petId})}">Yes</a>
+                                        <button aria-label="Close" class="btn btn-success font-weight-bold text-white"
+                                                data-dismiss="modal" type="button">No
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <a class="btn bg-pets text-white" th:href="@{/illnesses/add/{id}/{page}(id=${petId},page=${page})}">Add</a>
+            <a class="btn btn-dark text-white ml-5" th:href="@{/pets/details/{id}/{page}(id=${petId},page=${page})}"
+               th:text="Back"></a>
+        </div>
+        <hr class="bg-pets hr-2 mt-5"/>
+    </main>
+    <footer>
+        <th:block th:replace="fragments/footer"/>
+    </footer>
 </div>
 </body>
 </html>

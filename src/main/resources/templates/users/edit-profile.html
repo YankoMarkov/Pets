@@ -14,41 +14,42 @@
         <hr class="bg-pets hr-2"/>
         <h1 class="text-center text-pets font-italic">Edit Profile</h1>
         <hr class="bg-pets w-25 hr-2"/>
-        <form id="submitEdit" class="form w-25 mx-auto" th:action="@{/users/edit}" th:method="post" th:object="${userEdit}">
+        <form class="form w-25 mx-auto" id="submitEdit" th:action="@{/users/edit}" th:method="post"
+              th:object="${userEdit}">
             <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'text-danger'">
-                <label for="username" class="text-pets">Username</label>
-                <input type="text" class="form-control" name="username" id="username"
-                       th:field="*{username}" readonly/>
+                <label class="text-pets" for="username">Username</label>
+                <input class="form-control" id="username" name="username" readonly
+                       th:field="*{username}" type="text"/>
                 <h6 th:each="error : ${#fields.errors('username')}" th:text="${error}"></h6>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'text-danger'">
-                <label for="password" class="text-pets">Old Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password..." name="password"
-                       required/>
+                <label class="text-pets" for="password">Old Password</label>
+                <input class="form-control" id="password" name="password" placeholder="Password..." required
+                       type="password"/>
                 <h6 th:each="error : ${#fields.errors('password')}" th:text="${error}"></h6>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('newPassword')}? 'text-danger'">
-                <label for="newPassword" class="text-pets">New Password</label>
-                <input type="password" class="form-control" id="newPassword" placeholder="New Password..."
-                       name="newPassword"/>
+                <label class="text-pets" for="newPassword">New Password</label>
+                <input class="form-control" id="newPassword" name="newPassword" placeholder="New Password..."
+                       type="password"/>
                 <h6 th:each="error : ${#fields.errors('newPassword')}" th:text="${error}"></h6>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('confirmNewPassword')}? 'text-danger'">
-                <label for="confirmNewPassword" class="text-pets">Confirm New Password</label>
-                <input type="password" class="form-control" id="confirmNewPassword"
+                <label class="text-pets" for="confirmNewPassword">Confirm New Password</label>
+                <input class="form-control" id="confirmNewPassword" name="confirmNewPassword"
                        placeholder="Confirm New Password..."
-                       name="confirmNewPassword"/>
+                       type="password"/>
                 <h6 th:each="error : ${#fields.errors('confirmNewPassword')}" th:text="${error}"></h6>
             </div>
             <div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'text-danger'">
-                <label for="email" class="text-pets">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Email..."
-                       name="email" th:field="*{email}"/>
+                <label class="text-pets" for="email">Email</label>
+                <input class="form-control" id="email" name="email" placeholder="Email..."
+                       th:field="*{email}" type="email"/>
                 <h6 th:each="error : ${#fields.errors('email')}" th:text="${error}"></h6>
             </div>
             <hr class="hr-2 bg-pets">
             <div class="button-holder d-flex justify-content-center">
-                <button id="btnEdit" type="submit" class="btn bg-pets text-white">Update</button>
+                <button class="btn bg-pets text-white" id="btnEdit" type="submit">Update</button>
                 <a class="btn btn-dark text-white ml-5" th:href="@{/users/profile}"
                    th:text="Cancel"></a>
             </div>
