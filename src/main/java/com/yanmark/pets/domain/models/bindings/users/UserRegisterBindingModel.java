@@ -12,8 +12,7 @@ public class UserRegisterBindingModel {
   private String confirmPassword;
   private String email;
 
-  @NotNull(message = "Username cannot be null.")
-  @NotBlank(message = "Username cannot be empty.")
+  @NotBlank(message = "Username cannot be null or empty.")
   @Size(min = 3, max = 15, message = "Username must be in range [3 - 15] symbols.")
   public String getUsername() {
     return this.username;
@@ -23,8 +22,7 @@ public class UserRegisterBindingModel {
     this.username = username;
   }
 
-  @NotNull(message = "Password cannot be null.")
-  @NotBlank(message = "Password cannot be empty.")
+  @NotBlank(message = "Password cannot be null or empty.")
   @Size(min = 6, message = "Password must be minimum 6 symbols.")
   public String getPassword() {
     return this.password;
@@ -34,8 +32,7 @@ public class UserRegisterBindingModel {
     this.password = password;
   }
 
-  @NotNull(message = "Confirm Password cannot be null.")
-  @NotBlank(message = "Confirm Password cannot be empty.")
+  @NotBlank(message = "Confirm Password cannot be null or empty.")
   @Size(min = 6, message = "Confirm Password must be minimum 6 symbols.")
   public String getConfirmPassword() {
     return this.confirmPassword;
@@ -45,8 +42,7 @@ public class UserRegisterBindingModel {
     this.confirmPassword = confirmPassword;
   }
 
-  @NotNull(message = "Email cannot be null.")
-  @NotBlank(message = "Email cannot be empty.")
+  @NotBlank(message = "Email cannot be null or empty.")
   @Email(message = "Invalid email.")
   public String getEmail() {
     return this.email;

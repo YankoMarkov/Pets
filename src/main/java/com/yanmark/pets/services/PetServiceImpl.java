@@ -75,7 +75,7 @@ public class PetServiceImpl implements PetService {
       LocalDate birthDate = LocalDate.parse(petCreate.getBirthDate(), formatter);
       petService.setBirthDate(birthDate);
 
-      if (petCreate.getVaccineDate() != null && !petCreate.getVaccineDate().trim().equals("")) {
+      if (!petCreate.getVaccineDate().isBlank()) {
         LocalDate vaccineDate = LocalDate.parse(petCreate.getVaccineDate(), formatter);
         petService.setVaccineDate(vaccineDate);
       }
@@ -102,10 +102,8 @@ public class PetServiceImpl implements PetService {
     DateTimeFormatter stringFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    String castrated = "false";
-    if (petService.isCastrated()) {
-      castrated = "true";
-    }
+    String castrated = petService.isCastrated() ? "true" : "false";
+    
     if (!petEdit.getImage().isEmpty()) {
       petService.setImage(this.cloudinaryService.uploadImage(petEdit.getImage()));
     }
@@ -115,35 +113,30 @@ public class PetServiceImpl implements PetService {
     if (petService.getVaccineDate() != null) {
       vaccineDate = petService.getVaccineDate().format(stringFormatter);
     }
-    if (petEdit.getAnimal() != null
+    if (!petEdit.getAnimal().isBlank()
         && !petService.getAnimal().getId().equals(petEdit.getAnimal())) {
       AnimalServiceModel animalServiceModel = this.animalService.getAnimalById(petEdit.getAnimal());
       petService.setAnimal(animalServiceModel);
     }
-    if (petEdit.getName() != null
-        && !petEdit.getName().trim().equals("")
+    if (!petEdit.getName().isBlank()
         && !petEdit.getName().trim().equalsIgnoreCase(petService.getName())) {
       petService.setName(petEdit.getName());
     }
-    if (petEdit.getBirthDate() != null
-        && !petEdit.getBirthDate().equals("")
+    if (!petEdit.getBirthDate().isBlank()
         && !birthDate.equals(petEdit.getBirthDate())) {
       LocalDate date = LocalDate.parse(petEdit.getBirthDate(), dateFormatter);
       petService.setBirthDate(date);
     }
-    if (petEdit.getVaccineDate() != null
-        && !petEdit.getVaccineDate().equals("")
+    if (!petEdit.getVaccineDate().isBlank()
         && !vaccineDate.equals(petEdit.getVaccineDate())) {
       LocalDate date = LocalDate.parse(petEdit.getVaccineDate(), dateFormatter);
       petService.setVaccineDate(date);
     }
-    if (petEdit.getFurColor() != null
-        && petEdit.getFurColor().trim().equals("")
+    if (!petEdit.getFurColor().isBlank()
         && !petEdit.getFurColor().equalsIgnoreCase(petService.getFurColor())) {
       petService.setFurColor(petEdit.getFurColor());
     }
-    if (petEdit.getBreed() != null
-        && petEdit.getBreed().trim().equals("")
+    if (!petEdit.getBreed().isBlank()
         && !petEdit.getBreed().equalsIgnoreCase(petService.getBreed())) {
       petService.setBreed(petEdit.getBreed());
     }
@@ -156,11 +149,7 @@ public class PetServiceImpl implements PetService {
       }
     }
     if (petEdit.getIsCastrated() != null && !castrated.equals(petEdit.getIsCastrated())) {
-      if (petEdit.getIsCastrated().equals("true")) {
-        petService.setCastrated(true);
-      } else {
-        petService.setCastrated(false);
-      }
+	    petService.setCastrated(petEdit.getIsCastrated().equals("true"));
     }
     return savePetToDB(petService);
   }
@@ -234,10 +223,7 @@ public class PetServiceImpl implements PetService {
         this.petRepository
             .findById(id)
             .orElseThrow(() -> new IllegalArgumentException(PET_NOT_FOUND));
-    if (pet.getVaccineDate() != null && date.isAfter(pet.getVaccineDate().plusYears(1))) {
-      return true;
-    }
-    return false;
+	  return pet.getVaccineDate() != null && date.isAfter(pet.getVaccineDate().plusYears(1));
   }
 
   @Override

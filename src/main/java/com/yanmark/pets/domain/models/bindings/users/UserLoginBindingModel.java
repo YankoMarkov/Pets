@@ -8,8 +8,7 @@ public class UserLoginBindingModel {
   private String username;
   private String password;
 
-  @NotNull(message = "Username cannot be null.")
-  @NotBlank(message = "Username cannot be empty.")
+  @NotBlank(message = "Username cannot be null or empty.")
   public String getUsername() {
     return this.username;
   }
@@ -18,8 +17,7 @@ public class UserLoginBindingModel {
     this.username = username;
   }
 
-  @NotNull(message = "Password cannot be null.")
-  @NotBlank(message = "Password cannot be empty.")
+  @NotBlank(message = "Password cannot be null or empty.")
   public String getPassword() {
     return this.password;
   }

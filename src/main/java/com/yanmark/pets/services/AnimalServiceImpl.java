@@ -95,8 +95,7 @@ public class AnimalServiceImpl implements AnimalService {
   }
 
   private AnimalServiceModel saveAnimalToDB(AnimalServiceModel animalService) {
-    Animal checkAnimal = this.animalRepository.findByName(animalService.getName()).orElse(null);
-    if (checkAnimal != null) {
+    if (this.animalRepository.findByName(animalService.getName()).isPresent()) {
       throw new IllegalArgumentException(ANIMAL_NAME_ALREADY_EXIST);
     }
     Animal animal = this.modelMapper.map(animalService, Animal.class);

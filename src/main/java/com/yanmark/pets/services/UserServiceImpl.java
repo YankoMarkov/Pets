@@ -21,7 +21,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
   private static final String USER_NOT_FOUND = "User was not found!";
+  private static final String USERNAME_EXISTS = "User with this username already exists!";
   private static final String INCORRECT_PASSWORD = "Incorrect password!";
+  private static final String NOT_EQUAL_PASSWORD_AND_CONFIRM_PASSWORD = "Password and confirm password is not equal!";
   private static final String INCORRECT_FIELDS = "Some of user's field is empty or wrong!";
 
   private final UserRepository userRepository;
@@ -58,6 +60,12 @@ public class UserServiceImpl implements UserService {
         userRegister.getPassword(),
         userRegister.getConfirmPassword(),
         userRegister.getEmail())) {
+      if (this.userRepository.findByUsername(userRegister.getUsername()).isPresent()){
+        throw new IllegalArgumentException(USERNAME_EXISTS);
+      }
+      if (!userRegister.getPassword().equals(userRegister.getConfirmPassword())){
+        throw new IllegalArgumentException(NOT_EQUAL_PASSWORD_AND_CONFIRM_PASSWORD);
+      }
       UserServiceModel userService = this.modelMapper.map(userRegister, UserServiceModel.class);
       User user = this.modelMapper.map(giveRolesToUser(userService), User.class);
       user.setPassword(this.passwordEncoder.encode(userService.getPassword()));
@@ -107,7 +115,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository
             .findByUsername(userService.getUsername())
             .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
-    if (userEdit.getNewPassword() != null && !userEdit.getNewPassword().trim().equals("")) {
+    if (!userEdit.getNewPassword().isBlank()) {
       userService.setPassword(userEdit.getNewPassword());
     }
     if (!this.passwordEncoder.matches(userEdit.getPassword(), user.getPassword())) {
@@ -116,7 +124,7 @@ public class UserServiceImpl implements UserService {
     if (!this.passwordEncoder.matches(userService.getPassword(), user.getPassword())) {
       user.setPassword(this.passwordEncoder.encode(userService.getPassword()));
     }
-    if (userEdit.getEmail() != null && !userEdit.getEmail().trim().equals("")) {
+    if (!userEdit.getEmail().isBlank()) {
       user.setEmail(userEdit.getEmail());
     } else {
       user.setEmail(userService.getEmail());

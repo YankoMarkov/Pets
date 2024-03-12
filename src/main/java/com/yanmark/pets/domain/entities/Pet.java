@@ -45,7 +45,7 @@ public class Pet extends BaseEntity {
     this.animal = animal;
   }
 
-  @Column(name = "name", nullable = false, unique = true)
+  @Column(name = "name", nullable = false)
   public String getName() {
     return name;
   }

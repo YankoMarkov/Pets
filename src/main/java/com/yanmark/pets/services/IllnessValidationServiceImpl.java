@@ -10,13 +10,10 @@ public class IllnessValidationServiceImpl implements IllnessValidationService {
     if (date == null || name == null) {
       return false;
     }
-    if (date.trim().equals("") || name.trim().equals("")) {
+    if (date.isBlank() || name.isBlank()) {
       return false;
     }
-    if (date.length() < 6 || name.length() < 3) {
-      return false;
-    }
-    return true;
+	  return date.length() >= 6 && name.length() >= 3;
   }
 
   @Override
@@ -24,12 +21,9 @@ public class IllnessValidationServiceImpl implements IllnessValidationService {
     if (name == null) {
       return false;
     }
-    if (name.trim().equals("")) {
+    if (name.isBlank()) {
       return false;
     }
-    if (name.length() < 3) {
-      return false;
-    }
-    return true;
+	  return name.length() >= 3;
   }
 }

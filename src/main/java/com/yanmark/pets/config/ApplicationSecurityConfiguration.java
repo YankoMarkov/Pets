@@ -12,50 +12,50 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.cors()
-        .disable()
-        .csrf()
-        .csrfTokenRepository(csrfTokenRepository())
-        .and()
-        .authorizeRequests()
-        .antMatchers("/css/**", "/js/**", "/images/**", "/")
-        .permitAll()
-        .antMatchers("/users/login", "/users/register")
-        .anonymous()
-        .antMatchers("/animals/all", "/animals/add", "/animals/edit/**", "/animals/delete/**")
-        .hasAnyAuthority("ADMIN", "MODERATOR")
-        .antMatchers(
-            "/home",
-            "/users/profile",
-            "/users/edit/**",
-            "/animals/fetch",
-            "/pets/**",
-            "/illnesses/**")
-        .authenticated()
-        .antMatchers("/users/all", "/users/changeRole", "/allPets")
-        .hasAuthority("ROOT")
-        .anyRequest()
-        .authenticated()
-        .and()
-        .formLogin()
-        .loginPage("/users/login")
-        .usernameParameter("username")
-        .passwordParameter("password")
-        .defaultSuccessUrl("/home")
-        .and()
-        .exceptionHandling()
-        .accessDeniedPage("/unauthorized")
-        .and()
-        .logout()
-        .logoutSuccessUrl("/");
-  }
-
-  private CsrfTokenRepository csrfTokenRepository() {
-    HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-    repository.setSessionAttributeName("_csrf");
-    return repository;
-  }
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors()
+				.disable()
+				.csrf()
+				.csrfTokenRepository(csrfTokenRepository())
+				.and()
+				.authorizeRequests()
+				.antMatchers("/css/**", "/js/**", "/images/**", "/")
+				.permitAll()
+				.antMatchers("/users/login", "/users/register")
+				.anonymous()
+				.antMatchers("/animals/all", "/animals/add", "/animals/edit/**", "/animals/delete/**")
+				.hasAnyAuthority("ADMIN", "MODERATOR")
+				.antMatchers(
+						"/home",
+						"/users/profile",
+						"/users/edit/**",
+						"/animals/fetch",
+						"/pets/**",
+						"/illnesses/**")
+				.authenticated()
+				.antMatchers("/users/all", "/users/changeRole", "/allPets")
+				.hasAuthority("ROOT")
+				.anyRequest()
+				.authenticated()
+				.and()
+				.formLogin()
+				.loginPage("/users/login")
+				.usernameParameter("username")
+				.passwordParameter("password")
+				.defaultSuccessUrl("/home")
+				.and()
+				.exceptionHandling()
+				.accessDeniedPage("/unauthorized")
+				.and()
+				.logout()
+				.logoutSuccessUrl("/");
+	}
+	
+	private CsrfTokenRepository csrfTokenRepository() {
+		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+		repository.setSessionAttributeName("_csrf");
+		return repository;
+	}
 }

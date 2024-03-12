@@ -23,8 +23,7 @@ public class UserEditBindingModel {
     this.username = username;
   }
 
-  @NotNull(message = "Password cannot be null.")
-  @NotBlank(message = "Password cannot be empty.")
+  @NotBlank(message = "Password cannot be null or empty.")
   public String getPassword() {
     return this.password;
   }
@@ -33,8 +32,7 @@ public class UserEditBindingModel {
     this.password = password;
   }
 
-  @NotNull(message = "New password cannot be null.")
-  @NotBlank(message = "New password cannot be empty.")
+  @NotBlank(message = "New password cannot be null or empty.")
   public String getNewPassword() {
     return newPassword;
   }
@@ -43,8 +41,7 @@ public class UserEditBindingModel {
     this.newPassword = newPassword;
   }
 
-  @NotNull(message = "Confirm new password cannot be null.")
-  @NotBlank(message = "Confirm new password cannot be empty.")
+  @NotBlank(message = "Confirm new password cannot be null or empty.")
   public String getConfirmNewPassword() {
     return confirmNewPassword;
   }
@@ -53,8 +50,7 @@ public class UserEditBindingModel {
     this.confirmNewPassword = confirmNewPassword;
   }
 
-  @NotNull(message = "Email cannot be null.")
-  @NotBlank(message = "Email cannot be empty.")
+  @NotBlank(message = "Email cannot be null or empty.")
   @Email(message = "Invalid email.")
   public String getEmail() {
     return this.email;

@@ -10,10 +10,7 @@ public class AnimalValidationServiceImpl implements AnimalValidationService {
 
   @Override
   public boolean isValidString(String str) {
-    if (str == null) {
-      return false;
-    }
-    if (str.trim().equals("")) {
+    if (str.isBlank()) {
       return false;
     }
     if (str.length() < 2 || str.length() > 15) {

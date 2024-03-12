@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,7 +81,7 @@ public class IllnessController extends BaseController {
   public ModelAndView addConfirm(
       @PathVariable String id,
       @PathVariable String page,
-      @ModelAttribute("illnessCreate") IllnessCreateBindingModel illnessCreate,
+      @Valid @ModelAttribute("illnessCreate") IllnessCreateBindingModel illnessCreate,
       BindingResult bindingResult,
       ModelAndView modelAndView)
       throws IOException {
@@ -135,7 +136,7 @@ public class IllnessController extends BaseController {
   public ModelAndView editConfirm(
       @PathVariable String id,
       @PathVariable String page,
-      @ModelAttribute("illnessEdit") IllnessEditBindingModel illnessEdit,
+      @Valid @ModelAttribute("illnessEdit") IllnessEditBindingModel illnessEdit,
       BindingResult bindingResult)
       throws IOException {
     if (bindingResult.hasErrors()) {
