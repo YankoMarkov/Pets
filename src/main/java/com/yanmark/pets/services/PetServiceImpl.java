@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter;
 public class PetServiceImpl implements PetService {
 
   private static final String PET_NOT_FOUND = "Pet was not found!";
-  private static final String PET_FIELDS_IS_WRONG = "Some of pet's field is empty or wrong!";
+  private static final String PET_FIELDS_IS_WRONG = "Check the required fields and image file!";
 
   private final ModelMapper modelMapper;
   private final PetRepository petRepository;

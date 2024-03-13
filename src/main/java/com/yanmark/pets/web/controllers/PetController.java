@@ -52,9 +52,6 @@ public class PetController extends BaseController {
 		if (bindingResult.hasErrors()) {
 			return view(CREATE_PET);
 		}
-		if (petCreate.getImage().isEmpty()) {
-			return view(CREATE_PET);
-		}
 		this.petService.savePet(petCreate, principal);
 		return this.redirect(HOME);
 	}
