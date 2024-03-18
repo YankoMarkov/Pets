@@ -1,12 +1,11 @@
 # Build stage
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /app
 COPY . .
 RUN mvn clean package
 
 # Package stage
-FROM openjdk:21
+FROM eclipse-temurin:21-alpine
 WORKDIR /app
-COPY --from=build /target/*.jar /app/app.jar
+COPY --from=build /target/pets-1.0.0-SNAPSHOT.jar app.jar
 EXPOSE 8080
-ENTRYPOINT["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
